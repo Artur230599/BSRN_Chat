@@ -1,0 +1,5 @@
+handle = "Bob"
+port = 5001
+whoisport = 4040
+autoreply = "Ich bin gerade nicht da."
+username = "Bob"
