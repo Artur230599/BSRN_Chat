@@ -17,10 +17,12 @@ async def main():
     loop.run_in_executor(None, discovery.start)
 
     # Messenger Listener starten
-    await messenger.start_listener()
-
-    # CLI starten
-    await interface.run()
+    try:
+        await messenger.start_listener()
+        await interface.run()
+    except KeyboardInterrupt:
+        print("Stopping discovery service...")
+        discovery.stop()
 
 
 if __name__ == "__main__":

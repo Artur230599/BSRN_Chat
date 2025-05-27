@@ -1,5 +1,5 @@
 handle = "Bob"
-port = 5001
-whoisport = 4040
+port = 5000
+whoisport = 4000
 autoreply = "Ich bin gerade nicht da."
 username = "Bob"

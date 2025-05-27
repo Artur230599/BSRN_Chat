@@ -1,46 +1,86 @@
 import socket
-import os
-import platform
-from common.protocol import parse_message, create_iam
-
+import threading
+import toml
+import time
+BROADCAST_PORT = 4000
+BUFFER_SIZE = 1024
 class DiscoveryService:
-    def __init__(self, config):
-        self.config = config
-        self.handle = config.get("handle")
-        self.port = config.get("port")
-        self.whoisport = config.get("whoisport", 4000)
+    def __init__(self, config_path):
+        self.peers = {}  # {handle: (ip, port)}
         self.running = True
+        self.config = self.load_config(config_path)
+        self.handle = self.config["handle"]
+        self.port = self.config["port"]
+        self.whois_port = self.config["whoisport"]
+
+        # UDP Socket für Broadcast
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-        self.sock.bind(("", self.whoisport))
         self.sock.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
+        self.sock.bind(('', BROADCAST_PORT))
+
+    def load_config(self, path):
+        with open(path, "r") as f:
+            return toml.load(f)
+
+    def listen(self):
+        while self.running:
+            try:
+                data, addr = self.sock.recvfrom(BUFFER_SIZE)
+                message = data.decode("utf-8").strip()
+                print(f"[DISCOVERY] Empfangen: {message} von {addr}")
+                self.handle_message(message, addr)
+            except Exception as e:
+                print(f"[Fehler] {e}")
+
+    def handle_message(self, message, addr):
+        parts = message.split()
+        if not parts:
+            return
+        cmd = parts[0]
+
+        if cmd == "JOIN" and len(parts) == 3:
+            handle, port = parts[1], int(parts[2])
+            self.peers[handle] = (addr[0], port)
+        elif cmd == "LEAVE" and len(parts) == 2:
+            handle = parts[1]
+            if handle in self.peers:
+                del self.peers[handle]
+        elif cmd == "WHOIS" and len(parts) == 2:
+            if parts[1] == self.handle:
+                self.send_iam(addr)
+        elif cmd == "IAM" and len(parts) == 4:
+            handle, ip, port = parts[1], parts[2], int(parts[3])
+            self.peers[handle] = (ip, port)
+
+    def send_iam(self, target_addr):
+        msg = f"IAM {self.handle} {self.get_local_ip()} {self.port}\n"
+        self.sock.sendto(msg.encode('utf-8'), target_addr)
+
+    def get_local_ip(self):
+        try:
+            s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+            s.connect(("8.8.8.8", 80))
+            ip = s.getsockname()[0]
+            s.close()
+            return ip
+        except:
+            return "127.0.0.1"
+
+    def send_join(self):
+        msg = f"JOIN {self.handle} {self.port}\n"
+        self.sock.sendto(msg.encode("utf-8"), ('255.255.255.255', BROADCAST_PORT))
+
+    def send_leave(self):
+        msg = f"LEAVE {self.handle}\n"
+        self.sock.sendto(msg.encode("utf-8"), ('255.255.255.255', BROADCAST_PORT))
 
     def start(self):
-        print("[Discovery] Discovery-Dienst läuft...")
-
-        # Plattformunabhängiges PID-File:
-        if platform.system() == "Windows":
-            pid_file = f"slcp.pid"   # Windows einfach im Projektordner
-        else:
-            pid_file = f"/run/user/{os.getuid()}/slcp.pid"  # Linux/Unix
-
-        with open(pid_file, "w") as f:
-            f.write(str(os.getpid()))
-        try:
-            while self.running:
-                data, addr = self.sock.recvfrom(512)
-                msg = data.decode("utf-8").strip()
-                command, params = parse_message(msg)
-
-                if command == "WHOIS" and params[0] == self.handle:
-                    response = create_iam(self.handle, addr[0], self.port)
-                    self.sock.sendto(response.encode("utf-8"), addr)
-                    print(f"[Discovery] WHOIS erhalten → IAM gesendet an {addr}")
-        except KeyboardInterrupt:
-            print("\n[Discovery] Discovery-Dienst gestoppt.")
-        finally:
-            if os.path.exists(pid_file):
-                os.remove(pid_file)
+        self.send_join()
+        listener = threading.Thread(target=self.listen)
+        listener.daemon = True
+        listener.start()
 
     def stop(self):
+        self.send_leave()
         self.running = False
         self.sock.close()
