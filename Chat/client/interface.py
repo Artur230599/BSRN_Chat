@@ -1,36 +1,137 @@
-# client/interface.py
-
 import asyncio
+import socket
+from common import protocol
+import os
 
-class Interface:
-    def __init__(self, config, messenger):
+
+class Messenger(asyncio.DatagramProtocol):
+
+    def __init__(self, config):
         self.config = config
-        self.messenger = messenger
+        self.peers = {}  # handle → (ip, port)
+        self.transport = None
+        self.message_callback = None
+        self.image_callback = None
 
-    async def run(self):
-        print("Welcome to the chat.")
-        print("Commands: whois <username>, join, leave, quit")
+    async def start_listener(self):
+        loop = asyncio.get_running_loop()
 
-        while True:
-            command = input(">> ").strip()
+        self.transport, _ = await loop.create_datagram_endpoint(
+            lambda: self,
+            local_addr=('0.0.0.0', self.config.port),
+            family=socket.AF_INET,
+            proto=socket.IPPROTO_UDP,
+            allow_broadcast=True
+        )
+        print(f"[Messenger] Listening on port {self.config.port}")
+        await asyncio.sleep(1)
+        await self.send_join()
 
-            if command == "/join":
-                await self.messenger.broadcast_join()
+    def connection_made(self, transport):
+        self.transport = transport
 
-            elif command == "/leave":
-                await self.messenger.broadcast_leave()
+    def datagram_received(self, data, addr):
+        try:
+            message = data.decode()
+            asyncio.create_task(self.handle_message(message, addr))
+        except Exception as e:
+            print(f"[Error] Could not decode message from {addr}: {e}")
 
-            elif command.startswith("/whois"):
-                parts = command.split()
-                if len(parts) == 2:
-                    username = parts[1]
-                    await self.messenger.send_whois_request(username)
-                else:
-                    print("Usage: /whois <username>")
+    async def handle_message(self, message, addr):
+        lines = message.splitlines()
+        for line in lines:
+            parsed = protocol.parse_slcp(line)
 
-            elif command == "/quit":
-                print("Exiting...")
-                break
+            if parsed["type"] == "JOIN":
+                self.peers[parsed["handle"]] = (addr[0], parsed["port"])
+                print(f"[JOIN] {parsed['handle']} joined from {addr[0]}:{parsed['port']}")
 
-            else:
-                print("Unknown command.")
+            elif parsed["type"] == "LEAVE":
+                self.peers.pop(parsed["handle"], None)
+                print(f"[LEAVE] {parsed['handle']} has left.")
+
+            elif parsed["type"] == "WHOIS":
+                if parsed["handle"] == self.config.username:
+                    await self.send_known_to(addr[0], addr[1])
+
+            elif parsed["type"] == "MSG":
+                if parsed["to"] == self.config.username:
+                    msg = parsed["message"]
+                    sender = addr[0]
+                    if self.message_callback:
+                        await self.message_callback(sender, msg)
+                    else:
+                        print(f"[{sender}] {msg}")
+                    if self.config.autoreply:
+                        await self.send_message(sender, self.config.autoreply)
+
+            elif parsed["type"] == "IMG":
+                if parsed["to"] == self.config.username:
+                    size = parsed["size"]
+                    filename = await self.receive_image(addr, size)
+                    if self.image_callback:
+                        await self.image_callback(addr[0], filename)
+                    else:
+                        print(f"[Image] Received and saved to: {filename}")
+
+    async def send_slcp(self, line, ip, port):
+        if self.transport:
+            self.transport.sendto(line.encode(), (ip, port))
+
+    async def send_broadcast(self, line):
+        await self.send_slcp(line, "255.255.255.255", self.config.port)
+
+    async def send_join(self):
+        msg = protocol.create_join(self.config.username, self.config.port)
+        await self.send_broadcast(msg)
+
+    async def send_leave(self):
+        msg = protocol.create_leave(self.config.username)
+        await self.send_broadcast(msg)
+
+    async def send_whois(self, handle):
+        msg = protocol.create_whois(handle)
+        await self.send_broadcast(msg)
+
+    async def send_message(self, handle, message):
+        if handle not in self.peers:
+            print(f"[Error] No known peer with handle '{handle}'")
+            return
+        msg = protocol.create_msg(handle, message)
+        ip, port = self.peers[handle]
+        await self.send_slcp(msg, ip, port)
+
+    async def send_image(self, handle, filepath):
+        if handle not in self.peers:
+            print(f"[Error] No known peer with handle '{handle}'")
+            return
+        size = os.path.getsize(filepath)
+        msg = protocol.create_img(handle, size)
+        ip, port = self.peers[handle]
+        await self.send_slcp(msg, ip, port)
+
+        # Bilddaten senden
+        with open(filepath, "rb") as f:
+            data = f.read()
+            self.transport.sendto(data, (ip, port))
+
+    async def receive_image(self, addr, size):
+        loop = asyncio.get_event_loop()
+        data, _ = await loop.sock_recvfrom(self.transport.get_extra_info("socket"), size)
+        filename = f"{self.config.imagepath}/{addr[0]}_image.jpg"
+        with open(filename, "wb") as f:
+            f.write(data)
+        return filename
+
+    def set_message_callback(self, callback):
+        self.message_callback = callback
+
+    def set_image_callback(self, callback):
+        self.image_callback = callback
+
+    async def send_known_to(self, ip, port):
+        users = []
+        for handle, (ip_, port_) in self.peers.items():
+            users.append(f"{handle} {ip_} {port_}")
+        message = "KNOWNUSERS " + ", ".join(users) + "\n"
+        await self.send_slcp(message, ip, port)
