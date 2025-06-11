@@ -46,7 +46,7 @@ class DiscoveryService:
         self.config = self.load_config(config_path)  # Konfiguration laden
         self.handle = self.config["handle"]  # Eigener Benutzername/Handle
         self.port = self.config["port"]  # Eigener Port, auf dem man erreichbar ist
-        self.whois_port = self.config["whoisport", 0]  # Optionaler Port für WHOIS-Anfragen.
+        self.whois_port = self.config.get("whoisport", 0)  # Optionaler Port für WHOIS-Anfragen.
 
         # UDP-Socket zum Senden und Empfangen von Broadcast-Nachrichten erzeugen
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
@@ -70,7 +70,7 @@ class DiscoveryService:
     def listen(self):
         while self.running:
             try:
-                # Empfang von Daten(Bytes)und Adresse (IP, Port) des Senders
+                # Empfang von Daten(Bytes) und Adresse (IP, Port) des Senders
                 data, addr = self.sock.recvfrom(BUFFER_SIZE)
                 # Dekodiere die empfangenen Bytes in einen String und entferne Leerzeichen
                 message = data.decode("utf-8").strip()
@@ -85,9 +85,8 @@ class DiscoveryService:
     #
     # @param message die empfangene Nachricht als String.
     # @param addr die Adresse (IP, Port) des Senders.
-
     def handle_message(self, message, addr):
-        parts = message.split()  # nachricht in einzelne Worte zerlegen
+        parts = message.split()  # Nachricht in einzelne Worte zerlegen
         if not parts:
             return  # Leere Nachricht ignorieren
 
@@ -105,7 +104,7 @@ class DiscoveryService:
                 self.peers[handle] = (addr[0], port)  # Peer speichern
 
         elif cmd == "LEAVE" and len(parts) == 2:
-            # LEAVE Nachricht bedeutet, einPeer verlässt das Netzwerk
+            # LEAVE Nachricht bedeutet, ein Peer verlässt das Netzwerk
             handle = parts[1]
             with self.peers_lock:
                 if handle in self.peers:
@@ -158,64 +157,66 @@ class DiscoveryService:
             # Wenn das nicht klappt, localhost zurückgeben
             return "127.0.0.1"
 
-        ##
-        # @brief sendet eine JOIN-Nachricht an alle im Netzwerk per broadcast.
-        #
-        # Diese Nachricht informiert andere Peers darüber, dass dieser Peer jetzt online ist.
-        def send_join(self):
-            msg = f"JOIN {self.handle} {self.port}\n"
-            self.sock.sendto(msg.encode("utf-8"), ('255.255.255.255', BROADCAST_PORT))
+    ##
+    # @brief sendet eine JOIN-Nachricht an alle im Netzwerk per broadcast.
+    #
+    # Diese Nachricht informiert andere Peers darüber, dass dieser Peer jetzt online ist.
+    def send_join(self):
+        msg = f"JOIN {self.handle} {self.port}\n"
+        self.sock.sendto(msg.encode("utf-8"), ('255.255.255.255', BROADCAST_PORT))
 
-        ##
-        # @brief sendet eine LEAVE-Nachricht an alle im Netzwerk per Broadcast.
-        #
-        # Diese Nachricht informiert andere Peers darüber, dass dieser Peer offline geht.
-        def send_leave(self):
-            msg = f"LEAVE {self.handle}\n"
-            self.sock.sendto(msg.encode("utf-8"), ('255.255.255.255', BROADCAST_PORT))
+    ##
+    # @brief sendet eine LEAVE-Nachricht an alle im Netzwerk per broadcast.
+    #
+    # Diese Nachricht informiert andere Peers darüber, dass dieser Peer offline geht.
+    def send_leave(self):
+        msg = f"LEAVE {self.handle}\n"
+        self.sock.sendto(msg.encode("utf-8"), ('255.255.255.255', BROADCAST_PORT))
 
-        ##
-        # @brief gibt eine sichere Kopie aller aktuell bekannten Peers zurück.
-        #
-        # @return Ein Dictionary mit Peers {handle: (IP, Port)}.
-        def get_peers(self):
-            with self.peers_lock:
-                return dict(self.peers)  # Kopie zurückgeben, damit andere Threads nicht stören
+    ##
+    # @brief gibt eine sichere Kopie aller aktuell bekannten Peers zurück.
+    #
+    # @return Ein Dictionary mit Peers {handle: (IP, Port)}.
+    def get_peers(self):
+        with self.peers_lock:
+            return dict(self.peers)  # Kopie zurückgeben, damit andere Threads nicht stören
 
-        ##
-        # @brief startet den Discovery-Service.
-        #
-        # Sendet eine JOIN-Nachricht und startet einen Hintergrund-Thread, der auf Nachrichten hört.
-        def start(self):
-            self.send_join()  # Anderen mitteilen, dass man online ist
-            listener = threading.Thread(target=self.listen)  # Listener-Thread erzeugen
-            listener.daemon = True  # Damit der Thread beendet wird, wenn das Hauptprogramm endet
-            listener.start()  # Thread starten
+    ##
+    # @brief startet den Discovery-Service.
+    #
+    # Sendet eine JOIN-Nachricht und startet einen Hintergrund-Thread, der auf Nachrichten hört.
+    def start(self):
+        self.send_join()  # Anderen mitteilen, dass man online ist
+        listener = threading.Thread(target=self.listen)  # Listener-Thread erzeugen
+        listener.daemon = True  # Damit der Thread beendet wird, wenn das Hauptprogramm endet
+        listener.start()  # Thread starten
 
-        ##
-        # @brief stoppt den Discovery-Service.
-        #
-        # Sendet eine LEAVE-Nachricht und beendet die Listener-Schleife.
-        def stop(self):
-            self.send_leave()  # Anderen mitteilen, dass man offline geht
-            self.running = False  # Listener stoppen
-            self.sock.close()  # Socket schließen
+    ##
+    # @brief stoppt den Discovery-Service.
+    #
+    # Sendet eine LEAVE-Nachricht und beendet die Listener-Schleife.
+    def stop(self):
+        self.send_leave()  # Anderen mitteilen, dass man offline geht
+        self.running = False  # Listener stoppen
+        self.sock.close()  # Socket schließen
 
-        ##
-        # @brief Hauptprogramm startet den DiscoveryService, wenn der Broadcast-Port frei ist.
-        if __name__ == "__main__":
-            if is_port_in_use(BROADCAST_PORT):
-                print("[Abbruch] Discovery-Service läuft bereits (Port belegt).")
-                sys.exit(1)
-        service = DiscoveryService("config.toml")  # Service mit Konfig laden
-        service.start()  # Service starten
 
-        print("Discovery-Service läuft. Drücke Strg+C zum Beenden.")
-        try:
-            while True:
-                time.sleep(1)  # Warte 1 Sekunde
-                peers = service.get_peers()  # Bekannte Peers abfragen
-                print("Aktuelle Peers:", peers)
-        except KeyboardInterrupt:
-            print("Beende Discovery-Service...")
-            service.stop()
+##
+# @brief Hauptprogramm startet den DiscoveryService, wenn der Broadcast-Port frei ist.
+if __name__ == "__main__":
+    if is_port_in_use(BROADCAST_PORT):
+        print("[Abbruch] Discovery-Service läuft bereits (Port belegt).")
+        sys.exit(1)
+
+    service = DiscoveryService("config.toml")  # Service mit Konfig laden
+    service.start()  # Service starten
+
+    print("Discovery-Service läuft. Drücke Strg+C zum Beenden.")
+    try:
+        while True:
+            time.sleep(1)  # Warte 1 Sekunde
+            peers = service.get_peers()  # Bekannte Peers abfragen
+            print("Aktuelle Peers:", peers)
+    except KeyboardInterrupt:
+        print("Beende Discovery-Service...")
+        service.stop()
