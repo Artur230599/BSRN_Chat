@@ -10,7 +10,7 @@ class Interface:
 
     async def run(self):
         print(f"🟢 Willkommen im SLCP-Chat, {self.config.handle}!")
-        print("Verfügbare Befehle: /join, /leave, /whois <name>, /send <name> <msg>, /img <name> <pfad>, /quit")
+        print("Verfügbare Befehle: /join, /leave, /whois <name>, /msg <handle> <text>, /img <handle> <pfad>, /quit")
 
         while True:
             try:
@@ -33,7 +33,7 @@ class Interface:
                 elif command.startswith("/send"):
                     parts = command.split(" ", 2)
                     if len(parts) < 3:
-                        print("❌ Usage: /send <handle> <message>")
+                        print("❌ Usage: /msg <handle> <text>")
                     else:
                         await self.messenger.send_message(parts[1], parts[2])
 

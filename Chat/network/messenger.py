@@ -42,7 +42,7 @@ class Messenger(asyncio.DatagramProtocol):
 
             if parsed["type"] == "JOIN":
                 self.peers[parsed["handle"]] = (addr[0], parsed["port"])
-                print(f"[JOIN] {parsed['handle']} joined from {addr[0]}:{parsed['port']}")
+                print(f"[JOIN] {parsed['handle']} joined from port {parsed['port']}")
 
             elif parsed["type"] == "LEAVE":
                 self.peers.pop(parsed["handle"], None)
