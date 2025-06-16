@@ -6,24 +6,24 @@ class Config:
         self.path = path
         self.data = self.load()
 
-        # Eingaben abfragen oder aus Datei nehmen
-        self.handle = self.data.get("handle") or input("Benutzername (handle): ")
+        # Hole handle/port — aus Datei ODER frage ab, wenn nicht gesetzt
+        self.handle = self.data.get("handle")
+        if not self.handle:
+            self.handle = input("Benutzername (handle): ")
+            self.data["handle"] = self.handle
+
         self.port = int(self.data.get("port") or input("Port: "))
+        self.data["port"] = self.port
+
         self.whoisport = int(self.data.get("whoisport") or input("Whois-Port (z. B. 4000): "))
+        self.data["whoisport"] = self.whoisport
+
         self.autoreply = self.data.get("autoreply", "")
         self.imagepath = self.data.get("imagepath", "./images")
 
-        # Kompatibilität: auch als `username` verfügbar machen
-        self.username = self.handle  # ✅ wichtig!
-
-        # alles zurückschreiben
-        self.data["handle"] = self.handle
-        self.data["port"] = self.port
-        self.data["whoisport"] = self.whoisport
-        self.data["autoreply"] = self.autoreply
-        self.data["imagepath"] = self.imagepath
-        self.save()
-
+        # Nur speichern, wenn noch nicht vorhanden – nicht jedes Mal!
+        if not os.path.exists(self.path) or "handle" not in toml.load(self.path):
+            self.save()
 
     def load(self):
         if os.path.exists(self.path):
@@ -33,10 +33,3 @@ class Config:
     def save(self):
         with open(self.path, "w") as f:
             toml.dump(self.data, f)
-
-    def get(self, key, default=None):
-        return self.data.get(key, default)
-
-    def set(self, key, value):
-        self.data[key] = value
-        self.save()

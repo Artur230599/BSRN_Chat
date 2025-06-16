@@ -16,8 +16,8 @@ async def main():
     messenger = Messenger(config)
 
     # Discovery starten
-   # discovery = DiscoveryService("slcp_config.toml")
-   # discovery.start()
+    discovery = DiscoveryService("slcp_config.toml")
+    discovery.start()
 
     # Interface vorbereiten
     interface = Interface(config, messenger)

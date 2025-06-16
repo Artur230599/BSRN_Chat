@@ -1,6 +1,3 @@
-import shlex
-
-
 def parse_slcp(line):
     parts = line.strip().split(" ")
     if not parts:
@@ -18,7 +15,7 @@ def parse_slcp(line):
         return {"type": "WHOIS", "handle": parts[1]}
 
     elif cmd == "IAM" and len(parts) == 4:
-        return {"type": "IAM", "handle": parts[1], "ip": parts[2], "port": int(parts[3])}
+        return {"type": "WHOIS_RESPONSE", "handle": parts[1], "ip": parts[2], "port": int(parts[3])}
 
     elif cmd == "MSG" and len(parts) >= 3:
         to = parts[1]
@@ -56,4 +53,3 @@ def create_whois(handle):
 
 def create_iam(handle, ip, port):
     return f"IAM {handle} {ip} {port}\n"
-
