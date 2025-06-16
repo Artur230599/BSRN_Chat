@@ -30,7 +30,7 @@ class Interface:
                     else:
                         print("❌ Usage: /whois <handle>")
 
-                elif command.startswith("/send"):
+                elif command.startswith("/msg"):
                     parts = command.split(" ", 2)
                     if len(parts) < 3:
                         print("❌ Usage: /msg <handle> <text>")
