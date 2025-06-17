@@ -79,24 +79,32 @@ class DiscoveryService:
             with self.peers_lock:
                 self.peers.pop(handle, None)
 
-        elif cmd == "WHOIS" and len(parts) == 2:
-            target_handle = parts[1]
-            if target_handle == self.handle:
-                self.send_iam(addr)
+        elif cmd == "WHO" and len(parts) == 1:
+            # Sende bekannte User als KNOWNUSERS zurück
+            user_infos = []
+            user_infos.append(f"{self.handle} {self.get_local_ip()} {self.port}")
+            with self.peers_lock:
+                for handle, (ip, port) in self.peers.items():
+                    user_infos.append(f"{handle} {ip} {port}")
+            msg = "KNOWNUSERS " + ", ".join(user_infos) + "\n"
+            self.sock.sendto(msg.encode("utf-8"), addr)
 
-        elif cmd == "IAM" and len(parts) == 4:
-            handle = parts[1]
-            ip = parts[2]
-            try:
-                port = int(parts[3])
-                with self.peers_lock:
-                    self.peers[handle] = (ip, port)
-            except ValueError:
-                print("[Fehler] Ungültiger Port in IAM.")
+        elif cmd == "KNOWNUSERS" and len(parts) >= 2:
+            user_str = message[len("KNOWNUSERS "):].strip()
+            user_list = user_str.split(",")
+            print("[DISCOVERY] KNOWNUSERS-Liste:")
+            with self.peers_lock:
+                for entry in user_list:
+                    infos = entry.strip().split()
+                    if len(infos) == 3:
+                        handle, ip, port = infos
+                        if handle != self.handle:
+                            self.peers[handle] = (ip, int(port))
+                        print(f" - {handle} @ {ip}:{port}")
 
-    def send_iam(self, target_addr):
-        msg = f"IAM {self.handle} {self.get_local_ip()} {self.port}\n"
-        self.sock.sendto(msg.encode('utf-8'), target_addr)
+    def send_who(self):
+        msg = "WHO\n"
+        self.sock.sendto(msg.encode("utf-8"), ('255.255.255.255', BROADCAST_PORT))
 
     def get_local_ip(self):
         try:

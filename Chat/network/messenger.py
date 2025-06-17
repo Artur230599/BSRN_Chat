@@ -1,5 +1,6 @@
 import asyncio
 import socket
+import time
 from Chat.common import protocol
 import os
 
@@ -48,19 +49,23 @@ class Messenger(asyncio.DatagramProtocol):
                 self.peers.pop(parsed["handle"], None)
                 print(f"[LEAVE] {parsed['handle']} has left.")
 
-            elif parsed["type"] == "WHOIS":
-                # FIX: Vergleiche mit self.config.handle statt username
-                if parsed["handle"] == self.config.handle:
-                    response = protocol.create_iam(
-                        self.config.handle,
-                        self.get_local_ip(),
-                        self.config.port
-                    )
-                    await self.send_slcp(response, addr[0], addr[1])
+            elif parsed["type"] == "WHO":
+                await self.send_known_to(addr[0], addr[1])
+                print(f"[KNOWNUSERS] Sent to {addr[0]}:{addr[1]}")
 
-            elif parsed["type"] == "WHOIS_RESPONSE":
-                self.peers[parsed["handle"]] = (parsed["ip"], parsed["port"])
-                print(f"[WHOIS] {parsed['handle']} is at {parsed['ip']}:{parsed['port']}")
+            elif parsed["type"] == "KNOWNUSERS":
+                # 'message' enthält die komplette empfangene Zeile
+                # Extrahiere die Nutzerliste nach "KNOWNUSERS "
+                user_list = message[len("KNOWNUSERS "):].strip().split(",")
+                print("\n[PEER LIST] Users online:")
+                for entry in user_list:
+                    infos = entry.strip().split()
+                    if len(infos) == 3:
+                        handle, ip, port = infos
+                        print(f" - {handle} @ {ip}:{port}")
+                        # Optional: peers-Liste aktualisieren, falls neuer User dabei
+                        if handle != self.config.handle:
+                            self.peers[handle] = (ip, int(port))
 
             elif parsed["type"] == "MSG":
                 if parsed["to"] == self.config.handle:
@@ -75,12 +80,15 @@ class Messenger(asyncio.DatagramProtocol):
 
             elif parsed["type"] == "IMG":
                 if parsed["to"] == self.config.handle:
-                    size = parsed["size"]
-                    filename = await self.receive_image(addr, size)
-                    if self.image_callback:
-                        await self.image_callback(addr[0], filename)
-                    else:
-                        print(f"[Image] Received and saved to: {filename}")
+                    size = int(parsed["size"])
+                    try:
+                        filename = await self.receive_image(addr, size)
+                        if self.image_callback:
+                            await self.image_callback(addr[0], filename)
+                        else:
+                            print(f"[Image] Received and saved to: {filename}")
+                    except Exception as e:
+                        print(f"[Image] Error while receiving image: {e}")
 
     async def send_slcp(self, line, ip, port):
         if self.transport:
@@ -97,8 +105,8 @@ class Messenger(asyncio.DatagramProtocol):
         msg = protocol.create_leave(self.config.handle)
         await self.send_broadcast(msg)
 
-    async def send_whois(self, handle):
-        msg = protocol.create_whois(handle)
+    async def send_who(self):
+        msg = "WHO\n"
         await self.send_broadcast(msg)
 
     async def send_message(self, handle, message):
@@ -113,22 +121,43 @@ class Messenger(asyncio.DatagramProtocol):
         if handle not in self.peers:
             print(f"[Error] No known peer with handle '{handle}'")
             return
-        size = os.path.getsize(filepath)
-        msg = protocol.create_img(handle, size)
+
+        if not os.path.isfile(filepath):
+            print(f"[Error] File '{filepath}' not found.")
+            return
+            # File einlesen
+        with open(filepath, "rb") as f:
+            img_bytes = f.read()
+        size = len(img_bytes)
+
+        # IMG Befehl erstellen und senden
+        msg = f"IMG {handle} {size}\n"
         ip, port = self.peers[handle]
         await self.send_slcp(msg, ip, port)
 
-        with open(filepath, "rb") as f:
-            data = f.read()
-            self.transport.sendto(data, (ip, port))
+        # Bilddaten senden
+        self.transport.sendto(img_bytes, (ip, port))
+        print(f"[IMG] Sent image ({size} bytes) to {handle} ({ip}:{port})")
 
     async def receive_image(self, addr, size):
-        loop = asyncio.get_event_loop()
+        loop = asyncio.get_running_loop()
         sock = self.transport.get_extra_info("socket")
-        data, _ = await loop.sock_recvfrom(sock, size)
-        filename = f"{self.config.imagepath}/{addr[0]}_image.jpg"
+        img_data = b""
+        # Stelle sicher, dass genau 'size' Bytes empfangen werden
+        while len(img_data) < size:
+            packet, _ = await loop.sock_recvfrom(sock, min(8192, size - len(img_data)))
+            img_data += packet
+
+        # Zielverzeichnis vorbereiten und Dateinamen generieren
+        os.makedirs(self.config.imagepath, exist_ok=True)
+        filename = os.path.join(
+            self.config.imagepath,
+            f"{addr[0]}_{int(time.time())}_image.jpg"
+        )
         with open(filename, "wb") as f:
-            f.write(data)
+            f.write(img_data[:size])  # Write exactly 'size' bytes
+
+        print(f"[IMG] Image saved as: {filename}")
         return filename
 
     def set_message_callback(self, callback):
@@ -138,11 +167,16 @@ class Messenger(asyncio.DatagramProtocol):
         self.image_callback = callback
 
     async def send_known_to(self, ip, port):
-        users = []
-        for handle, (ip_, port_) in self.peers.items():
-            users.append(f"{handle} {ip_} {port_}")
-        message = "KNOWNUSERS " + ", ".join(users) + "\n"
-        await self.send_slcp(message, ip, port)
+        # Erstelle eine Liste aller bekannten Nutzer (inkl. sich selbst)
+        user_infos = []
+        # Eigene Daten als Erstes hinzufügen
+        user_infos.append(f"{self.config.handle} {self.get_local_ip()} {self.config.port}")
+        # Bekannte Peers (aus self.peers) ergänzen
+        for handle, (ip, port) in self.peers.items():
+            user_infos.append(f"{handle} {ip} {port}")
+        # KNOWNUSERS-Befehl im SLCP-Format zusammenbauen
+        msg = "KNOWNUSERS " + ", ".join(user_infos) + "\n"
+        await self.send_slcp(msg, ip, port)
 
     def get_local_ip(self):
         try:

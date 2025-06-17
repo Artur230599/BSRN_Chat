@@ -10,7 +10,7 @@ class Interface:
 
     async def run(self):
         print(f"🟢 Willkommen im SLCP-Chat, {self.config.handle}!")
-        print("Verfügbare Befehle: /join, /leave, /whois <name>, /msg <handle> <text>, /img <handle> <pfad>, /quit")
+        print("Verfügbare Befehle: /join, /leave, /who , /msg <handle> <text>, /img <handle> <pfad>, /quit")
 
         while True:
             try:
@@ -23,12 +23,8 @@ class Interface:
                 elif command == "/leave":
                     await self.messenger.send_leave()
 
-                elif command.startswith("/whois"):
-                    parts = command.split()
-                    if len(parts) == 2:
-                        await self.messenger.send_whois(parts[1])
-                    else:
-                        print("❌ Usage: /whois <handle>")
+                elif command.startswith("/who"):
+                    await self.messenger.send_who()
 
                 elif command.startswith("/msg"):
                     parts = command.split(" ", 2)
@@ -64,3 +60,8 @@ class Interface:
 
     async def display_image_notice(self, sender, filename):
         print(f"\n🖼️ Bild von {sender} empfangen: {filename}")
+
+    async def display_knownusers(self, user_list):
+        print("\n[PEER LIST] Users online:")
+        for handle, ip, port in user_list:
+            print(f" - {handle} {ip}:{port}")
