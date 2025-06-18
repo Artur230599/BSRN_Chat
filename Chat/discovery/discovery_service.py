@@ -36,7 +36,7 @@ class DiscoveryService:
         self.whois_port = self.config.get("whoisport", 0)
 
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-        self.sock.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
+        self.sock.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST,1)
         self.sock.bind(('', BROADCAST_PORT))
 
     @staticmethod
@@ -68,12 +68,12 @@ class DiscoveryService:
 
         if cmd == "JOIN" and len(parts) == 3:
             handle = parts[1]
+            ip = addr[0]
             try:
                 port = int(parts[2])
-                if not (handle == self.handle and addr[0] == self.get_local_ip() and port == self.port):
+                if not (handle == self.handle and ip in self.get_all_local_ips() and port == self.port):
                     with self.peers_lock:
-                        self.peers[handle] = (addr[0], port)
-                    self.peers[handle] = (addr[0], port)
+                        self.peers[handle] = (ip, port)
             except ValueError:
                 print("[Fehler] Ungültiger Port in JOIN.")
 
@@ -109,18 +109,19 @@ class DiscoveryService:
         print("[DEBUG] sende WHO-Broadcast...")
         self.sock.sendto(msg.encode("utf-8"), ('255.255.255.255', BROADCAST_PORT))
 
-    def get_local_ip(self):
+    def get_all_local_ips(self):
+
         try:
             s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
             s.connect(("8.8.8.8", 80))
             ip = s.getsockname()[0]
             s.close()
-            return ip
+            return [ip]
         except Exception:
             return "127.0.0.1"
 
     def send_join(self):
-        msg = f"JOIN {self.handle} {self.port}"
+        msg = f"JOIN {self.handle} {self.port}\n"
         self.sock.sendto(msg.encode("utf-8"), ('255.255.255.255', BROADCAST_PORT))
 
     def send_leave(self):
