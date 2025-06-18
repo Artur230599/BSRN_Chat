@@ -82,12 +82,18 @@ class Messenger(asyncio.DatagramProtocol):
                 if parsed["to"] == self.config.handle:
                     msg = parsed["message"]
                     sender = addr[0]
+                    sender_handle = None
+                    for handle, (ip, _) in self.peers.items():
+                        if ip == sender:
+                            sender_handle = handle
+                            break
+                    sender_display = sender_handle if sender_handle else f"Unbekannt ({sender})"
                     if self.message_callback:
-                        await self.message_callback(sender, msg)
+                        await self.message_callback(sender_display, msg)
                     else:
-                        print(f"[{sender}] {msg}")
+                        print(f"\n💬 Nachricht von {sender_display}: {msg}")
                     if self.config.autoreply:
-                        await self.send_message(sender, self.config.autoreply)
+                        await self.send_message(sender_display, self.config.autoreply)
 
             elif parsed["type"] == "IMG":
                 if parsed["to"] == self.config.handle:
@@ -127,9 +133,12 @@ class Messenger(asyncio.DatagramProtocol):
         if handle not in self.peers:
             print(f"[Error] No known peer with handle '{handle}'")
             return
-        msg = protocol.create_msg(handle, message)
-        ip, port = self.peers[handle]
-        await self.send_slcp(msg, ip, port)
+        if handle in self.peers:
+            ip, port = self.peers[handle]
+            msg = protocol.create_msg(handle, message)
+            await self.send_slcp(msg, ip, port)
+        else:
+            print(f"[Error] Handle '{handle}' not connected")
 
     async def send_image(self, handle, filepath):
         if handle not in self.peers:

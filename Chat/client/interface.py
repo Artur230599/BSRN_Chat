@@ -10,7 +10,7 @@ class Interface:
 
     async def run(self):
         print(f"🟢 Willkommen im SLCP-Chat, {self.config.handle}!")
-        print("Verfügbare Befehle: /join, /leave, /who , /msg <handle> <text>, /img <handle> <pfad>, /quit")
+        print("Verfügbare Befehle: /join, /leave, /who, /msg <handle> <text>, /img <handle> <pfad>, /quit")
 
         while True:
             try:
@@ -55,8 +55,8 @@ class Interface:
             except Exception as e:
                 print(f"⚠️ Fehler in Interface: {e}")
 
-    async def display_message(self, sender, message):
-        print(f"\n💬 Nachricht von {sender}: {message}")
+    async def display_message(self, sender_display, message):
+        print(f"\n💬 Nachricht von {sender_display}: {message}")
 
     async def display_image_notice(self, sender, filename):
         print(f"\n🖼️ Bild von {sender} empfangen: {filename}")
