@@ -176,7 +176,7 @@ class Messenger(asyncio.DatagramProtocol):
                 img_command = f"IMG {handle} {size}\n".encode('utf-8')
                 await loop.sock_sendall(tcp_socket, img_command)
 
-                await self._send_image_data(tcp_socket, img_bytes, handle)
+                await self.send_image_data(tcp_socket, img_bytes, handle)
 
                 print(f"[IMG] Successfully sent image ({size} bytes) to {handle}")
                 return True
@@ -229,7 +229,7 @@ class Messenger(asyncio.DatagramProtocol):
         except Exception as e:
             print(f"[Error] Failed to start TCP server: {e}")
 
-    async def handle_tcp_connection(self, writer, reader):
+    async def handle_tcp_connection(self, reader, writer):
         addr = writer.get_extra_info('peername')
         print(f"[TCP] New connection from {addr}")
 
@@ -248,7 +248,10 @@ class Messenger(asyncio.DatagramProtocol):
                     print(f"[IMG] Receiving {size} bytes from {handle}")
                     filename = await self.receive_image_data(reader, addr, size, handle)
                     if filename and self.image_callback:
-                        await self.image_callback(handle, filename)
+                        if asyncio.iscoroutinefunction(self.image_callback):
+                            await self.image_callback(handle, filename)
+                        else:
+                            self.image_callback(handle, filename)
                 else:
                     print(f"[Error] Invalid IMG command format: {img_command}")
             else:
