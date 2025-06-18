@@ -70,10 +70,10 @@ class DiscoveryService:
             handle = parts[1]
             ip = addr[0]
             try:
-                port = int(parts[2])
-                if not (handle == self.handle and ip in self.get_all_local_ips() and port == self.port):
+                tcp_port = int(parts[2])
+                if not (handle == self.handle and ip in self.get_all_local_ips() and tcp_port == self.port):
                     with self.peers_lock:
-                        self.peers[handle] = (ip, port)
+                        self.peers[handle] = (ip, tcp_port)
             except ValueError:
                 print("[Fehler] Ungültiger Port in JOIN.")
 

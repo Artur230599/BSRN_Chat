@@ -1,6 +1,5 @@
 import asyncio
 import os
-from Chat.common import protocol
 
 
 class Interface:
@@ -39,10 +38,16 @@ class Interface:
                         print("❌ Usage: /img <handle> <pfad>")
                     else:
                         handle, pfad = parts[1], parts[2]
-                        if os.path.exists(pfad):
-                            await self.messenger.send_image(handle, pfad)
+                        if not os.path.isfile(pfad):
+                            print(f"❌ Datei nicht gefunden: {pfad}")
+                        elif not pfad.lower().endswith(('.jpg', '.jpeg', '.png', '.gif', '.bmp')):
+                            print(f"❌ '{pfad}' ist keine Bilddatei.")
                         else:
-                            print(f"❌ Bild nicht gefunden: {pfad}")
+                            result = await self.messenger.send_image(handle, pfad)
+                            if result:
+                                print(f"🖼️ Bild wird gesendet an {handle}...")
+                            else:
+                                print("❌ Bildversand fehlgeschlagen!")
 
                 elif command == "/quit":
                     await self.messenger.send_leave()
@@ -62,6 +67,7 @@ class Interface:
         print(f"\n🖼️ Bild von {sender} empfangen: {filename}")
 
     async def display_knownusers(self, user_list):
-        print("\n[PEER LIST] Users online:")
+        print("\n🌐 Aktive Benutzer:")
         for handle, ip, port in user_list:
-            print(f" - {handle} {ip}:{port}")
+            print(f"  👉 {handle:8} an {ip}:{port}")
+
