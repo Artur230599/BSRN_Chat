@@ -86,7 +86,7 @@ class DiscoveryService:
             with self.peers_lock:
                 for handle, (ip, port) in self.peers.items():
                     user_infos.append(f"{handle} {ip} {port}")
-            msg = "KNOWNUSERS " + ", ".join(user_infos) + "\n"
+            msg = "KNOWNUSERS " + ", ".join(user_infos)
             self.sock.sendto(msg.encode("utf-8"), addr)
 
         elif cmd == "KNOWNUSERS" and len(parts) >= 2:
@@ -104,6 +104,7 @@ class DiscoveryService:
 
     def send_who(self):
         msg = "WHO\n"
+        print("[DEBUG] sende WHO-Broadcast...")
         self.sock.sendto(msg.encode("utf-8"), ('255.255.255.255', BROADCAST_PORT))
 
     def get_local_ip(self):
@@ -117,7 +118,7 @@ class DiscoveryService:
             return "127.0.0.1"
 
     def send_join(self):
-        msg = f"JOIN {self.handle} {self.port}\n"
+        msg = f"JOIN {self.handle} {self.port}"
         self.sock.sendto(msg.encode("utf-8"), ('255.255.255.255', BROADCAST_PORT))
 
     def send_leave(self):
@@ -129,10 +130,13 @@ class DiscoveryService:
             return dict(self.peers)
 
     def start(self):
-        self.send_join()
         listener = threading.Thread(target=self.listen)
         listener.daemon = True
         listener.start()
+        time.sleep(0.5)  # Warten, damit listener bereit ist
+        self.send_join()
+        time.sleep(0.5)  # Optional
+        self.send_who()
 
     def stop(self):
         self.send_leave()
@@ -154,5 +158,5 @@ if __name__ == "__main__":
             peers = service.get_peers()
             print("Aktuelle Peers:", peers)
     except KeyboardInterrupt:
-        print("Beende Discovery-Service...")
+        print("Beende Discovery-Service....")
         service.stop()
