@@ -109,16 +109,34 @@ class DiscoveryService:
         print("[DEBUG] sende WHO-Broadcast...")
         self.sock.sendto(msg.encode("utf-8"), ('255.255.255.255', BROADCAST_PORT))
 
-    def get_all_local_ips(self):
-
+    def get_local_ip(self):
         try:
             s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
             s.connect(("8.8.8.8", 80))
             ip = s.getsockname()[0]
             s.close()
-            return [ip]
+            return ip
         except Exception:
             return "127.0.0.1"
+
+    def get_all_local_ips(self):
+        import socket
+        ips = set()
+        try:
+            hostname = socket.gethostname()
+            for ip in socket.gethostbyname_ex(hostname)[2]:
+                ips.add(ip)
+        except Exception:
+            pass
+        try:
+            s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+            s.connect(("8.8.8.8", 80))
+            ips.add(s.getsockname()[0])
+            s.close()
+        except Exception:
+            pass
+        ips.add("127.0.0.1")
+        return list(ips)
 
     def send_join(self):
         msg = f"JOIN {self.handle} {self.port}\n"

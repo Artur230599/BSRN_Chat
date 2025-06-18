@@ -67,7 +67,9 @@ class Interface:
         print(f"\n🖼️ Bild von {sender} empfangen: {filename}")
 
     async def display_knownusers(self, user_list):
+        shown_handles = set()
         print("\n🌐 Aktive Benutzer:")
         for handle, ip, port in user_list:
-            print(f"  👉 {handle:8} an {ip}:{port}")
-
+            if handle not in shown_handles:
+                print(f"  👉 {handle:8} an {ip}:{port}")
+                shown_handles.add(handle)

@@ -81,7 +81,6 @@ class Messenger(asyncio.DatagramProtocol):
                     for handle, ip, port in users:
                         print(f" - {handle} @ {ip}:{port}")
 
-
             elif parsed["type"] == "MSG":
                 if parsed["to"] == self.config.handle:
                     msg = parsed["message"]
