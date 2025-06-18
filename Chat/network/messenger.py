@@ -12,6 +12,7 @@ class Messenger(asyncio.DatagramProtocol):
         self.transport = None
         self.message_callback = None
         self.image_callback = None
+        self.knownusers_callback = None
 
     async def start_listener(self):
         loop = asyncio.get_running_loop()
@@ -54,18 +55,31 @@ class Messenger(asyncio.DatagramProtocol):
                 print(f"[KNOWNUSERS] Sent to {addr[0]}:{addr[1]}")
 
             elif parsed["type"] == "KNOWNUSERS":
-                # 'message' enthält die komplette empfangene Zeile
-                # Extrahiere die Nutzerliste nach "KNOWNUSERS "
                 user_list = message[len("KNOWNUSERS "):].strip().split(",")
-                print("\n[PEER LIST] Users online:")
+                users = []
                 for entry in user_list:
                     infos = entry.strip().split()
                     if len(infos) == 3:
                         handle, ip, port = infos
-                        print(f" - {handle} @ {ip}:{port}")
-                        # Optional: peers-Liste aktualisieren, falls neuer User dabei
+                        users.append((handle, ip, int(port)))
                         if handle != self.config.handle:
                             self.peers[handle] = (ip, int(port))
+
+                if self.knownusers_callback:  # ✅ NEU
+                    await self.knownusers_callback(users)
+                else:  # ✅ Optional: Fallback-Anzeige
+                    print("\n[PEER LIST] Users online:")
+                    for handle, ip, port in users:
+                        print(f" - {handle} @ {ip}:{port}")
+
+                # Interface-Callback aufrufen, falls vorhanden
+                if self.knownusers_callback:
+                    await self.knownusers_callback(users)
+                else:
+                    print("\n[PEER LIST] Users online:")
+                    for handle, ip, port in users:
+                        print(f" - {handle} @ {ip}:{port}")
+
 
             elif parsed["type"] == "MSG":
                 if parsed["to"] == self.config.handle:
@@ -166,13 +180,16 @@ class Messenger(asyncio.DatagramProtocol):
     def set_image_callback(self, callback):
         self.image_callback = callback
 
+    def set_knownusers_callback(self, callback):
+       self.knownusers_callback = callback
+
     async def send_known_to(self, ip, port):
         # Erstelle eine Liste aller bekannten Nutzer (inkl. sich selbst)
-        user_infos = []
+        user_infos = [f"{self.config.handle}{self.get_local_ip()}:{self.config.port}"]
         # Eigene Daten als Erstes hinzufügen
         user_infos.append(f"{self.config.handle} {self.get_local_ip()} {self.config.port}")
         # Bekannte Peers (aus self.peers) ergänzen
-        for handle, (ip, port) in self.peers.items():
+        for handle, (peer_ip, peer_port) in self.peers.items():
             user_infos.append(f"{handle} {ip} {port}")
         # KNOWNUSERS-Befehl im SLCP-Format zusammenbauen
         msg = "KNOWNUSERS " + ", ".join(user_infos) + "\n"
