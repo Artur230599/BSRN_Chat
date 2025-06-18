@@ -29,7 +29,7 @@ async def main():
     messenger.set_message_callback(interface.display_message)
     messenger.set_image_callback(interface.display_image_notice)
     messenger.set_knownusers_callback(interface.display_knownusers)
-
+    messenger.set_knownusers_callback(interface.display_knownusers)
     # UDP-Listener für SLCP starten
     await messenger.start_listener()
 

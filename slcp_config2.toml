@@ -1,9 +1,8 @@
- #username = "Bob"
+#username = "Bob"
 port = 5000
-handle = "Bob"
+handle = "Aysha2 "
 whoisport = 4000
 autoreply = ""
 imagepath = "./images"
-
 
 

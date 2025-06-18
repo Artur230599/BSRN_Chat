@@ -71,8 +71,7 @@ class DiscoveryService:
             ip = addr[0]
             try:
                 tcp_port = int(parts[2])
-                if not (handle == self.handle and ip in self.get_all_local_ips() and tcp_port == self.port):
-                    with self.peers_lock:
+                with self.peers_lock:
                         self.peers[handle] = (ip, tcp_port)
             except ValueError:
                 print("[Fehler] Ungültiger Port in JOIN.")
@@ -86,8 +85,15 @@ class DiscoveryService:
             # Sende bekannte User als KNOWNUSERS zurück
             user_infos = [f"{self.handle} {self.get_local_ip()} {self.port}"]
             with self.peers_lock:
+                user_infos = []
                 for handle, (ip, port) in self.peers.items():
-                    user_infos.append(f"{handle} {ip} {port}")
+                    # Nur hinzufügen, wenn es nicht du selbst bist
+                    if handle != self.handle or ip != self.get_local_ip() or port != self.port:
+                        user_infos.append(f"{handle} {ip} {port}")
+
+                # Füge eigene info genau einmal hinzu – ganz am Schluss oder am Anfang
+                user_infos.insert(0, f"{self.handle} {self.get_local_ip()} {self.port}")
+
             msg = "KNOWNUSERS " + ", ".join(user_infos) + "\n"
             self.sock.sendto(msg.encode("utf-8"), addr)
 
@@ -100,8 +106,7 @@ class DiscoveryService:
                     infos = entry.strip().split()
                     if len(infos) == 3:
                         handle, ip, port = infos
-                        if not (handle == self.handle and ip == self.get_local_ip() and int(port) == self.port):
-                            self.peers[handle] = (ip, int(port))
+                        self.peers[handle] = (ip, int(port))
                         print(f" - {handle} @ {ip}:{port}")
 
     def send_who(self):
