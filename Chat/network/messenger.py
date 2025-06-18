@@ -16,6 +16,10 @@ class Messenger(asyncio.DatagramProtocol):
 
     async def start_listener(self):
         loop = asyncio.get_running_loop()
+        sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+        sock.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
+        sock.settimeout(5)
         self.transport, _ = await loop.create_datagram_endpoint(
             lambda: self,
             local_addr=('0.0.0.0', self.config.port),
@@ -65,13 +69,6 @@ class Messenger(asyncio.DatagramProtocol):
                         if handle != self.config.handle:
                             self.peers[handle] = (ip, int(port))
 
-                if self.knownusers_callback:  # ✅ NEU
-                    await self.knownusers_callback(users)
-                else:  # ✅ Optional: Fallback-Anzeige
-                    print("\n[PEER LIST] Users online:")
-                    for handle, ip, port in users:
-                        print(f" - {handle} @ {ip}:{port}")
-
                 # Interface-Callback aufrufen, falls vorhanden
                 if self.knownusers_callback:
                     await self.knownusers_callback(users)
@@ -105,8 +102,11 @@ class Messenger(asyncio.DatagramProtocol):
                         print(f"[Image] Error while receiving image: {e}")
 
     async def send_slcp(self, line, ip, port):
-        if self.transport:
-            self.transport.sendto(line.encode(), (ip, port))
+        try:
+            if self.transport:
+                self.transport.sendto(line.encode(), (ip, port))
+        except Exception as e:
+            print(f"[Error] Failed to send to {ip}:{port}: {e}")
 
     async def send_broadcast(self, line):
         await self.send_slcp(line, "255.255.255.255", self.config.port)
@@ -184,14 +184,9 @@ class Messenger(asyncio.DatagramProtocol):
        self.knownusers_callback = callback
 
     async def send_known_to(self, ip, port):
-        # Erstelle eine Liste aller bekannten Nutzer (inkl. sich selbst)
-        user_infos = [f"{self.config.handle}{self.get_local_ip()}:{self.config.port}"]
-        # Eigene Daten als Erstes hinzufügen
-        user_infos.append(f"{self.config.handle} {self.get_local_ip()} {self.config.port}")
-        # Bekannte Peers (aus self.peers) ergänzen
+        user_infos = [f"{self.config.handle} {self.get_local_ip()} {self.config.port}"]
         for handle, (peer_ip, peer_port) in self.peers.items():
-            user_infos.append(f"{handle} {ip} {port}")
-        # KNOWNUSERS-Befehl im SLCP-Format zusammenbauen
+            user_infos.append(f"{handle} {peer_ip} {peer_port}")  # peer_ip statt ip
         msg = "KNOWNUSERS " + ", ".join(user_infos) + "\n"
         await self.send_slcp(msg, ip, port)
 

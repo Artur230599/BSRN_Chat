@@ -11,11 +11,8 @@ def parse_slcp(line):
     elif cmd == "LEAVE" and len(parts) == 2:
         return {"type": "LEAVE", "handle": parts[1]}
 
-    elif cmd == "WHOIS" and len(parts) == 2:
-        return {"type": "WHOIS", "handle": parts[1]}
-
-    elif cmd == "IAM" and len(parts) == 4:
-        return {"type": "WHOIS_RESPONSE", "handle": parts[1], "ip": parts[2], "port": int(parts[3])}
+    elif cmd == "WHO" and len(parts) == 2:
+        return {"type": "WHO"}
 
     elif cmd == "MSG" and len(parts) >= 3:
         to = parts[1]
@@ -25,8 +22,19 @@ def parse_slcp(line):
     elif cmd == "IMG" and len(parts) == 3:
         return {"type": "IMG", "to": parts[1], "size": int(parts[2])}
 
-    elif cmd == "KNOWNUSERS":
-        return {"type": "KNOWNUSERS", "data": " ".join(parts[1:])}
+    elif cmd == "KNOWNUSERS" and len(parts) >= 1:
+        users = []
+        user_data = ' '.join(parts[1:]).split(',')
+        for entry in user_data:
+            entry = entry.strip()
+            if entry:
+                user_parts = entry.split()
+                if len(user_parts) == 3:
+                    users.append({
+                        "handle": user_parts[0],
+                        "ip": user_parts[1],
+                        "port": int(user_parts[2])})
+        return {"type": "KNOWNUSERS", "users": users}
 
     return {"type": "UNKNOWN", "raw": line}
 

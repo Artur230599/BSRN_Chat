@@ -60,6 +60,7 @@ class DiscoveryService:
 
     def handle_message(self, message, addr):
         parts = message.split()
+        print(f"[RAW] Received: {repr(message)} from {addr}")
         if not parts:
             return
 
@@ -81,17 +82,16 @@ class DiscoveryService:
 
         elif cmd == "WHO" and len(parts) == 1:
             # Sende bekannte User als KNOWNUSERS zurück
-            user_infos = []
-            user_infos.append(f"{self.handle} {self.get_local_ip()} {self.port}")
+            user_infos = [f"{self.handle} {self.get_local_ip()} {self.port}"]
             with self.peers_lock:
                 for handle, (ip, port) in self.peers.items():
                     user_infos.append(f"{handle} {ip} {port}")
-            msg = "KNOWNUSERS " + ", ".join(user_infos)
+            msg = "KNOWNUSERS " + ", ".join(user_infos) + "\n"
             self.sock.sendto(msg.encode("utf-8"), addr)
 
         elif cmd == "KNOWNUSERS" and len(parts) >= 2:
             user_str = message[len("KNOWNUSERS "):].strip()
-            user_list = user_str.split(",")
+            user_list = [u.strip() for u in user_str.split(",") if u.strip()]
             print("[DISCOVERY] KNOWNUSERS-Liste:")
             with self.peers_lock:
                 for entry in user_list:
