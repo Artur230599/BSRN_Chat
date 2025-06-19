@@ -53,7 +53,7 @@ class DiscoveryService:
             try:
                 data, addr = self.sock.recvfrom(BUFFER_SIZE)
                 message = data.decode("utf-8").strip()
-                print(f"[DISCOVERY] Empfangen: {message} von {self.handle} {addr}")
+                print(f"[DISCOVERY] Empfangen: {message} von {addr}")
                 self.handle_message(message, addr)
             except Exception as e:
                 print(f"[Fehler beim Empfangen] {e}")
