@@ -15,6 +15,8 @@ class Messenger(asyncio.DatagramProtocol):
         self.image_callback = None
         self.knownusers_callback = None
         self.progress_callback = None
+        self.pending_who_responses = {}
+        self.who_timeout = 2.0
 
     async def start_listener(self):
         loop = asyncio.get_running_loop()
@@ -63,23 +65,7 @@ class Messenger(asyncio.DatagramProtocol):
                 print(f"[KNOWNUSERS] Sent to {addr[0]}:{addr[1]}")
 
             elif parsed["type"] == "KNOWNUSERS":
-                user_list = message[len("KNOWNUSERS "):].strip().split(",")
-                users = []
-                for entry in user_list:
-                    infos = entry.strip().split()
-                    if len(infos) == 3:
-                        handle, ip, port = infos
-                        users.append((handle, ip, int(port)))
-                        if handle != self.config.handle:
-                            self.peers[handle] = (ip, int(port))
-
-                # Interface-Callback aufrufen, falls vorhanden
-                if self.knownusers_callback:
-                    await self.knownusers_callback(users)
-                else:
-                    print("\n[PEER LIST] Users online:")
-                    for handle, ip, port in users:
-                        print(f" - {handle} @ {ip}:{port}")
+                await self.handle_knownusers_response(message, addr)
 
             elif parsed["type"] == "MSG":
                 if parsed["to"] == self.config.handle:
@@ -322,6 +308,41 @@ class Messenger(asyncio.DatagramProtocol):
 
     def set_knownusers_callback(self, callback):
        self.knownusers_callback = callback
+
+    async def handle_knownusers_response(self, message, addr):
+        user_list = message[len("KNOWNUSERS "):].strip().split(",")
+        users = []
+        for entry in user_list:
+            infos = entry.strip().split()
+            if len(infos) == 3:
+                handle, ip, port = infos
+                users.append((handle, ip, int(port)))
+                if handle != self.config.handle:
+                    self.peers[handle] = (ip, int(port))
+
+        response_id = f"who_{int(time.time())}"
+        if response_id not in self.pending_who_responses:
+            self.pending_who_responses[response_id] = []
+
+        self.pending_who_responses[response_id].extend(users)
+
+        await asyncio.sleep(0.5)
+
+        if response_id in self.pending_who_responses:
+            all_users = self.pending_who_responses[response_id]
+            unique_users = {}
+            for handle, ip, port in all_users:
+                unique_users[handle] = (ip, port)
+
+            if self.knownusers_callback:
+                users_list = [(h, i, p) for h, (i, p) in unique_users.items()]
+                await self.knownusers_callback(users_list)
+            else:
+                print("\n[PEER LIST] Users online:")
+                for handle, (ip, port) in unique_users.items():
+                    print(f" - {handle} @ {ip}:{port}")
+
+            del self.pending_who_responses[response_id]
 
     async def send_known_to(self, ip, port):
         user_infos = [f"{self.config.handle} {self.get_local_ip()} {self.config.port}"]
