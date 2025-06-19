@@ -1,8 +1,8 @@
 #username = "Bob"
-port = 5000
-handle = "Aysha"
+port = 5001
+handle = "Nora"
 whoisport = 4000
 autoreply = ""
-imagepath = "./images"
+imagepath = "~/slcp_images"
 
 

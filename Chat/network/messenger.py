@@ -285,11 +285,11 @@ class Messenger(asyncio.DatagramProtocol):
                 self.config.imagepath,
                 f"{addr[0]}_{int(time.time())}_{sender_handle}.jpg"
             )
-            os.makedirs(self.config.imagepath, exist_ok=True)
+            os.makedirs(os.path.dirname(filename), exist_ok=True)
 
             with open(filename, "wb") as f:
                 f.write(img_data)
-            print(f"[IMG] Successfully received and saved: {filename}")
+            print(f"[IMG] Saved to: {os.path.normpath(filename)}")
             return filename
 
         except Exception as e:
