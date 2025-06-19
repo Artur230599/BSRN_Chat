@@ -108,13 +108,13 @@ class DiscoveryService:
                 seen = set()
                 for entry in user_list:
                     infos = entry.strip().split()
-                    if len(infos) == 3:
-                        hande, ip, port = infos
-                        key = f"{handle}@ {ip}: {port}"
-                        if key not in seen:
-                            seen.add(key)
-                            self.peers[handle] = (ip, int (port))
-                            print(f"-{handle}@{ip}:{port}")
+                    if len(infos) != 3:
+                        print(f"[WARNUNG] Ungültiger KNOWNUSERS-Eintrag: {entry}")
+                        continue  # Nicht verarbeiten
+
+                    handle, ip, port = infos
+
+
 
     def send_who(self):
         msg = "WHO\n"
