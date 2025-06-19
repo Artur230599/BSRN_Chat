@@ -83,16 +83,20 @@ class DiscoveryService:
 
         elif cmd == "WHO" and len(parts) == 1:
             # Sende bekannte User als KNOWNUSERS zurück
-            user_infos = [f"{self.handle} {self.get_local_ip()} {self.port}"]
             with self.peers_lock:
+                seen = set()
                 user_infos = []
-                for handle, (ip, port) in self.peers.items():
-                    # Nur hinzufügen, wenn es nicht du selbst bist
-                    if handle != self.handle or ip != self.get_local_ip() or port != self.port:
-                        user_infos.append(f"{handle} {ip} {port}")
 
-                # Füge eigene info genau einmal hinzu – ganz am Schluss oder am Anfang
-                user_infos.insert(0, f"{self.handle} {self.get_local_ip()} {self.port}")
+                for handle, (ip, port) in self.peers.items():
+                    entry = f"{handle} {ip} {port}"
+                    if entry not in seen and (handle != self.handle or ip != self.get_local_ip() or port != self.port):
+                        user_infos.append(entry)
+                        seen.add(entry)
+
+                # Eigene info hinzufügen, wenn sie noch nicht enthalten ist
+                self_info = f"{self.handle} {self.get_local_ip()} {self.port}"
+                if self_info not in seen:
+                    user_infos.append(self_info)
 
             msg = "KNOWNUSERS " + ", ".join(user_infos) + "\n"
             self.sock.sendto(msg.encode("utf-8"), addr)
