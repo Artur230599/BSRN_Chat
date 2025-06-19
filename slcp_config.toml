@@ -1,5 +1,5 @@
 #username = "Bob"
-port = 5001
+port = 5000
 handle = "Nora"
 whoisport = 4000
 autoreply = ""
