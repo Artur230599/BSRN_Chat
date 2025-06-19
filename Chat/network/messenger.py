@@ -234,7 +234,7 @@ class Messenger(asyncio.DatagramProtocol):
                 if len(parts) >= 3:
                     _, handle, size_str = parts[0], parts[1], parts[2]
                     size = int(size_str)
-                    print(f"[IMG] Receiving {size} bytes from {handle}")
+                    print(f"[IMG] Receiving {size} bytes from  from peer {addr[0]}")
                     filename = await self.receive_image_data(reader, addr, size, handle)
 
                     if filename is not None and self.image_callback is not None:
