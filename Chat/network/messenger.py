@@ -193,9 +193,12 @@ class Messenger(asyncio.DatagramProtocol):
             await loop.sock_sendall(tcp_socket, chunk)
             sent += current_chunk_size
 
-            if self.progress_callback:
+            if self.progress_callback is not None:
                 progress = (sent / total_size) * 100
-                await self.progress_callback("send", handle, progress, sent, total_size)
+                if asyncio.iscoroutinefunction(self.progress_callback):
+                    await self.progress_callback("send", handle, progress, sent, total_size)
+                else:
+                    self.progress_callback("send", handle, progress, sent, total_size)
 
             if sent < total_size:
                 await asyncio.sleep(0.001)
@@ -233,7 +236,8 @@ class Messenger(asyncio.DatagramProtocol):
                     size = int(size_str)
                     print(f"[IMG] Receiving {size} bytes from {handle}")
                     filename = await self.receive_image_data(reader, addr, size, handle)
-                    if filename and self.image_callback:
+
+                    if filename and self.image_callback is not None:
                         if asyncio.iscoroutinefunction(self.image_callback):
                             await self.image_callback(handle, filename)
                         else:
