@@ -42,7 +42,6 @@ Verfügbare Befehle:
                         print(f"{Fore.RED}❌ Usage: /msg <handle> <text>{Style.RESET_ALL}")
                     else:
                         await self.messenger.send_message(parts[1], parts[2])
-                        print(f"{Fore.GREEN}✉️ Nachricht an {parts[1]} gesendet!{Style.RESET_ALL}")
 
                 elif command.startswith("/img"):
                     parts = command.split(" ", 2)

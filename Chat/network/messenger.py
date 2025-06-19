@@ -33,7 +33,7 @@ class Messenger(asyncio.DatagramProtocol):
             proto=socket.IPPROTO_UDP,
             allow_broadcast=True
         )
-        print(f"[Messenger] Listening on port {self.config.port}")
+        print(f"[Messenger] Lauscht auf Port {self.config.port}")
         await asyncio.sleep(1)
         await self.send_join()
 
@@ -45,7 +45,7 @@ class Messenger(asyncio.DatagramProtocol):
             message = data.decode()
             asyncio.create_task(self.handle_message(message, addr))
         except Exception as e:
-            print(f"[Error] Could not decode message from {addr}: {e}")
+            print(f"[Error] Konnte Nachricht von {addr} nicht dekodieren: {e}")
 
     async def handle_message(self, message, addr):
         lines = message.splitlines()
@@ -54,15 +54,15 @@ class Messenger(asyncio.DatagramProtocol):
 
             if parsed["type"] == "JOIN":
                 self.peers[parsed["handle"]] = (addr[0], parsed["port"])
-                print(f"[JOIN] {parsed['handle']} joined from port {parsed['port']}")
+                print(f"[JOIN] {parsed['handle']} ist vom Port {parsed['port']} beigetreten")
 
             elif parsed["type"] == "LEAVE":
                 self.peers.pop(parsed["handle"], None)
-                print(f"[LEAVE] {parsed['handle']} has left.")
+                print(f"[LEAVE] {parsed['handle']} hat den Chat verlassen.")
 
             elif parsed["type"] == "WHO":
                 await self.send_known_to(addr[0], addr[1])
-                print(f"[KNOWNUSERS] Sent to {addr[0]}:{addr[1]}")
+                print(f"[KNOWNUSERS] Gesendet an {addr[0]}:{addr[1]}")
 
             elif parsed["type"] == "KNOWNUSERS":
                 await self.handle_knownusers_response(message, addr)
@@ -81,24 +81,24 @@ class Messenger(asyncio.DatagramProtocol):
                             if ip == sender_ip:
                                 sender_handle = f"{handle} (port {sender_port})"
                                 break
-                    sender_display = sender_handle if sender_handle else f"Unknown ({sender_ip}:{sender_port})"
+                    sender_display = sender_handle if sender_handle else f"Unbekannt ({sender_ip}:{sender_port})"
                     if self.message_callback:
                         await self.message_callback(sender_display, msg)
                     else:
-                        print(f"\n💬 Message from {sender_display}: {msg}")
+                        print(f"\n💬 Nachricht von {sender_display}: {msg}")
                     if self.config.autoreply:
                         await self.send_message(sender_display, self.config.autoreply)
 
             elif parsed["type"] == "IMG":
                 if parsed["to"] == self.config.handle:
-                    print(f"[IMG] Peer {addr[0]} is sending an image via TCP...")
+                    print(f"[IMG] Peer {addr[0]} sendet ein Bild über TCP ...")
 
     async def send_slcp(self, line, ip, port):
         try:
             if self.transport:
                 self.transport.sendto(line.encode(), (ip, port))
         except Exception as e:
-            print(f"[Error] Failed to send to {ip}:{port}: {e}")
+            print(f"[Error] Fehler beim Senden an {ip}:{port}: {e}")
 
     async def send_broadcast(self, line):
         await self.send_slcp(line, "255.255.255.255", self.config.whoisport)
@@ -117,22 +117,22 @@ class Messenger(asyncio.DatagramProtocol):
 
     async def send_message(self, handle, message):
         if handle not in self.peers:
-            print(f"[Error] No known peer with handle '{handle}'")
+            print(f"[Error] Kein bekannter Peer mit Handle '{handle}'")
             return
         if handle in self.peers:
             ip, port = self.peers[handle]
             msg = protocol.create_msg(handle, message)
             await self.send_slcp(msg, ip, port)
         else:
-            print(f"[Error] Handle '{handle}' not connected")
+            print(f"[Error] Handle '{handle}' ist nicht verbunden")
 
     async def send_image(self, handle, filepath):
         if handle not in self.peers:
-            print(f"[Error] No known peer with handle '{handle}'")
+            print(f"[Error] Kein bekannter Peer mit Handle '{handle}'")
             return
 
         if not os.path.isfile(filepath):
-            print(f"[Error] File '{filepath}' not found.")
+            print(f"[Error] Datei '{filepath}' nicht gefunden.")
             return
 
         try:
@@ -142,10 +142,10 @@ class Messenger(asyncio.DatagramProtocol):
 
             mime_type, _ = mimetypes.guess_type(filepath)
             if not mime_type or not mime_type.startswith('image/'):
-                print(f"[Error] File '{filepath}' is not a valid image.")
+                print(f"[Error] Datei '{filepath}' ist kein gültiges Bild.")
                 return False
 
-            print(f"[IMG] Preparing to send {size} bytes to {handle}")
+            print(f"[IMG] Bereite das Senden von {size} Bytes an {handle} vor")
 
             ip, port = self.peers[handle]
             loop = asyncio.get_running_loop()
@@ -164,20 +164,20 @@ class Messenger(asyncio.DatagramProtocol):
 
                 await self.send_image_data(tcp_socket, img_bytes, handle)
 
-                print(f"[IMG] Successfully sent image ({size} bytes) to {handle}")
+                print(f"[IMG] Bild erfolgreich gesendet ({size} Bytes) an {handle}")
                 return True
 
             except asyncio.TimeoutError:
-                print(f"[Error] Connection to {handle} timed out")
+                print(f"[Error] Verbindung zu {handle} abgelaufen")
                 return False
             except ConnectionRefusedError:
-                print(f"[Error] Connection to {handle} refused")
+                print(f"[Error] Verbindung zu {handle} wurde abgelehnt")
                 return False
             finally:
                 tcp_socket.close()
 
         except Exception as e:
-            print(f"[Error] Failed to send image: {e}")
+            print(f"[Error] Bild konnte nicht gesendet werden: {e}")
             return False
 
     async def send_image_data(self, tcp_socket, img_bytes, handle):
@@ -210,17 +210,17 @@ class Messenger(asyncio.DatagramProtocol):
                 '0.0.0.0',
                 self.config.port
             )
-            print(f"[TCP] Server started on port {self.config.port}")
+            print(f"[TCP] Server gestartet auf Port {self.config.port}")
 
             async with server:
                 await server.serve_forever()
 
         except Exception as e:
-            print(f"[Error] Failed to start TCP server: {e}")
+            print(f"[Error] TCP-Server konnte nicht gestartet werden: {e}")
 
     async def handle_tcp_connection(self, reader, writer):
         addr = writer.get_extra_info('peername')
-        print(f"[TCP] New connection from {addr}")
+        print(f"[TCP] Neue Verbindung von {addr}")
 
         try:
             img_command_bytes = await asyncio.wait_for(
@@ -234,7 +234,7 @@ class Messenger(asyncio.DatagramProtocol):
                 if len(parts) >= 3:
                     _, handle, size_str = parts[0], parts[1], parts[2]
                     size = int(size_str)
-                    print(f"[IMG] Receiving {size} bytes from  from peer {addr[0]}")
+                    print(f"[IMG] Empfange {size} Bytes vom Peer {addr[0]}")
                     filename = await self.receive_image_data(reader, addr, size, handle)
 
                     if filename is not None and self.image_callback is not None:
@@ -244,16 +244,16 @@ class Messenger(asyncio.DatagramProtocol):
                             else:
                                 self.image_callback(handle, filename)
                         except Exception as e:
-                            print(f"[Error] Image callback handling error: {str(e)}")
+                            print(f"[Error] Fehler beim Bild-Callback: {str(e)}")
                 else:
-                    print(f"[Error] Invalid IMG command format: {img_command}")
+                    print(f"[Error] Ungültiges IMG-Befehlsformat: {img_command}")
             else:
-                print(f"[Error] Unknown TCP command: {img_command}")
+                print(f"[Error] Unbekannter TCP-Befehl: {img_command}")
 
         except asyncio.TimeoutError:
-            print(f"[Error] TCP connection from {addr} timed out")
+            print(f"[Error] TCP-Verbindung von {addr} abgelaufen")
         except Exception as e:
-            print(f"[Error] TCP connection error from {addr}: {e}")
+            print(f"[Error] TCP-Verbindungsfehler von {addr}: {e}")
         finally:
             writer.close()
             await writer.wait_closed()
@@ -269,7 +269,7 @@ class Messenger(asyncio.DatagramProtocol):
                     timeout=30.0
                 )
                 if not chunk:
-                    print(f"[Error] Connection closed unexpectedly")
+                    print(f"[Error] Verbindung wurde unerwartet geschlossen")
                     return None
 
                 img_data += chunk
@@ -289,11 +289,11 @@ class Messenger(asyncio.DatagramProtocol):
 
             with open(filename, "wb") as f:
                 f.write(img_data)
-            print(f"[IMG] Saved to: {os.path.normpath(filename)}")
+            print(f"[IMG] Gespeichert als: {os.path.normpath(filename)}")
             return filename
 
         except Exception as e:
-            print(f"[Error] Failed to receive image: {e}")
+            print(f"[Error] Fehler beim Empfangen des Bildes: {e}")
             return None
 
     def set_progress_callback(self, callback):
@@ -337,7 +337,7 @@ class Messenger(asyncio.DatagramProtocol):
                 users_list = [(h, i, p) for h, (i, p) in unique_users.items()]
                 await self.knownusers_callback(users_list)
             else:
-                print("\n[PEER LIST] Users online:")
+                print("\n[PEER LIST] Aktive Benutzer:")
                 for handle, (ip, port) in unique_users.items():
                     print(f" - {handle} @ {ip}:{port}")
 

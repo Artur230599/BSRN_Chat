@@ -114,8 +114,6 @@ class DiscoveryService:
 
                     handle, ip, port = infos
 
-
-
     def send_who(self):
         msg = "WHO\n"
         print("[DEBUG] sende WHO-Broadcast...")
