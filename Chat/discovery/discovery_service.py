@@ -106,12 +106,18 @@ class DiscoveryService:
             user_list = [u.strip() for u in user_str.split(",") if u.strip()]
             print("[DISCOVERY] KNOWNUSERS-Liste:")
             with self.peers_lock:
+                seen = set()
                 for entry in user_list:
                     infos = entry.strip().split()
                     if len(infos) == 3:
-                        handle, ip, port = infos
-                        self.peers[handle] = (ip, int(port))
-                        print(f" - {handle} @ {ip}:{port}")
+                        handle = infos[0].strip()
+                        ip = infos[1].strip()
+                        port = int(infos[2].strip())
+                        key = f"{handle}@{ip}:{port}"
+                        if key not in seen:
+                            self.peers[handle] = (ip, port)
+                            seen.add(key)
+                            print(f" - {handle} @ {ip}:{port}")
 
     def send_who(self):
         msg = "WHO\n"
