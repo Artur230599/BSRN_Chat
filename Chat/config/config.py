@@ -19,11 +19,21 @@ class Config:
         self.data["whoisport"] = self.whoisport
 
         self.autoreply = self.data.get("autoreply", "")
-        self.imagepath = self.data.get("imagepath", "./images")
+        self.imagepath = self._setup_imagepath()
 
         # Nur speichern, wenn noch nicht vorhanden – nicht jedes Mal!
         if not os.path.exists(self.path) or "handle" not in toml.load(self.path):
             self.save()
+
+    def _setup_imagepath(self):
+        raw_path = self.data.get("imagepath", "~/slcp_images")
+
+        normalized_path = os.path.abspath(os.path.expanduser(raw_path))
+
+        os.makedirs(normalized_path, exist_ok=True)
+
+        self.data["imagepath"] = normalized_path
+        return normalized_path
 
     def load(self):
         if os.path.exists(self.path):
