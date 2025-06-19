@@ -237,11 +237,14 @@ class Messenger(asyncio.DatagramProtocol):
                     print(f"[IMG] Receiving {size} bytes from {handle}")
                     filename = await self.receive_image_data(reader, addr, size, handle)
 
-                    if filename and self.image_callback is not None:
-                        if asyncio.iscoroutinefunction(self.image_callback):
-                            await self.image_callback(handle, filename)
-                        else:
-                            self.image_callback(handle, filename)
+                    if filename is not None and self.image_callback is not None:
+                        try:
+                            if asyncio.iscoroutinefunction(self.image_callback):
+                                await self.image_callback(handle, filename)
+                            else:
+                                self.image_callback(handle, filename)
+                        except Exception as e:
+                            print(f"[Error] Image callback handling error: {str(e)}")
                 else:
                     print(f"[Error] Invalid IMG command format: {img_command}")
             else:
@@ -257,38 +260,30 @@ class Messenger(asyncio.DatagramProtocol):
 
     async def receive_image_data(self, reader, addr, size, sender_handle):
         try:
-            img_data = b''
+            img_data = bytearray()
             received = 0
 
             while received < size:
-                remaining = size - received
-                chunk_size = min(8192, remaining)  # 8KB chunks
-
-                try:
-                    chunk = await asyncio.wait_for(
-                        reader.read(chunk_size),
-                        timeout=30.0  # 30 seconds timeout for each chunk
-                    )
-
-                    if not chunk:
-                        print(f"[Error] Connection closed unexpectedly")
-                        return None
-
-                    img_data += chunk
-                    received += len(chunk)
-
-                    if self.progress_callback:
-                        progress = (received / size) * 100
-                        await self.progress_callback("receive", sender_handle, progress, received, size)
-
-                except asyncio.TimeoutError:
-                    print(f"[Error] Timeout while receiving image data")
+                chunk = await asyncio.wait_for(
+                    reader.read(min(8192, size - received)),
+                    timeout=30.0
+                )
+                if not chunk:
+                    print(f"[Error] Connection closed unexpectedly")
                     return None
 
-            timestamp = int(time.time())
+                img_data += chunk
+                received += len(chunk)
+
+                if self.progress_callback is not None:
+                    progress = (received / size) * 100
+                    if asyncio.iscoroutinefunction(self.progress_callback):
+                        await self.progress_callback("receive", sender_handle, progress, received, size)
+                    else:
+                        self.progress_callback("receive", sender_handle, progress, received, size)
             filename = os.path.join(
                 self.config.imagepath,
-                f"{addr[0]}_{timestamp}_{sender_handle}_image.jpg"
+                f"{addr[0]}_{int(time.time())}_{sender_handle}.jpg"
             )
             os.makedirs(self.config.imagepath, exist_ok=True)
 
