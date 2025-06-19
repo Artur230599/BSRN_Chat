@@ -53,14 +53,13 @@ class DiscoveryService:
             try:
                 data, addr = self.sock.recvfrom(BUFFER_SIZE)
                 message = data.decode("utf-8").strip()
-                print(f"[DISCOVERY] Empfangen: {message} von {addr}")
+                print(f"[DISCOVERY] Empfangen: {message} von {self.handle} {addr}")
                 self.handle_message(message, addr)
             except Exception as e:
                 print(f"[Fehler beim Empfangen] {e}")
 
     def handle_message(self, message, addr):
         parts = message.split()
-        print(f"[RAW] Received: {repr(message)} from {addr}")
         if not parts:
             return
 
@@ -110,14 +109,12 @@ class DiscoveryService:
                 for entry in user_list:
                     infos = entry.strip().split()
                     if len(infos) == 3:
-                        handle = infos[0].strip()
-                        ip = infos[1].strip()
-                        port = int(infos[2].strip())
-                        key = f"{handle}@{ip}:{port}"
+                        hande, ip, port = infos
+                        key = f"{handle}@ {ip}: {port}"
                         if key not in seen:
-                            self.peers[handle] = (ip, port)
                             seen.add(key)
-                            print(f" - {handle} @ {ip}:{port}")
+                            self.peers[handle] = (ip, int (port))
+                            print(f"-{handle}@{ip}:{port}")
 
     def send_who(self):
         msg = "WHO\n"
