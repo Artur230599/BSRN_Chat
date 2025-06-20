@@ -2,40 +2,41 @@ import asyncio
 import os
 from colorama import Fore, Style, init
 
-##
-# @class Interface
-# @brief Diese Klasse stellt die Benutzeroberfläche für den SLCP-Chat dar.
-#        Sie übernimmt die Eingabe und Ausgabe über das Terminal und bietet
-#        Interaktion mit dem Messenger an.
-#
-# Die Klasse erlaubt es dem Nutzer, Befehle einzugeben wie:
-# - Beitritt zum Netzwerk
-# - Nachricht an andere Peers senden
-# - Bilder senden
-# - Nutzerinformationen abfragen
-# 
-# Die Ausgaben sind farblich gestaltet mit `colorama` zur besseren Lesbarkeit.
 class Interface:
-    ##
-    # @brief Konstruktor der Interface-Klasse
-    # @param config Die Konfiguration mit Nutzerdaten (z. B. Handle, Port)
-    # @param messenger Eine Messenger-Instanz zur Kommunikation mit anderen Peers
+    """
+    @class Interface
+    @brief CLI-basierte Benutzeroberfläche für den SLCP-Chat-Client.
+
+    Diese Klasse stellt die Interaktion des Nutzers mit dem SLCP-Chat über ein Konsoleninterface bereit.
+    Sie verwaltet alle Benutzereingaben, interpretiert SLCP-Befehle wie /join, /leave, /msg usw.
+    und leitet sie asynchron an die Messenger-Komponente zur Verarbeitung weiter.
+
+    Zusätzlich wird die farbliche Konsolenausgabe mit dem Modul `colorama` unterstützt,
+    um Statusnachrichten und Befehle übersichtlicher darzustellen.
+    """
+
     def __init__(self, config, messenger):
+        """
+        @brief Konstruktor der Interface-Klasse.
+
+        Initialisiert das Interface mit Konfigurationsdaten und der Messenger-Instanz
+        zur Netzwerkkommunikation.
+
+        @param config Ein Konfigurationsobjekt mit Nutzername, Port, Autoreply etc.
+        @param messenger Eine Messenger-Instanz, die SLCP-Nachrichten verarbeitet und verschickt
+        """
         self.config = config
         self.messenger = messenger
-        init()  # Farbausgabe im Terminal initialisieren (colorama)
+        init()  # Initialisiere colorama (Farben für Terminalausgabe)
 
-    ##
-    # @brief Haupt-Loop der Benutzeroberfläche – verarbeitet Benutzereingaben
-    # 
-    # Unterstützte Befehle:
-    # - `/join` → Netzwerkbeitritt
-    # - `/leave` → Netzwerk verlassen
-    # - `/who` → Alle aktiven Nutzer anzeigen
-    # - `/msg <handle> <text>` → Nachricht senden
-    # - `/img <handle> <pfad>` → Bild senden
-    # - `/quit` → Beenden des Chats
     async def run(self):
+        """
+        @brief Startet die Haupt-Eingabeschleife für den Nutzer.
+
+        Die Methode zeigt verfügbare Befehle an, liest Eingaben von der Konsole
+        (z. B. /join, /msg, /img), prüft diese auf Gültigkeit und ruft entsprechende
+        Messenger-Methoden zur Verarbeitung auf. Sie läuft bis der Befehl /quit ausgeführt wird.
+        """
         print(f"{Fore.GREEN}🟢 Willkommen im SLCP-Chat, {self.config.handle}!{Style.RESET_ALL}")
         print(f"""{Fore.CYAN}
 Verfügbare Befehle:
@@ -49,7 +50,7 @@ Verfügbare Befehle:
 
         while True:
             try:
-                # Benutzerbefehl eingeben
+                # Eingabe vom Nutzer in einem eigenen Thread lesen (blockierend)
                 command = await asyncio.to_thread(input, f"{Fore.MAGENTA}>> {Style.RESET_ALL}")
                 command = command.strip()
 
@@ -80,7 +81,7 @@ Verfügbare Befehle:
                         if not os.path.isfile(pfad):
                             print(f"{Fore.RED}❌ Datei nicht gefunden: {pfad}{Style.RESET_ALL}")
                         elif not pfad.lower().endswith(('.jpg', '.jpeg', '.png')):
-                            print(f"{Fore.RED}❌ Ungültiges Bildformat!{Style.RESET_ALL}")
+                            print(f"{Fore.RED}❌ Ungültiges Bildformat! (.jpg/.png erlaubt){Style.RESET_ALL}")
                         else:
                             success = await self.messenger.send_image(handle, pfad)
                             if success:
@@ -99,24 +100,37 @@ Verfügbare Befehle:
             except Exception as e:
                 print(f"{Fore.RED}⚠️ Fehler: {e}{Style.RESET_ALL}")
 
-    ##
-    # @brief Zeigt eine empfangene Textnachricht im Chat an
-    # @param sender_display Der Anzeigename oder die IP des Senders
-    # @param message Die empfangene Nachricht
     async def display_message(self, sender_display, message):
+        """
+        @brief Zeigt eine empfangene Textnachricht in der Konsole an.
+
+        Wird vom Messenger aufgerufen, wenn eine neue Nachricht vom Netzwerk empfangen wurde.
+
+        @param sender_display Der Anzeigename oder die IP-Adresse des Absenders
+        @param message Die empfangene Textnachricht
+        """
         print(f"\n{Fore.BLUE}💬 {sender_display}: {Fore.RESET}{message}")
 
-    ##
-    # @brief Gibt einen Hinweis über ein empfangenes Bild aus
-    # @param sender Absender der Bildnachricht
-    # @param filename Der Dateiname bzw. Pfad des gespeicherten Bilds
     async def display_image_notice(self, sender, filename):
+        """
+        @brief Zeigt eine Benachrichtigung über ein empfangenes Bild an.
+
+        Diese Methode wird als Callback bei erfolgreichem Empfang eines Bildes aufgerufen.
+
+        @param sender Handle oder IP des Absenders
+        @param filename Pfad zur lokal gespeicherten Bilddatei
+        """
         print(f"\n{Fore.GREEN}🖼️ Bild von {sender}: {Fore.YELLOW}{filename}{Style.RESET_ALL}")
 
-    ##
-    # @brief Gibt eine Liste bekannter Nutzer im Netzwerk aus
-    # @param user_list Eine Liste mit Tupeln (handle, ip, port)
     async def display_knownusers(self, user_list):
+        """
+        @brief Gibt alle bekannten/erkannten Nutzer formatiert auf der Konsole aus.
+
+        Diese Methode wird nach Empfang einer KNOWNUSERS-Nachricht genutzt, um
+        alle bekannten Peers in der Benutzeroberfläche anzuzeigen.
+
+        @param user_list Liste von Tupeln: (handle, ip, port)
+        """
         print(f"\n{Fore.CYAN}🌐 Aktive Benutzer:{Style.RESET_ALL}")
         seen = set()
         for handle, ip, port in user_list:
