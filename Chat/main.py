@@ -1,8 +1,8 @@
 import asyncio
-from Chat.config.config import Config
-from Chat.network.messenger import Messenger
-from Chat.discovery.discovery_service import DiscoveryService
-from Chat.client.interface import Interface
+from config.config import Config
+from network.messenger import Messenger
+from discovery.discovery_service import DiscoveryService
+from client.interface import Interface
 
 
 async def main():
