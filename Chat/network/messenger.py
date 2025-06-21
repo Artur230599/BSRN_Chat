@@ -1,3 +1,12 @@
+"""
+@file messenger.py
+@brief Messenger-Klasse für das SLCP-Chat-Projekt.
+@details
+    Diese Klasse implementiert die UDP- und TCP-Kommunikation für den Austausch von Nachrichten und Bildern
+    im dezentralen Chat. Sie verwaltet Peers, verarbeitet SLCP-Nachrichten und stellt Methoden zum Senden
+    und Empfangen bereit.
+"""
+
 import asyncio
 import mimetypes
 import socket
@@ -7,18 +16,39 @@ import os
 
 
 class Messenger(asyncio.DatagramProtocol):
+    """
+    @brief Messenger für den Versand und Empfang von Chat-Nachrichten und Bildern.
+    @details
+        Verwaltet alle UDP- und TCP-Kommunikationsprozesse, Peer-Liste, sowie das Senden und Empfangen von Nachrichten und Bildern.
+        Stellt zudem verschiedene Callback-Funktionen für die Interaktion mit der Benutzeroberfläche bereit.
+    """
     def __init__(self, config):
+        """
+        @brief Konstruktor der Messenger-Klasse
+        @param config Konfigurationsobjekt mit folgenden Attributen:
+            - handle: Benutzername
+            - port: Port für TCP/UDP Kommunikation
+            - whoisport: Port für WHO-Broadcasts
+            - imagepath: Pfad zum Speichern empfangener Bilder
+            - autoreply: Automatische Antwort (optional)
+        """
         self.config = config
-        self.peers = {}  # handle → (ip, port)
-        self.transport = None
-        self.message_callback = None
-        self.image_callback = None
-        self.knownusers_callback = None
-        self.progress_callback = None
-        self.pending_who_responses = {}
-        self.who_timeout = 2.0
+        self.peers = {}  # Dictionary: handle → (ip, port) - Bekannte Peers
+        self.transport = None # UDP Transport Objekt
+        self.message_callback = None  # Callback für eingehende Nachrichten
+        self.image_callback = None  # Callback für empfangene Bilder
+        self.knownusers_callback = None  # Callback für Benutzerlisten
+        self.progress_callback = None  # Callback für Übertragungsfortschritt
+        self.pending_who_responses = {}  # Ausstehende WHO-Antworten
+        self.who_timeout = 2.0  # Timeout für WHO-Anfragen in Sekunden
 
     async def start_listener(self):
+        """
+        @brief Startet den UDP-Listener und den TCP-Server.
+        @details
+            Öffnet den UDP-Socket für Nachrichtenempfang und startet
+            parallel den TCP-Server für den Empfang von Bildern.
+        """
         loop = asyncio.get_running_loop()
         sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
@@ -38,9 +68,18 @@ class Messenger(asyncio.DatagramProtocol):
         await self.send_join()
 
     def connection_made(self, transport):
+        """
+        @brief Wird aufgerufen, wenn die UDP-Verbindung erfolgreich hergestellt wurde.
+        @param transport Das UDP-Transport-Objekt
+        """
         self.transport = transport
 
     def datagram_received(self, data, addr):
+        """
+        @brief Wird aufgerufen, wenn eine UDP-Nachricht empfangen wird.
+        @param data Empfangene Bytes (Nachricht)
+        @param addr Adresse des Absenders als Tupel (IP, Port)
+        """
         try:
             message = data.decode()
             asyncio.create_task(self.handle_message(message, addr))
@@ -48,6 +87,18 @@ class Messenger(asyncio.DatagramProtocol):
             print(f"[Error] Konnte Nachricht von {addr} nicht dekodieren: {e}")
 
     async def handle_message(self, message, addr):
+        """
+        @brief Verarbeitet empfangene SLCP-Nachrichten.
+        @param message Die dekodierte Nachricht als String
+        @param addr Absender-Adresse als (ip, port) Tupel
+        @details Parst SLCP-Befehle und führt entsprechende Aktionen aus:
+            - JOIN: Neuen Peer registrieren
+            - LEAVE: Peer entfernen
+            - WHO: Bekannte Benutzer senden
+            - KNOWNUSERS: Benutzerliste verarbeiten
+            - MSG: Private Nachricht empfangen
+            - IMG: Bildübertragung initialisieren
+        """
         lines = message.splitlines()
         for line in lines:
             parsed = protocol.parse_slcp(line)
@@ -72,6 +123,8 @@ class Messenger(asyncio.DatagramProtocol):
                     msg = parsed["message"]
                     sender_ip, sender_port = addr[0], addr[1]
                     sender_handle = None
+
+                    # Absender-Handle ermitteln
                     for handle, (ip, port) in self.peers.items():
                         if ip == sender_ip and port == sender_port:
                             sender_handle = handle
@@ -81,11 +134,16 @@ class Messenger(asyncio.DatagramProtocol):
                             if ip == sender_ip:
                                 sender_handle = f"{handle} (port {sender_port})"
                                 break
+
                     sender_display = sender_handle if sender_handle else f"Unbekannt ({sender_ip}:{sender_port})"
+
+                    # Nachricht-Callback aufrufen oder ausgeben
                     if self.message_callback:
                         await self.message_callback(sender_display, msg)
                     else:
                         print(f"\n💬 Nachricht von {sender_display}: {msg}")
+
+                    # Automatische Antwort senden falls konfiguriert
                     if self.config.autoreply:
                         await self.send_message(sender_display, self.config.autoreply)
 
@@ -94,6 +152,12 @@ class Messenger(asyncio.DatagramProtocol):
                     print(f"[IMG] Peer {addr[0]} sendet ein Bild über TCP ...")
 
     async def send_slcp(self, line, ip, port):
+        """
+        @brief Sendet eine SLCP-Nachricht (UDP) an die angegebene Zieladresse.
+        @param line SLCP-formatierte Nachricht (String)
+        @param ip Ziel-IP-Adresse
+        @param port Ziel-Portnummer
+        """
         try:
             if self.transport:
                 self.transport.sendto(line.encode(), (ip, port))
@@ -101,21 +165,39 @@ class Messenger(asyncio.DatagramProtocol):
             print(f"[Error] Fehler beim Senden an {ip}:{port}: {e}")
 
     async def send_broadcast(self, line):
+        """
+        @brief Sendet eine SLCP-Broadcast-Nachricht an alle Teilnehmer im lokalen Netzwerk.
+        @param line Die zu sendende SLCP-Nachricht (String)
+        """
         await self.send_slcp(line, "255.255.255.255", self.config.whoisport)
 
     async def send_join(self):
+        """
+        @brief Sendet eine JOIN-Nachricht per UDP-Broadcast, um dem Chat beizutreten.
+        """
         msg = protocol.create_join(self.config.handle, self.config.port)
         await self.send_broadcast(msg)
 
     async def send_leave(self):
+        """
+        @brief Sendet eine LEAVE-Nachricht per UDP-Broadcast, um den Chat zu verlassen.
+        """
         msg = protocol.create_leave(self.config.handle)
         await self.send_broadcast(msg)
 
     async def send_who(self):
+        """
+        @brief Sendet eine WHO-Nachricht, um die Liste aktiver Teilnehmer zu erfragen.
+        """
         msg = "WHO\n"
         await self.send_broadcast(msg)
 
     async def send_message(self, handle, message):
+        """
+        @brief Sendet eine Textnachricht an einen bestimmten Peer.
+        @param handle Ziel-Handle (Benutzername) des Empfängers
+        @param message Die zu sendende Nachricht (String)
+        """
         if handle not in self.peers:
             print(f"[Error] Kein bekannter Peer mit Handle '{handle}'")
             return
@@ -127,6 +209,14 @@ class Messenger(asyncio.DatagramProtocol):
             print(f"[Error] Handle '{handle}' ist nicht verbunden")
 
     async def send_image(self, handle, filepath):
+        """
+        @brief Sendet ein Bild an einen bestimmten Peer via TCP.
+        @param handle Der Ziel-Benutzername
+        @param filepath Pfad zur Bilddatei
+        @return True bei Erfolg, False bei Fehler
+        @details Überprüft die Datei auf Gültigkeit, öffnet eine TCP-Verbindung
+                 zum Ziel-Peer und überträgt das Bild in Chunks.
+        """
         if handle not in self.peers:
             print(f"[Error] Kein bekannter Peer mit Handle '{handle}'")
             return
@@ -181,10 +271,16 @@ class Messenger(asyncio.DatagramProtocol):
             return False
 
     async def send_image_data(self, tcp_socket, img_bytes, handle):
+        """
+        @brief Sendet die Binärdaten eines Bildes über einen TCP-Socket und ruft Progress-Callbacks auf.
+        @param tcp_socket Offener TCP-Socket
+        @param img_bytes Bilddaten als Byte-Array
+        @param handle Ziel-Handle des Empfängers (für Progress-Callback)
+        """
         loop = asyncio.get_running_loop()
         total_size = len(img_bytes)
         sent = 0
-        chunk_size = 8192  # 8KB chunks
+        chunk_size = 8192  # 8KB Chunks
 
         while sent < total_size:
             current_chunk_size = min(chunk_size, total_size - sent)
@@ -193,6 +289,7 @@ class Messenger(asyncio.DatagramProtocol):
             await loop.sock_sendall(tcp_socket, chunk)
             sent += current_chunk_size
 
+            # Progress-Callback aufrufen
             if self.progress_callback is not None:
                 progress = (sent / total_size) * 100
                 if asyncio.iscoroutinefunction(self.progress_callback):
@@ -204,6 +301,9 @@ class Messenger(asyncio.DatagramProtocol):
                 await asyncio.sleep(0.001)
 
     async def start_tcp_server(self):
+        """
+        @brief Startet den TCP-Server zum Empfang von eingehenden Bildübertragungen.
+        """
         try:
             server = await asyncio.start_server(
                 self.handle_tcp_connection,
@@ -219,6 +319,13 @@ class Messenger(asyncio.DatagramProtocol):
             print(f"[Error] TCP-Server konnte nicht gestartet werden: {e}")
 
     async def handle_tcp_connection(self, reader, writer):
+        """
+        @brief Behandelt eingehende TCP-Verbindungen für Bildempfang.
+        @param reader StreamReader für eingehende Daten
+        @param writer StreamWriter für ausgehende Daten
+        @details Liest IMG-Befehle und empfängt Bilddaten, speichert diese
+                 lokal und ruft Image-Callbacks auf.
+        """
         addr = writer.get_extra_info('peername')
         print(f"[TCP] Neue Verbindung von {addr}")
 
@@ -259,10 +366,21 @@ class Messenger(asyncio.DatagramProtocol):
             await writer.wait_closed()
 
     async def receive_image_data(self, reader, addr, size, sender_handle):
+        """
+        @brief Empfängt Bilddaten über TCP und speichert sie.
+        @param reader StreamReader für die Datenübertragung
+        @param addr Absender-Adresse als (ip, port) Tupel
+        @param size Erwartete Dateigröße in Bytes
+        @param sender_handle Benutzername des Absenders
+        @return Dateiname der gespeicherten Datei oder None bei Fehler
+        @details Empfängt Daten in Chunks, zeigt Fortschritt an und speichert
+                das Bild mit einem eindeutigen Dateinamen.
+        """
         try:
             img_data = bytearray()
             received = 0
 
+            # Daten in Chunks empfangen
             while received < size:
                 chunk = await asyncio.wait_for(
                     reader.read(min(8192, size - received)),
@@ -275,18 +393,22 @@ class Messenger(asyncio.DatagramProtocol):
                 img_data += chunk
                 received += len(chunk)
 
+                # Progress-Callback aufrufen
                 if self.progress_callback is not None:
                     progress = (received / size) * 100
                     if asyncio.iscoroutinefunction(self.progress_callback):
                         await self.progress_callback("receive", sender_handle, progress, received, size)
                     else:
                         self.progress_callback("receive", sender_handle, progress, received, size)
+
+             # Eindeutigen Dateinamen generieren
             filename = os.path.join(
                 self.config.imagepath,
                 f"{addr[0]}_{int(time.time())}_{sender_handle}.jpg"
             )
             os.makedirs(os.path.dirname(filename), exist_ok=True)
 
+            # Datei speichern
             with open(filename, "wb") as f:
                 f.write(img_data)
             print(f"[IMG] Gespeichert als: {os.path.normpath(filename)}")
@@ -297,18 +419,48 @@ class Messenger(asyncio.DatagramProtocol):
             return None
 
     def set_progress_callback(self, callback):
+        """
+        @brief Setzt den Callback für Übertragungsfortschritt.
+        @param callback Funktion mit Signatur: (direction, handle, progress, bytes_transferred, total_bytes)
+            - direction: "send" oder "receive"
+            - handle: Benutzername des Partners
+            - progress: Fortschritt in Prozent (0-100)
+            - bytes_transferred: Übertragene Bytes
+            - total_bytes: Gesamtanzahl Bytes
+        """
         self.progress_callback = callback
 
     def set_message_callback(self, callback):
+        """
+        @brief Setzt den Callback für empfangene Nachrichten.
+        @param callback Async-Funktion mit Signatur: (sender_handle, message)
+        """
         self.message_callback = callback
 
     def set_image_callback(self, callback):
+        """
+        @brief Setzt den Callback für empfangene Bilder.
+        @param callback Funktion mit Signatur: (sender_handle, filename)
+        """
         self.image_callback = callback
 
     def set_knownusers_callback(self, callback):
-       self.knownusers_callback = callback
+        """
+        @brief Setzt den Callback für Benutzerlisten.
+        @param callback Async-Funktion mit Signatur: (users_list)
+            users_list ist eine Liste von (handle, ip, port) Tupeln
+        """
+        self.knownusers_callback = callback
 
     async def handle_knownusers_response(self, message, addr):
+        """
+        @brief Verarbeitet KNOWNUSERS-Antworten.
+        @param message Die vollständige KNOWNUSERS-Nachricht
+        @param addr Absender-Adresse als (ip, port) Tupel
+        @details Parst die Benutzerliste, aktualisiert die Peer-Informationen
+                und ruft den entsprechenden Callback auf. Sammelt Antworten
+                für eine kurze Zeit um mehrfache Antworten zu konsolidieren.
+        """
         user_list = message[len("KNOWNUSERS "):].strip().split(",")
         users = []
         for entry in user_list:
@@ -344,6 +496,14 @@ class Messenger(asyncio.DatagramProtocol):
             del self.pending_who_responses[response_id]
 
     async def send_known_to(self, ip, port):
+        """
+        @brief Sendet bekannte Benutzer als Antwort auf WHO-Anfrage.
+        @param ip Ziel-IP-Adresse
+        @param port Ziel-Port
+        @details Erstellt eine KNOWNUSERS-Nachricht mit allen bekannten Peers
+                inklusive eigener Informationen und sendet diese direkt an
+                den anfragenden Peer.
+        """
         user_infos = [f"{self.config.handle} {self.get_local_ip()} {self.config.port}"]
         for handle, (peer_ip, peer_port) in self.peers.items():
             user_infos.append(f"{handle} {peer_ip} {peer_port}")  # peer_ip statt ip
@@ -351,6 +511,10 @@ class Messenger(asyncio.DatagramProtocol):
         await self.send_slcp(msg, ip, port)
 
     def get_local_ip(self):
+        """
+        @brief Ermittelt die lokale IP-Adresse.
+        @return Die lokale IP-Adresse als String
+        """
         try:
             s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
             s.connect(("8.8.8.8", 80))
