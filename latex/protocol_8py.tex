@@ -1,0 +1,122 @@
+\doxysection{Chat/common/protocol.py-\/\+Dateireferenz}
+\hypertarget{protocol_8py}{}\label{protocol_8py}\index{Chat/common/protocol.py@{Chat/common/protocol.py}}
+
+
+Enthält Funktionen zum Parsen und Erzeugen von SLCP-\/\+Protokollnachrichten.  
+
+
+\doxysubsubsection*{Funktionen}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{protocol_8py_a1b4297a79d008f1f45e9786840771f3b}{common.\+protocol.\+parse\+\_\+slcp}} (line)
+\item 
+\mbox{\hyperlink{protocol_8py_a8a2cd5bee78fd29e7a6f3c8ada38d6b1}{common.\+protocol.\+create\+\_\+join}} (handle, port)
+\item 
+\mbox{\hyperlink{protocol_8py_a8a640310c1fc1fb4f4d530e8ca781ad8}{common.\+protocol.\+create\+\_\+leave}} (handle)
+\item 
+\mbox{\hyperlink{protocol_8py_a86856e56803ca33c96669aa927717c0f}{common.\+protocol.\+create\+\_\+msg}} (target, text)
+\item 
+\mbox{\hyperlink{protocol_8py_a6625763196fa571f2dfddd979e92125d}{common.\+protocol.\+create\+\_\+img}} (target, size)
+\item 
+\mbox{\hyperlink{protocol_8py_a0f0e4646c3336e7dfc83b54bae1bed08}{common.\+protocol.\+create\+\_\+who}} ()
+\item 
+\mbox{\hyperlink{protocol_8py_a0a10ce1113974701f01a69d55e16625b}{common.\+protocol.\+create\+\_\+knownusers}} (users)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Ausführliche Beschreibung}
+Enthält Funktionen zum Parsen und Erzeugen von SLCP-\/\+Protokollnachrichten. 
+
+Diese Datei stellt das Kommunikationsprotokoll bereit, das vom Messenger und Discovery-\/\+Service verwendet wird, um Text-\/ und Bildnachrichten sowie Netzwerkanfragen zu senden und zu empfangen. 
+
+\label{doc-func-members}
+\Hypertarget{protocol_8py_doc-func-members}
+\doxysubsection{Dokumentation der Funktionen}
+\Hypertarget{protocol_8py_a6625763196fa571f2dfddd979e92125d}\index{protocol.py@{protocol.py}!create\_img@{create\_img}}
+\index{create\_img@{create\_img}!protocol.py@{protocol.py}}
+\doxysubsubsection{\texorpdfstring{create\_img()}{create\_img()}}
+{\footnotesize\ttfamily \label{protocol_8py_a6625763196fa571f2dfddd979e92125d} 
+common.\+protocol.\+create\+\_\+img (\begin{DoxyParamCaption}\item[{}]{target}{, }\item[{}]{size}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}@brief Erstellt eine IMG-Nachricht zum Senden von Bilddaten.
+
+@param target Empfänger-Handle
+@param size Größe des Bildes in Bytes
+@return SLCP-konforme IMG-Zeile
+\end{DoxyVerb}
+ \Hypertarget{protocol_8py_a8a2cd5bee78fd29e7a6f3c8ada38d6b1}\index{protocol.py@{protocol.py}!create\_join@{create\_join}}
+\index{create\_join@{create\_join}!protocol.py@{protocol.py}}
+\doxysubsubsection{\texorpdfstring{create\_join()}{create\_join()}}
+{\footnotesize\ttfamily \label{protocol_8py_a8a2cd5bee78fd29e7a6f3c8ada38d6b1} 
+common.\+protocol.\+create\+\_\+join (\begin{DoxyParamCaption}\item[{}]{handle}{, }\item[{}]{port}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}@brief Erstellt eine JOIN-Nachricht.
+
+@param handle Benutzername
+@param port Portnummer
+@return SLCP-konforme JOIN-Zeile
+\end{DoxyVerb}
+ \Hypertarget{protocol_8py_a0a10ce1113974701f01a69d55e16625b}\index{protocol.py@{protocol.py}!create\_knownusers@{create\_knownusers}}
+\index{create\_knownusers@{create\_knownusers}!protocol.py@{protocol.py}}
+\doxysubsubsection{\texorpdfstring{create\_knownusers()}{create\_knownusers()}}
+{\footnotesize\ttfamily \label{protocol_8py_a0a10ce1113974701f01a69d55e16625b} 
+common.\+protocol.\+create\+\_\+knownusers (\begin{DoxyParamCaption}\item[{}]{users}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}@brief Erstellt eine KNOWNUSERS-Nachricht mit Liste aller bekannten Peers.
+
+@param users Liste von Dictionaries mit Schlüsseln 'handle', 'ip', 'port'
+@return SLCP-konforme KNOWNUSERS-Zeile
+\end{DoxyVerb}
+ \Hypertarget{protocol_8py_a8a640310c1fc1fb4f4d530e8ca781ad8}\index{protocol.py@{protocol.py}!create\_leave@{create\_leave}}
+\index{create\_leave@{create\_leave}!protocol.py@{protocol.py}}
+\doxysubsubsection{\texorpdfstring{create\_leave()}{create\_leave()}}
+{\footnotesize\ttfamily \label{protocol_8py_a8a640310c1fc1fb4f4d530e8ca781ad8} 
+common.\+protocol.\+create\+\_\+leave (\begin{DoxyParamCaption}\item[{}]{handle}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}@brief Erstellt eine LEAVE-Nachricht.
+
+@param handle Benutzername
+@return SLCP-konforme LEAVE-Zeile
+\end{DoxyVerb}
+ \Hypertarget{protocol_8py_a86856e56803ca33c96669aa927717c0f}\index{protocol.py@{protocol.py}!create\_msg@{create\_msg}}
+\index{create\_msg@{create\_msg}!protocol.py@{protocol.py}}
+\doxysubsubsection{\texorpdfstring{create\_msg()}{create\_msg()}}
+{\footnotesize\ttfamily \label{protocol_8py_a86856e56803ca33c96669aa927717c0f} 
+common.\+protocol.\+create\+\_\+msg (\begin{DoxyParamCaption}\item[{}]{target}{, }\item[{}]{text}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}@brief Erstellt eine MSG-Nachricht zum Senden eines Textes.
+
+@param target Empfänger-Handle
+@param text Nachrichtentext
+@return SLCP-konforme MSG-Zeile
+\end{DoxyVerb}
+ \Hypertarget{protocol_8py_a0f0e4646c3336e7dfc83b54bae1bed08}\index{protocol.py@{protocol.py}!create\_who@{create\_who}}
+\index{create\_who@{create\_who}!protocol.py@{protocol.py}}
+\doxysubsubsection{\texorpdfstring{create\_who()}{create\_who()}}
+{\footnotesize\ttfamily \label{protocol_8py_a0f0e4646c3336e7dfc83b54bae1bed08} 
+common.\+protocol.\+create\+\_\+who (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}@brief Erstellt eine WHO-Broadcast-Nachricht zur Abfrage aller bekannten Nutzer.
+
+@return SLCP-konforme WHO-Zeile
+\end{DoxyVerb}
+ \Hypertarget{protocol_8py_a1b4297a79d008f1f45e9786840771f3b}\index{protocol.py@{protocol.py}!parse\_slcp@{parse\_slcp}}
+\index{parse\_slcp@{parse\_slcp}!protocol.py@{protocol.py}}
+\doxysubsubsection{\texorpdfstring{parse\_slcp()}{parse\_slcp()}}
+{\footnotesize\ttfamily \label{protocol_8py_a1b4297a79d008f1f45e9786840771f3b} 
+common.\+protocol.\+parse\+\_\+slcp (\begin{DoxyParamCaption}\item[{}]{line}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}@brief Parst eine SLCP-Zeile (Simple Local Chat Protocol) in ein Dictionary.
+
+Unterstützte Befehle:
+- JOIN <handle> <port>
+- LEAVE <handle>
+- WHO
+- MSG <to> <message>
+- IMG <to> <size>
+- KNOWNUSERS <handle1> <ip1> <port1>, ...
+
+@param line SLCP-Zeile als String
+@return Dictionary mit Schlüssel "type" und weiteren Feldern je nach Befehl
+\end{DoxyVerb}
+ 

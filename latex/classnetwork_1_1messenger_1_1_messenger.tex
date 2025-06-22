@@ -1,0 +1,362 @@
+\doxysection{network.\+messenger.\+Messenger Klassenreferenz}
+\hypertarget{classnetwork_1_1messenger_1_1_messenger}{}\label{classnetwork_1_1messenger_1_1_messenger}\index{network.messenger.Messenger@{network.messenger.Messenger}}
+Klassendiagramm für network.\+messenger.\+Messenger\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classnetwork_1_1messenger_1_1_messenger}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Öffentliche Methoden}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classnetwork_1_1messenger_1_1_messenger_a58d0b25752d84a9311d86eacba015c24}{\+\_\+\+\_\+init\+\_\+\+\_\+}} (self, config)
+\item 
+\mbox{\hyperlink{classnetwork_1_1messenger_1_1_messenger_a76385dd92a52af2f56d3fe3a22c68339}{start\+\_\+listener}} (self)
+\item 
+\mbox{\hyperlink{classnetwork_1_1messenger_1_1_messenger_acdcf2038818bc39d6142d9decb159de5}{connection\+\_\+made}} (self, transport)
+\item 
+\mbox{\hyperlink{classnetwork_1_1messenger_1_1_messenger_aa3a94dcaf49fadc07adff20a7ebf5a79}{datagram\+\_\+received}} (self, data, addr)
+\item 
+\mbox{\hyperlink{classnetwork_1_1messenger_1_1_messenger_a880527125b0edad9fe348d5709b0b7c7}{handle\+\_\+message}} (self, message, addr)
+\item 
+\mbox{\hyperlink{classnetwork_1_1messenger_1_1_messenger_a637257a2721b8c00566d6ee26edbb786}{send\+\_\+slcp}} (self, line, ip, port)
+\item 
+\mbox{\hyperlink{classnetwork_1_1messenger_1_1_messenger_ab6ce1904c427fe0e0ad7c468b112183d}{send\+\_\+broadcast}} (self, line)
+\item 
+\mbox{\hyperlink{classnetwork_1_1messenger_1_1_messenger_a0d75381ce8326ef09f7a4fb0c4d2b036}{send\+\_\+join}} (self)
+\item 
+\mbox{\hyperlink{classnetwork_1_1messenger_1_1_messenger_a6aedbc1ed4039e54621e7f9b2a0a31ce}{send\+\_\+leave}} (self)
+\item 
+\mbox{\hyperlink{classnetwork_1_1messenger_1_1_messenger_ae3d334899fa0a67ae91a32ff053cef12}{send\+\_\+who}} (self)
+\item 
+\mbox{\hyperlink{classnetwork_1_1messenger_1_1_messenger_a5e7b10f93946b28d25d07357b9263738}{send\+\_\+message}} (self, handle, message)
+\item 
+\mbox{\hyperlink{classnetwork_1_1messenger_1_1_messenger_a1b3c9dad2ab07a87d5d4c6c6c7340df6}{send\+\_\+image}} (self, handle, filepath)
+\item 
+\mbox{\hyperlink{classnetwork_1_1messenger_1_1_messenger_afbb894ada08503d57d6cdc762d0d7861}{send\+\_\+image\+\_\+data}} (self, tcp\+\_\+socket, img\+\_\+bytes, handle)
+\item 
+\mbox{\hyperlink{classnetwork_1_1messenger_1_1_messenger_a9f367e8b8aed3a80f4216776e2335667}{start\+\_\+tcp\+\_\+server}} (self)
+\item 
+\mbox{\hyperlink{classnetwork_1_1messenger_1_1_messenger_ab3e116bb225c4bc759cdeab5fa3794c9}{handle\+\_\+tcp\+\_\+connection}} (self, reader, writer)
+\item 
+\mbox{\hyperlink{classnetwork_1_1messenger_1_1_messenger_a12c913891c1ced7796e069bda1ec568f}{receive\+\_\+image\+\_\+data}} (self, reader, addr, size, sender\+\_\+handle)
+\item 
+\mbox{\hyperlink{classnetwork_1_1messenger_1_1_messenger_a73cf6c7f3ca98e8392671a72b2e87a4d}{set\+\_\+progress\+\_\+callback}} (self, callback)
+\item 
+\mbox{\hyperlink{classnetwork_1_1messenger_1_1_messenger_aa9d05e5f01e3bf3d668162a783b4c203}{set\+\_\+message\+\_\+callback}} (self, callback)
+\item 
+\mbox{\hyperlink{classnetwork_1_1messenger_1_1_messenger_ae40927ae2ff4bbe7f66291da3ef6e327}{set\+\_\+image\+\_\+callback}} (self, callback)
+\item 
+\mbox{\hyperlink{classnetwork_1_1messenger_1_1_messenger_a7ddefa674ffd5458ce502d574a49bb9d}{set\+\_\+knownusers\+\_\+callback}} (self, callback)
+\item 
+\mbox{\hyperlink{classnetwork_1_1messenger_1_1_messenger_a9a3ea2d48e31f6511d752c6c92af34a8}{handle\+\_\+knownusers\+\_\+response}} (self, message, addr)
+\item 
+\mbox{\hyperlink{classnetwork_1_1messenger_1_1_messenger_acdf95e5da81097e2ed520b6c60491b8f}{send\+\_\+known\+\_\+to}} (self, ip, port)
+\item 
+\mbox{\hyperlink{classnetwork_1_1messenger_1_1_messenger_a85936c66edeeee4936179e27e470b124}{get\+\_\+local\+\_\+ip}} (self)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Öffentliche Attribute}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classnetwork_1_1messenger_1_1_messenger_aa7f13e059db2f3643f2b8ad7d1031ed9}\label{classnetwork_1_1messenger_1_1_messenger_aa7f13e059db2f3643f2b8ad7d1031ed9} 
+{\bfseries config} = config
+\item 
+\Hypertarget{classnetwork_1_1messenger_1_1_messenger_a60bfbf2ef7af99156c1a5f6486d80ecb}\label{classnetwork_1_1messenger_1_1_messenger_a60bfbf2ef7af99156c1a5f6486d80ecb} 
+dict {\bfseries peers} = \{\}
+\item 
+\Hypertarget{classnetwork_1_1messenger_1_1_messenger_a3b357635165f6347b2ef80e889a4a594}\label{classnetwork_1_1messenger_1_1_messenger_a3b357635165f6347b2ef80e889a4a594} 
+{\bfseries transport} = None
+\item 
+\Hypertarget{classnetwork_1_1messenger_1_1_messenger_ada0561d37a27861f849848b096b88bea}\label{classnetwork_1_1messenger_1_1_messenger_ada0561d37a27861f849848b096b88bea} 
+{\bfseries message\+\_\+callback} = None
+\item 
+\Hypertarget{classnetwork_1_1messenger_1_1_messenger_ae456078aa9e9438aba114f80364f37d1}\label{classnetwork_1_1messenger_1_1_messenger_ae456078aa9e9438aba114f80364f37d1} 
+{\bfseries image\+\_\+callback} = None
+\item 
+\Hypertarget{classnetwork_1_1messenger_1_1_messenger_acec0c52ddc917314b08912b533b55e4c}\label{classnetwork_1_1messenger_1_1_messenger_acec0c52ddc917314b08912b533b55e4c} 
+{\bfseries knownusers\+\_\+callback} = None
+\item 
+\Hypertarget{classnetwork_1_1messenger_1_1_messenger_a6578b77b6edcda0da2d2c33bd3eb4019}\label{classnetwork_1_1messenger_1_1_messenger_a6578b77b6edcda0da2d2c33bd3eb4019} 
+{\bfseries progress\+\_\+callback} = None
+\item 
+\Hypertarget{classnetwork_1_1messenger_1_1_messenger_a40c62ebb8231946d0b132415a61ed03c}\label{classnetwork_1_1messenger_1_1_messenger_a40c62ebb8231946d0b132415a61ed03c} 
+dict {\bfseries pending\+\_\+who\+\_\+responses} = \{\}
+\item 
+\Hypertarget{classnetwork_1_1messenger_1_1_messenger_a8ef0a8e16e3eac6f95588df957e1d8e0}\label{classnetwork_1_1messenger_1_1_messenger_a8ef0a8e16e3eac6f95588df957e1d8e0} 
+float {\bfseries who\+\_\+timeout} = 2.\+0
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Ausführliche Beschreibung}
+\begin{DoxyVerb}@class Messenger
+@brief Messenger für den Versand und Empfang von Chat-Nachrichten und Bildern.
+@details
+    Verwaltet alle UDP- und TCP-Kommunikationsprozesse, Peer-Liste, sowie das Senden und Empfangen von Nachrichten und Bildern.
+    Stellt zudem verschiedene Callback-Funktionen für die Interaktion mit der Benutzeroberfläche bereit.
+\end{DoxyVerb}
+ 
+
+\label{doc-constructors}
+\Hypertarget{classnetwork_1_1messenger_1_1_messenger_doc-constructors}
+\doxysubsection{Beschreibung der Konstruktoren und Destruktoren}
+\Hypertarget{classnetwork_1_1messenger_1_1_messenger_a58d0b25752d84a9311d86eacba015c24}\index{network.messenger.Messenger@{network.messenger.Messenger}!\_\_init\_\_@{\_\_init\_\_}}
+\index{\_\_init\_\_@{\_\_init\_\_}!network.messenger.Messenger@{network.messenger.Messenger}}
+\doxysubsubsection{\texorpdfstring{\_\_init\_\_()}{\_\_init\_\_()}}
+{\footnotesize\ttfamily \label{classnetwork_1_1messenger_1_1_messenger_a58d0b25752d84a9311d86eacba015c24} 
+network.\+messenger.\+Messenger.\+\_\+\+\_\+init\+\_\+\+\_\+ (\begin{DoxyParamCaption}\item[{}]{self}{, }\item[{}]{config}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}@brief Konstruktor der Messenger-Klasse
+@param config Konfigurationsobjekt mit folgenden Attributen:
+    - handle: Benutzername
+    - port: Port für TCP/UDP Kommunikation
+    - whoisport: Port für WHO-Broadcasts
+    - imagepath: Pfad zum Speichern empfangener Bilder
+    - autoreply: Automatische Antwort (optional)
+\end{DoxyVerb}
+ 
+
+\label{doc-func-members}
+\Hypertarget{classnetwork_1_1messenger_1_1_messenger_doc-func-members}
+\doxysubsection{Dokumentation der Elementfunktionen}
+\Hypertarget{classnetwork_1_1messenger_1_1_messenger_acdcf2038818bc39d6142d9decb159de5}\index{network.messenger.Messenger@{network.messenger.Messenger}!connection\_made@{connection\_made}}
+\index{connection\_made@{connection\_made}!network.messenger.Messenger@{network.messenger.Messenger}}
+\doxysubsubsection{\texorpdfstring{connection\_made()}{connection\_made()}}
+{\footnotesize\ttfamily \label{classnetwork_1_1messenger_1_1_messenger_acdcf2038818bc39d6142d9decb159de5} 
+network.\+messenger.\+Messenger.\+connection\+\_\+made (\begin{DoxyParamCaption}\item[{}]{self}{, }\item[{}]{transport}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}@brief Wird aufgerufen, wenn die UDP-Verbindung erfolgreich hergestellt wurde.
+@param transport Das UDP-Transport-Objekt
+\end{DoxyVerb}
+ \Hypertarget{classnetwork_1_1messenger_1_1_messenger_aa3a94dcaf49fadc07adff20a7ebf5a79}\index{network.messenger.Messenger@{network.messenger.Messenger}!datagram\_received@{datagram\_received}}
+\index{datagram\_received@{datagram\_received}!network.messenger.Messenger@{network.messenger.Messenger}}
+\doxysubsubsection{\texorpdfstring{datagram\_received()}{datagram\_received()}}
+{\footnotesize\ttfamily \label{classnetwork_1_1messenger_1_1_messenger_aa3a94dcaf49fadc07adff20a7ebf5a79} 
+network.\+messenger.\+Messenger.\+datagram\+\_\+received (\begin{DoxyParamCaption}\item[{}]{self}{, }\item[{}]{data}{, }\item[{}]{addr}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}@brief Wird aufgerufen, wenn eine UDP-Nachricht empfangen wird.
+@param data Empfangene Bytes (Nachricht)
+@param addr Adresse des Absenders als Tupel (IP, Port)
+\end{DoxyVerb}
+ \Hypertarget{classnetwork_1_1messenger_1_1_messenger_a85936c66edeeee4936179e27e470b124}\index{network.messenger.Messenger@{network.messenger.Messenger}!get\_local\_ip@{get\_local\_ip}}
+\index{get\_local\_ip@{get\_local\_ip}!network.messenger.Messenger@{network.messenger.Messenger}}
+\doxysubsubsection{\texorpdfstring{get\_local\_ip()}{get\_local\_ip()}}
+{\footnotesize\ttfamily \label{classnetwork_1_1messenger_1_1_messenger_a85936c66edeeee4936179e27e470b124} 
+network.\+messenger.\+Messenger.\+get\+\_\+local\+\_\+ip (\begin{DoxyParamCaption}\item[{}]{self}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}@brief Ermittelt die lokale IP-Adresse.
+@return Die lokale IP-Adresse als String
+\end{DoxyVerb}
+ \Hypertarget{classnetwork_1_1messenger_1_1_messenger_a9a3ea2d48e31f6511d752c6c92af34a8}\index{network.messenger.Messenger@{network.messenger.Messenger}!handle\_knownusers\_response@{handle\_knownusers\_response}}
+\index{handle\_knownusers\_response@{handle\_knownusers\_response}!network.messenger.Messenger@{network.messenger.Messenger}}
+\doxysubsubsection{\texorpdfstring{handle\_knownusers\_response()}{handle\_knownusers\_response()}}
+{\footnotesize\ttfamily \label{classnetwork_1_1messenger_1_1_messenger_a9a3ea2d48e31f6511d752c6c92af34a8} 
+network.\+messenger.\+Messenger.\+handle\+\_\+knownusers\+\_\+response (\begin{DoxyParamCaption}\item[{}]{self}{, }\item[{}]{message}{, }\item[{}]{addr}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}@brief Verarbeitet KNOWNUSERS-Antworten.
+@param message Die vollständige KNOWNUSERS-Nachricht
+@param addr Absender-Adresse als (ip, port) Tupel
+@details Parst die Benutzerliste, aktualisiert die Peer-Informationen
+        und ruft den entsprechenden Callback auf. Sammelt Antworten
+        für eine kurze Zeit um mehrfache Antworten zu konsolidieren.
+\end{DoxyVerb}
+ \Hypertarget{classnetwork_1_1messenger_1_1_messenger_a880527125b0edad9fe348d5709b0b7c7}\index{network.messenger.Messenger@{network.messenger.Messenger}!handle\_message@{handle\_message}}
+\index{handle\_message@{handle\_message}!network.messenger.Messenger@{network.messenger.Messenger}}
+\doxysubsubsection{\texorpdfstring{handle\_message()}{handle\_message()}}
+{\footnotesize\ttfamily \label{classnetwork_1_1messenger_1_1_messenger_a880527125b0edad9fe348d5709b0b7c7} 
+network.\+messenger.\+Messenger.\+handle\+\_\+message (\begin{DoxyParamCaption}\item[{}]{self}{, }\item[{}]{message}{, }\item[{}]{addr}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}@brief Verarbeitet empfangene SLCP-Nachrichten.
+@param message Die dekodierte Nachricht als String
+@param addr Absender-Adresse als (ip, port) Tupel
+@details Parst SLCP-Befehle und führt entsprechende Aktionen aus:
+    - JOIN: Neuen Peer registrieren
+    - LEAVE: Peer entfernen
+    - WHO: Bekannte Benutzer senden
+    - KNOWNUSERS: Benutzerliste verarbeiten
+    - MSG: Private Nachricht empfangen
+    - IMG: Bildübertragung initialisieren
+\end{DoxyVerb}
+ \Hypertarget{classnetwork_1_1messenger_1_1_messenger_ab3e116bb225c4bc759cdeab5fa3794c9}\index{network.messenger.Messenger@{network.messenger.Messenger}!handle\_tcp\_connection@{handle\_tcp\_connection}}
+\index{handle\_tcp\_connection@{handle\_tcp\_connection}!network.messenger.Messenger@{network.messenger.Messenger}}
+\doxysubsubsection{\texorpdfstring{handle\_tcp\_connection()}{handle\_tcp\_connection()}}
+{\footnotesize\ttfamily \label{classnetwork_1_1messenger_1_1_messenger_ab3e116bb225c4bc759cdeab5fa3794c9} 
+network.\+messenger.\+Messenger.\+handle\+\_\+tcp\+\_\+connection (\begin{DoxyParamCaption}\item[{}]{self}{, }\item[{}]{reader}{, }\item[{}]{writer}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}@brief Behandelt eingehende TCP-Verbindungen für Bildempfang.
+@param reader StreamReader für eingehende Daten
+@param writer StreamWriter für ausgehende Daten
+@details Liest IMG-Befehle und empfängt Bilddaten, speichert diese
+         lokal und ruft Image-Callbacks auf.
+\end{DoxyVerb}
+ \Hypertarget{classnetwork_1_1messenger_1_1_messenger_a12c913891c1ced7796e069bda1ec568f}\index{network.messenger.Messenger@{network.messenger.Messenger}!receive\_image\_data@{receive\_image\_data}}
+\index{receive\_image\_data@{receive\_image\_data}!network.messenger.Messenger@{network.messenger.Messenger}}
+\doxysubsubsection{\texorpdfstring{receive\_image\_data()}{receive\_image\_data()}}
+{\footnotesize\ttfamily \label{classnetwork_1_1messenger_1_1_messenger_a12c913891c1ced7796e069bda1ec568f} 
+network.\+messenger.\+Messenger.\+receive\+\_\+image\+\_\+data (\begin{DoxyParamCaption}\item[{}]{self}{, }\item[{}]{reader}{, }\item[{}]{addr}{, }\item[{}]{size}{, }\item[{}]{sender\+\_\+handle}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}@brief Empfängt Bilddaten über TCP und speichert sie.
+@param reader StreamReader für die Datenübertragung
+@param addr Absender-Adresse als (ip, port) Tupel
+@param size Erwartete Dateigröße in Bytes
+@param sender_handle Benutzername des Absenders
+@return Dateiname der gespeicherten Datei oder None bei Fehler
+@details Empfängt Daten in Chunks, zeigt Fortschritt an und speichert
+        das Bild mit einem eindeutigen Dateinamen.
+\end{DoxyVerb}
+ \Hypertarget{classnetwork_1_1messenger_1_1_messenger_ab6ce1904c427fe0e0ad7c468b112183d}\index{network.messenger.Messenger@{network.messenger.Messenger}!send\_broadcast@{send\_broadcast}}
+\index{send\_broadcast@{send\_broadcast}!network.messenger.Messenger@{network.messenger.Messenger}}
+\doxysubsubsection{\texorpdfstring{send\_broadcast()}{send\_broadcast()}}
+{\footnotesize\ttfamily \label{classnetwork_1_1messenger_1_1_messenger_ab6ce1904c427fe0e0ad7c468b112183d} 
+network.\+messenger.\+Messenger.\+send\+\_\+broadcast (\begin{DoxyParamCaption}\item[{}]{self}{, }\item[{}]{line}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}@brief Sendet eine SLCP-Broadcast-Nachricht an alle Teilnehmer im lokalen Netzwerk.
+@param line Die zu sendende SLCP-Nachricht (String)
+\end{DoxyVerb}
+ \Hypertarget{classnetwork_1_1messenger_1_1_messenger_a1b3c9dad2ab07a87d5d4c6c6c7340df6}\index{network.messenger.Messenger@{network.messenger.Messenger}!send\_image@{send\_image}}
+\index{send\_image@{send\_image}!network.messenger.Messenger@{network.messenger.Messenger}}
+\doxysubsubsection{\texorpdfstring{send\_image()}{send\_image()}}
+{\footnotesize\ttfamily \label{classnetwork_1_1messenger_1_1_messenger_a1b3c9dad2ab07a87d5d4c6c6c7340df6} 
+network.\+messenger.\+Messenger.\+send\+\_\+image (\begin{DoxyParamCaption}\item[{}]{self}{, }\item[{}]{handle}{, }\item[{}]{filepath}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}@brief Sendet ein Bild an einen bestimmten Peer via TCP.
+@param handle Der Ziel-Benutzername
+@param filepath Pfad zur Bilddatei
+@return True bei Erfolg, False bei Fehler
+@details Überprüft die Datei auf Gültigkeit, öffnet eine TCP-Verbindung
+         zum Ziel-Peer und überträgt das Bild in Chunks.
+\end{DoxyVerb}
+ \Hypertarget{classnetwork_1_1messenger_1_1_messenger_afbb894ada08503d57d6cdc762d0d7861}\index{network.messenger.Messenger@{network.messenger.Messenger}!send\_image\_data@{send\_image\_data}}
+\index{send\_image\_data@{send\_image\_data}!network.messenger.Messenger@{network.messenger.Messenger}}
+\doxysubsubsection{\texorpdfstring{send\_image\_data()}{send\_image\_data()}}
+{\footnotesize\ttfamily \label{classnetwork_1_1messenger_1_1_messenger_afbb894ada08503d57d6cdc762d0d7861} 
+network.\+messenger.\+Messenger.\+send\+\_\+image\+\_\+data (\begin{DoxyParamCaption}\item[{}]{self}{, }\item[{}]{tcp\+\_\+socket}{, }\item[{}]{img\+\_\+bytes}{, }\item[{}]{handle}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}@brief Sendet die Binärdaten eines Bildes über einen TCP-Socket und ruft Progress-Callbacks auf.
+@param tcp_socket Offener TCP-Socket
+@param img_bytes Bilddaten als Byte-Array
+@param handle Ziel-Handle des Empfängers (für Progress-Callback)
+\end{DoxyVerb}
+ \Hypertarget{classnetwork_1_1messenger_1_1_messenger_a0d75381ce8326ef09f7a4fb0c4d2b036}\index{network.messenger.Messenger@{network.messenger.Messenger}!send\_join@{send\_join}}
+\index{send\_join@{send\_join}!network.messenger.Messenger@{network.messenger.Messenger}}
+\doxysubsubsection{\texorpdfstring{send\_join()}{send\_join()}}
+{\footnotesize\ttfamily \label{classnetwork_1_1messenger_1_1_messenger_a0d75381ce8326ef09f7a4fb0c4d2b036} 
+network.\+messenger.\+Messenger.\+send\+\_\+join (\begin{DoxyParamCaption}\item[{}]{self}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}@brief Sendet eine JOIN-Nachricht per UDP-Broadcast, um dem Chat beizutreten.
+\end{DoxyVerb}
+ \Hypertarget{classnetwork_1_1messenger_1_1_messenger_acdf95e5da81097e2ed520b6c60491b8f}\index{network.messenger.Messenger@{network.messenger.Messenger}!send\_known\_to@{send\_known\_to}}
+\index{send\_known\_to@{send\_known\_to}!network.messenger.Messenger@{network.messenger.Messenger}}
+\doxysubsubsection{\texorpdfstring{send\_known\_to()}{send\_known\_to()}}
+{\footnotesize\ttfamily \label{classnetwork_1_1messenger_1_1_messenger_acdf95e5da81097e2ed520b6c60491b8f} 
+network.\+messenger.\+Messenger.\+send\+\_\+known\+\_\+to (\begin{DoxyParamCaption}\item[{}]{self}{, }\item[{}]{ip}{, }\item[{}]{port}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}@brief Sendet bekannte Benutzer als Antwort auf WHO-Anfrage.
+@param ip Ziel-IP-Adresse
+@param port Ziel-Port
+@details Erstellt eine KNOWNUSERS-Nachricht mit allen bekannten Peers
+        inklusive eigener Informationen und sendet diese direkt an
+        den anfragenden Peer.
+\end{DoxyVerb}
+ \Hypertarget{classnetwork_1_1messenger_1_1_messenger_a6aedbc1ed4039e54621e7f9b2a0a31ce}\index{network.messenger.Messenger@{network.messenger.Messenger}!send\_leave@{send\_leave}}
+\index{send\_leave@{send\_leave}!network.messenger.Messenger@{network.messenger.Messenger}}
+\doxysubsubsection{\texorpdfstring{send\_leave()}{send\_leave()}}
+{\footnotesize\ttfamily \label{classnetwork_1_1messenger_1_1_messenger_a6aedbc1ed4039e54621e7f9b2a0a31ce} 
+network.\+messenger.\+Messenger.\+send\+\_\+leave (\begin{DoxyParamCaption}\item[{}]{self}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}@brief Sendet eine LEAVE-Nachricht per UDP-Broadcast, um den Chat zu verlassen.
+\end{DoxyVerb}
+ \Hypertarget{classnetwork_1_1messenger_1_1_messenger_a5e7b10f93946b28d25d07357b9263738}\index{network.messenger.Messenger@{network.messenger.Messenger}!send\_message@{send\_message}}
+\index{send\_message@{send\_message}!network.messenger.Messenger@{network.messenger.Messenger}}
+\doxysubsubsection{\texorpdfstring{send\_message()}{send\_message()}}
+{\footnotesize\ttfamily \label{classnetwork_1_1messenger_1_1_messenger_a5e7b10f93946b28d25d07357b9263738} 
+network.\+messenger.\+Messenger.\+send\+\_\+message (\begin{DoxyParamCaption}\item[{}]{self}{, }\item[{}]{handle}{, }\item[{}]{message}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}@brief Sendet eine Textnachricht an einen bestimmten Peer.
+@param handle Ziel-Handle (Benutzername) des Empfängers
+@param message Die zu sendende Nachricht (String)
+\end{DoxyVerb}
+ \Hypertarget{classnetwork_1_1messenger_1_1_messenger_a637257a2721b8c00566d6ee26edbb786}\index{network.messenger.Messenger@{network.messenger.Messenger}!send\_slcp@{send\_slcp}}
+\index{send\_slcp@{send\_slcp}!network.messenger.Messenger@{network.messenger.Messenger}}
+\doxysubsubsection{\texorpdfstring{send\_slcp()}{send\_slcp()}}
+{\footnotesize\ttfamily \label{classnetwork_1_1messenger_1_1_messenger_a637257a2721b8c00566d6ee26edbb786} 
+network.\+messenger.\+Messenger.\+send\+\_\+slcp (\begin{DoxyParamCaption}\item[{}]{self}{, }\item[{}]{line}{, }\item[{}]{ip}{, }\item[{}]{port}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}@brief Sendet eine SLCP-Nachricht (UDP) an die angegebene Zieladresse.
+@param line SLCP-formatierte Nachricht (String)
+@param ip Ziel-IP-Adresse
+@param port Ziel-Portnummer
+\end{DoxyVerb}
+ \Hypertarget{classnetwork_1_1messenger_1_1_messenger_ae3d334899fa0a67ae91a32ff053cef12}\index{network.messenger.Messenger@{network.messenger.Messenger}!send\_who@{send\_who}}
+\index{send\_who@{send\_who}!network.messenger.Messenger@{network.messenger.Messenger}}
+\doxysubsubsection{\texorpdfstring{send\_who()}{send\_who()}}
+{\footnotesize\ttfamily \label{classnetwork_1_1messenger_1_1_messenger_ae3d334899fa0a67ae91a32ff053cef12} 
+network.\+messenger.\+Messenger.\+send\+\_\+who (\begin{DoxyParamCaption}\item[{}]{self}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}@brief Sendet eine WHO-Nachricht, um die Liste aktiver Teilnehmer zu erfragen.
+\end{DoxyVerb}
+ \Hypertarget{classnetwork_1_1messenger_1_1_messenger_ae40927ae2ff4bbe7f66291da3ef6e327}\index{network.messenger.Messenger@{network.messenger.Messenger}!set\_image\_callback@{set\_image\_callback}}
+\index{set\_image\_callback@{set\_image\_callback}!network.messenger.Messenger@{network.messenger.Messenger}}
+\doxysubsubsection{\texorpdfstring{set\_image\_callback()}{set\_image\_callback()}}
+{\footnotesize\ttfamily \label{classnetwork_1_1messenger_1_1_messenger_ae40927ae2ff4bbe7f66291da3ef6e327} 
+network.\+messenger.\+Messenger.\+set\+\_\+image\+\_\+callback (\begin{DoxyParamCaption}\item[{}]{self}{, }\item[{}]{callback}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}@brief Setzt den Callback für empfangene Bilder.
+@param callback Funktion mit Signatur: (sender_handle, filename)
+\end{DoxyVerb}
+ \Hypertarget{classnetwork_1_1messenger_1_1_messenger_a7ddefa674ffd5458ce502d574a49bb9d}\index{network.messenger.Messenger@{network.messenger.Messenger}!set\_knownusers\_callback@{set\_knownusers\_callback}}
+\index{set\_knownusers\_callback@{set\_knownusers\_callback}!network.messenger.Messenger@{network.messenger.Messenger}}
+\doxysubsubsection{\texorpdfstring{set\_knownusers\_callback()}{set\_knownusers\_callback()}}
+{\footnotesize\ttfamily \label{classnetwork_1_1messenger_1_1_messenger_a7ddefa674ffd5458ce502d574a49bb9d} 
+network.\+messenger.\+Messenger.\+set\+\_\+knownusers\+\_\+callback (\begin{DoxyParamCaption}\item[{}]{self}{, }\item[{}]{callback}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}@brief Setzt den Callback für Benutzerlisten.
+@param callback Async-Funktion mit Signatur: (users_list)
+    users_list ist eine Liste von (handle, ip, port) Tupeln
+\end{DoxyVerb}
+ \Hypertarget{classnetwork_1_1messenger_1_1_messenger_aa9d05e5f01e3bf3d668162a783b4c203}\index{network.messenger.Messenger@{network.messenger.Messenger}!set\_message\_callback@{set\_message\_callback}}
+\index{set\_message\_callback@{set\_message\_callback}!network.messenger.Messenger@{network.messenger.Messenger}}
+\doxysubsubsection{\texorpdfstring{set\_message\_callback()}{set\_message\_callback()}}
+{\footnotesize\ttfamily \label{classnetwork_1_1messenger_1_1_messenger_aa9d05e5f01e3bf3d668162a783b4c203} 
+network.\+messenger.\+Messenger.\+set\+\_\+message\+\_\+callback (\begin{DoxyParamCaption}\item[{}]{self}{, }\item[{}]{callback}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}@brief Setzt den Callback für empfangene Nachrichten.
+@param callback Async-Funktion mit Signatur: (sender_handle, message)
+\end{DoxyVerb}
+ \Hypertarget{classnetwork_1_1messenger_1_1_messenger_a73cf6c7f3ca98e8392671a72b2e87a4d}\index{network.messenger.Messenger@{network.messenger.Messenger}!set\_progress\_callback@{set\_progress\_callback}}
+\index{set\_progress\_callback@{set\_progress\_callback}!network.messenger.Messenger@{network.messenger.Messenger}}
+\doxysubsubsection{\texorpdfstring{set\_progress\_callback()}{set\_progress\_callback()}}
+{\footnotesize\ttfamily \label{classnetwork_1_1messenger_1_1_messenger_a73cf6c7f3ca98e8392671a72b2e87a4d} 
+network.\+messenger.\+Messenger.\+set\+\_\+progress\+\_\+callback (\begin{DoxyParamCaption}\item[{}]{self}{, }\item[{}]{callback}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}@brief Setzt den Callback für Übertragungsfortschritt.
+@param callback Funktion mit Signatur: (direction, handle, progress, bytes_transferred, total_bytes)
+    - direction: "send" oder "receive"
+    - handle: Benutzername des Partners
+    - progress: Fortschritt in Prozent (0-100)
+    - bytes_transferred: Übertragene Bytes
+    - total_bytes: Gesamtanzahl Bytes
+\end{DoxyVerb}
+ \Hypertarget{classnetwork_1_1messenger_1_1_messenger_a76385dd92a52af2f56d3fe3a22c68339}\index{network.messenger.Messenger@{network.messenger.Messenger}!start\_listener@{start\_listener}}
+\index{start\_listener@{start\_listener}!network.messenger.Messenger@{network.messenger.Messenger}}
+\doxysubsubsection{\texorpdfstring{start\_listener()}{start\_listener()}}
+{\footnotesize\ttfamily \label{classnetwork_1_1messenger_1_1_messenger_a76385dd92a52af2f56d3fe3a22c68339} 
+network.\+messenger.\+Messenger.\+start\+\_\+listener (\begin{DoxyParamCaption}\item[{}]{self}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}@brief Startet den UDP-Listener und den TCP-Server.
+@details
+    Öffnet den UDP-Socket für Nachrichtenempfang und startet
+    parallel den TCP-Server für den Empfang von Bildern.
+\end{DoxyVerb}
+ \Hypertarget{classnetwork_1_1messenger_1_1_messenger_a9f367e8b8aed3a80f4216776e2335667}\index{network.messenger.Messenger@{network.messenger.Messenger}!start\_tcp\_server@{start\_tcp\_server}}
+\index{start\_tcp\_server@{start\_tcp\_server}!network.messenger.Messenger@{network.messenger.Messenger}}
+\doxysubsubsection{\texorpdfstring{start\_tcp\_server()}{start\_tcp\_server()}}
+{\footnotesize\ttfamily \label{classnetwork_1_1messenger_1_1_messenger_a9f367e8b8aed3a80f4216776e2335667} 
+network.\+messenger.\+Messenger.\+start\+\_\+tcp\+\_\+server (\begin{DoxyParamCaption}\item[{}]{self}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}@brief Startet den TCP-Server zum Empfang von eingehenden Bildübertragungen.
+\end{DoxyVerb}
+ 
+
+Die Dokumentation für diese Klasse wurde erzeugt aufgrund der Datei\+:\begin{DoxyCompactItemize}
+\item 
+Chat/network/messenger.\+py\end{DoxyCompactItemize}

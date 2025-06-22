@@ -1,0 +1,352 @@
+\chapter{DOKUMENTATION }
+\hypertarget{index}{}\label{index}\index{DOKUMENTATION@{DOKUMENTATION}}
+\hypertarget{index_autotoc_md0}{}\doxysection{\texorpdfstring{Peer-\/to-\/\+Peer Chat – Dokumentation}{Peer-\/to-\/\+Peer Chat – Dokumentation}}\label{index_autotoc_md0}
+\DoxyHorRuler{0}
+\hypertarget{index_autotoc_md2}{}\doxysubsection{\texorpdfstring{Projektüberblick}{Projektüberblick}}\label{index_autotoc_md2}
+Ein dezentraler Chat-\/\+Client im lokalen Netzwerk, der Text-\/ und Bildnachrichten ohne zentralen Server ermöglicht. ~\newline
+ Hauptfunktionen\+: Peer Discovery, Text-\/ und Bildübertragung, Kommandozeilen-\/\+Bedienung (CLI), automatische Nutzererkennung.\hypertarget{index_autotoc_md3}{}\doxysubsubsection{\texorpdfstring{Gruppenmitglieder}{Gruppenmitglieder}}\label{index_autotoc_md3}
+
+\begin{DoxyItemize}
+\item Aysha Aryubi
+\item Nhu Ngoc Le
+\item Artur Gubarkov
+\end{DoxyItemize}\hypertarget{index_autotoc_md4}{}\doxysubsubsection{\texorpdfstring{Abgabedatum / Semester / Kurs}{Abgabedatum / Semester / Kurs}}\label{index_autotoc_md4}
+
+\begin{DoxyItemize}
+\item Abgabedatum\+: 22. Juni 2025
+\item Semester\+: So\+Se 2025
+\item Kurs\+: Betriebssysteme und Rechnernetze
+\item Dozent\+: Prof. Dr.-\/Ing. Markus Miettinen
+\end{DoxyItemize}
+
+\DoxyHorRuler{0}
+\hypertarget{index_autotoc_md6}{}\doxysubsection{\texorpdfstring{Architektur}{Architektur}}\label{index_autotoc_md6}
+Das System ist modular aufgebaut und besteht aus folgenden Hauptkomponenten\+:
+
+
+\begin{DoxyItemize}
+\item {\bfseries{Interface (CLI)\+:}} Stellt die Kommandozeilen-\/\+Bedienung bereit. Nutzer gibt hier Befehle wie {\ttfamily /msg}, {\ttfamily /img}, {\ttfamily /who} usw. ein. Das Interface leitet die Befehle an den Messenger weiter und zeigt empfangene Nachrichten und Bilder an.
+\item {\bfseries{Messenger\+:}} Übernimmt die Netzwerkkommunikation. Sendet und empfängt Nachrichten sowie Bilder über UDP/\+TCP. Kommuniziert direkt mit Interface, Discovery\+Service und nutzt das Protocol-\/\+Modul zum Kodieren/\+Dekodieren der Nachrichten.
+\item {\bfseries{Protocol\+:}} Stellt Funktionen zum Kodieren und Parsen des SLCP-\/\+Protokolls bereit (JOIN, MSG, IMG etc.).
+\item {\bfseries{Discovery\+Service\+:}} Verantwortlich für Peer-\/\+Discovery im lokalen Netzwerk mittels UDP-\/\+Broadcasts (JOIN, WHO, LEAVE, KNOWNUSERS). Pflegt eine aktuelle Liste bekannter Teilnehmer.
+\item {\bfseries{Config\+:}} Verwaltet alle Einstellungen (wie Benutzername, Port, Bildverzeichnis) über eine TOML-\/\+Datei. Wird von Messenger und Discovery\+Service geladen.
+\item {\bfseries{main.\+py\+:}} Startet und verbindet alle Komponenten.
+\end{DoxyItemize}
+
+Das Zusammenspiel der Komponenten ist im folgenden Architekturdiagramm dargestellt\+:
+
+
+\begin{DoxyImage}
+\includegraphics[width=\textwidth]{architektur.png}
+\doxyfigcaption{Architekturdiagramm}
+\end{DoxyImage}
+
+
+\DoxyHorRuler{0}
+\hypertarget{index_autotoc_md8}{}\doxysubsection{\texorpdfstring{Verwendete Technologien \& Tools}{Verwendete Technologien \& Tools}}\label{index_autotoc_md8}
+
+\begin{DoxyItemize}
+\item {\bfseries{Programmiersprache\+:}} Python 3.\+10+
+\item {\bfseries{Libraries\+:}} socket, threading, asyncio, toml, colorama
+\item {\bfseries{Doxygen\+:}} für technische Dokumentation (HTML, PDF)
+\item {\bfseries{Git\+:}} für Versionierung (Git\+Hub)
+\item {\bfseries{Konfigurationsdatei\+:}} TOML-\/\+Format (slcp\+\_\+config.\+toml)
+\item {\bfseries{Entwicklungsumgebung\+:}} Py\+Charm
+\end{DoxyItemize}
+
+\DoxyHorRuler{0}
+\hypertarget{index_autotoc_md10}{}\doxysubsection{\texorpdfstring{Protokollübersicht (SLCP)}{Protokollübersicht (SLCP)}}\label{index_autotoc_md10}
+Textbasierte Kommandos im Simple Local Chat Protocol\+:
+
+\tabulinesep=1mm
+\begin{longtabu}spread 0pt [c]{*{3}{|X[-1]}|}
+\hline
+\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Befehl  }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Parameter  }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Beschreibung  }\\\cline{1-3}
+\endfirsthead
+\hline
+\endfoot
+\hline
+\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Befehl  }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Parameter  }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Beschreibung  }\\\cline{1-3}
+\endhead
+JOIN  &{\ttfamily \texorpdfstring{$<$}{<}Handle\texorpdfstring{$>$}{>} \texorpdfstring{$<$}{<}Port\texorpdfstring{$>$}{>}}  &Tritt dem Chat bei  \\\cline{1-3}
+LEAVE  &{\ttfamily \texorpdfstring{$<$}{<}Handle\texorpdfstring{$>$}{>}}  &Verlässt den Chat  \\\cline{1-3}
+MSG  &{\ttfamily \texorpdfstring{$<$}{<}Handle\texorpdfstring{$>$}{>} \texorpdfstring{$<$}{<}Text\texorpdfstring{$>$}{>}}  &Sendet Nachricht an Nutzer  \\\cline{1-3}
+IMG  &{\ttfamily \texorpdfstring{$<$}{<}Handle\texorpdfstring{$>$}{>} \texorpdfstring{$<$}{<}Size\texorpdfstring{$>$}{>}}  &Bildübertragung starten  \\\cline{1-3}
+WHO  &-\/  &Fragt bekannte Nutzer ab  \\\cline{1-3}
+KNOWNUSERS  &{\ttfamily \texorpdfstring{$<$}{<}Liste\texorpdfstring{$>$}{>}}  &Antwort mit bekannten Nutzern  \\\cline{1-3}
+\end{longtabu}
+
+
+\DoxyHorRuler{0}
+\hypertarget{index_autotoc_md12}{}\doxysubsubsection{\texorpdfstring{Ablauf beim Anmelden im Chat}{Ablauf beim Anmelden im Chat}}\label{index_autotoc_md12}
+Im Folgenden wird gezeigt, wie ein Nutzer dem Chat beitritt\+:
+
+
+\begin{DoxyEnumerate}
+\item {\bfseries{Alice}} gibt im Interface den Befehl /join ein.
+\item {\bfseries{Das Interface}} ruft im Messenger die Funktion zum Beitreten auf.
+\item {\bfseries{Der Messenger}} veranlasst den Discovery-\/\+Service, eine JOIN Alice $<$\+Port$>$-\/Nachricht per UDP-\/\+Broadcast im lokalen Netzwerk zu senden.
+\item {\bfseries{Alle Discovery-\/\+Services}} der anderen Peers empfangen die JOIN-\/\+Nachricht und nehmen Alice in ihre Peer-\/\+Liste auf.
+\item {\bfseries{Alice}} ist jetzt als aktiver Teilnehmer im Chat-\/\+Netzwerk bekannt.
+\end{DoxyEnumerate}
+
+Der Ablauf ist im folgenden Diagramm dargestellt\+:
+
+
+\begin{DoxyImage}
+\includegraphics[width=\textwidth]{join.png}
+\doxyfigcaption{Ablauf JOIN}
+\end{DoxyImage}
+
+
+\DoxyHorRuler{0}
+\hypertarget{index_autotoc_md14}{}\doxysubsubsection{\texorpdfstring{Ablauf beim Abmelden aus dem Chat}{Ablauf beim Abmelden aus dem Chat}}\label{index_autotoc_md14}
+Im Folgenden wird gezeigt, wie ein Nutzer den Chat verlässt\+:
+
+
+\begin{DoxyEnumerate}
+\item {\bfseries{Alice}} gibt im Interface den Befehl /leave ein.
+\item {\bfseries{Das Interface}} ruft im Messenger die Funktion zum Verlassen des Chats auf.
+\item {\bfseries{Der Messenger}} veranlasst den Discovery-\/\+Service, eine LEAVE Alice-\/\+Nachricht per UDP-\/\+Broadcast im lokalen Netzwerk zu senden.
+\item {\bfseries{Alle Discovery-\/\+Services}} der anderen Peers empfangen die LEAVE-\/\+Nachricht und entfernen Alice aus ihrer Peer-\/\+Liste.
+\item {\bfseries{Alice}} wird aus dem Netzwerk entfernt und erscheint nicht mehr als aktiver Teilnehmer.
+\end{DoxyEnumerate}
+
+Der Ablauf ist im folgenden Diagramm dargestellt\+:
+
+
+\begin{DoxyImage}
+\includegraphics[width=\textwidth]{leave.png}
+\doxyfigcaption{Ablauf LEAVE}
+\end{DoxyImage}
+
+
+\DoxyHorRuler{0}
+\hypertarget{index_autotoc_md16}{}\doxysubsubsection{\texorpdfstring{Ablauf beim Abfragen und Empfangen der Nutzerliste}{Ablauf beim Abfragen und Empfangen der Nutzerliste}}\label{index_autotoc_md16}
+Im Folgenden wird gezeigt, wie die Liste aller aktiven Nutzer im Chat abgefragt wird\+:
+
+
+\begin{DoxyEnumerate}
+\item {\bfseries{Bob}} gibt im Interface den Befehl /who ein.
+\item {\bfseries{Das Interface}} ruft im Messenger die Funktion zum Senden einer WHO-\/\+Anfrage auf.
+\item {\bfseries{Der Messenger}} veranlasst den Discovery-\/\+Service, eine WHO-\/\+Nachricht per UDP-\/\+Broadcast an alle Discovery-\/\+Services im lokalen Netzwerk zu senden.
+\item {\bfseries{Jeder Discovery-\/\+Service}} (bei allen aktiven Peers) empfängt die WHO-\/\+Anfrage und antwortet per Unicast mit einer eigenen KNOWNUSERS-\/\+Nachricht, die alle aktuell bekannten Nutzer (Handle, IP, Port) enthält.
+\item {\bfseries{Der Messenger von Bob}} empfängt eine oder mehrere KNOWNUSERS-\/\+Antworten, konsolidiert die Einträge (entfernt ggf. Duplikate) und aktualisiert seine interne Peer-\/\+Liste.
+\item {\bfseries{Das Interface bei Bob}} zeigt daraufhin die vollständige Liste aller aktuell erreichbaren Nutzer im Terminal an.
+\end{DoxyEnumerate}
+
+Der Ablauf ist im folgenden Diagramm dargestellt\+:
+
+
+\begin{DoxyImage}
+\includegraphics[width=\textwidth]{whoundknownusers.png}
+\doxyfigcaption{Ablauf WHO/\+KNOWNUSERS}
+\end{DoxyImage}
+
+
+\DoxyHorRuler{0}
+\hypertarget{index_autotoc_md18}{}\doxysubsubsection{\texorpdfstring{Ablauf beim Senden einer Textnachricht}{Ablauf beim Senden einer Textnachricht}}\label{index_autotoc_md18}
+Im Folgenden wird gezeigt, wie ein Bild vom Nutzer „\+Alice“ an „\+Bob“ gesendet wird\+:
+
+
+\begin{DoxyEnumerate}
+\item {\bfseries{Alice}} gibt im Interface den Befehl /msg Bob Hallo Bob! ein.
+\item {\bfseries{Das Interface}} ruft im Messenger die Funktion zum Senden einer Nachricht auf.
+\item {\bfseries{Der Messenger}} ermittelt die Netzwerkadresse von Bob und sendet den SLCP-\/\+Befehl MSG Bob "{}\+Hallo Bob!"{} per UDP direkt an Bobs Peer-\/\+Adresse.
+\item {\bfseries{Bob\textquotesingle{}s Messenger}} empfängt die Nachricht, prüft den Befehl und übergibt den Text an das lokale Interface.
+\item {\bfseries{Das Interface bei Bob}} zeigt die empfangene Nachricht sofort im Terminal an.
+\end{DoxyEnumerate}
+
+Der Ablauf ist im folgenden Diagramm dargestellt\+:
+
+
+\begin{DoxyImage}
+\includegraphics[width=\textwidth]{messagebeispiel.png}
+\doxyfigcaption{Ablauf MSG}
+\end{DoxyImage}
+
+
+\DoxyHorRuler{0}
+\hypertarget{index_autotoc_md20}{}\doxysubsubsection{\texorpdfstring{Ablauf beim Senden eines Bildes}{Ablauf beim Senden eines Bildes}}\label{index_autotoc_md20}
+Im Folgenden wird gezeigt, wie ein Bild vom Nutzer „\+Alice“ an „\+Bob“ gesendet wird\+:
+
+
+\begin{DoxyEnumerate}
+\item {\bfseries{Alice}} gibt im Interface den Befehl {\ttfamily /img Bob pfad/zum/bild.\+jpg} ein.
+\item {\bfseries{Das Interface}} ruft im Messenger die Funktion zum Senden eines Bildes auf.
+\item {\bfseries{Der Messenger}} öffnet eine TCP-\/\+Verbindung zum Peer (Bob), sendet den SLCP-\/\+Befehl {\ttfamily IMG Bob \texorpdfstring{$<$}{<}Größe\texorpdfstring{$>$}{>}}, danach die Bilddaten als Bytestream.
+\item {\bfseries{Bob\textquotesingle{}s Messenger}} nimmt die Verbindung entgegen, liest Befehl und Daten und speichert das Bild im vorgegebenen Ordner.
+\item {\bfseries{Das Interface bei Bob}} zeigt eine Benachrichtigung über das empfangene Bild an.
+\end{DoxyEnumerate}
+
+Der Ablauf ist im folgenden Diagramm dargestellt\+:
+
+
+\begin{DoxyImage}
+\includegraphics[width=\textwidth]{bildbeispiel.png}
+\doxyfigcaption{Ablauf IMG}
+\end{DoxyImage}
+
+
+\DoxyHorRuler{0}
+\hypertarget{index_autotoc_md22}{}\doxysubsubsection{\texorpdfstring{Ausgabe-\/\+Beispiel}{Ausgabe-\/\+Beispiel}}\label{index_autotoc_md22}
+Im Folgenden einige Screenshots der CLI-\/\+Anwendung\+:
+
+ 
+\begin{DoxyImage}
+\includegraphics[width=\textwidth,height=\textheight/2,keepaspectratio=true]{ausgabe1.jpeg}
+\doxyfigcaption{Ausgabe 1}
+\end{DoxyImage}
+   
+
+ 
+\begin{DoxyImage}
+\includegraphics[width=\textwidth,height=\textheight/2,keepaspectratio=true]{ausgabe2.jpeg}
+\doxyfigcaption{Ausgabe 2}
+\end{DoxyImage}
+   
+
+ 
+\begin{DoxyImage}
+\includegraphics[width=\textwidth,height=\textheight/2,keepaspectratio=true]{ausgabe3.jpeg}
+\doxyfigcaption{Ausgabe 3}
+\end{DoxyImage}
+   
+
+\DoxyHorRuler{0}
+\hypertarget{index_autotoc_md24}{}\doxysubsection{\texorpdfstring{Teilprobleme und Lösungsansätze (Fehleranalyse)}{Teilprobleme und Lösungsansätze (Fehleranalyse)}}\label{index_autotoc_md24}
+Im Folgenden werden typische Fehler und ihre Lösungen im Projekt erläutert. ~\newline
+ Jedes Beispiel enthält einen Screenshot sowie eine kurze Analyse und die jeweilige Korrektur.
+
+\DoxyHorRuler{0}
+\hypertarget{index_autotoc_md26}{}\doxysubsubsection{\texorpdfstring{Index\+Error beim Parsen von Benutzerdaten}{Index\+Error beim Parsen von Benutzerdaten}}\label{index_autotoc_md26}
+Beim Parsen der „\+KNOWNUSERS“-\/\+Nachricht wurde die empfangene Zeichenkette mit {\ttfamily info.\+split()} zerlegt, ohne zu prüfen, ob wirklich drei Felder ({\ttfamily Handle}, {\ttfamily IP}, {\ttfamily Port}) vorliegen. Wenn ein Netzwerkpaket fehlformatiert war (z.\+ B. zu wenige Einträge enthielt), wurde auf ein nicht vorhandenes Element zugegriffen – das führte zu einem Index\+Error. Dieser Fehler trat insbesondere bei Netzwerkproblemen oder inkompatiblen Peers auf und konnte das ganze Programm zum Absturz bringen.
+
+ 
+\begin{DoxyImage}
+\includegraphics[width=\textwidth,height=\textheight/2,keepaspectratio=true]{problem1.png}
+\doxyfigcaption{Index\+Error Fix}
+\end{DoxyImage}
+   
+
+\begin{quote}
+{\bfseries{Lösung\+:}} ~\newline
+ Jetzt wird vor dem Zugriff geprüft, ob {\ttfamily len(infos) == 3} gilt. So werden nur gültige Peer-\/\+Informationen akzeptiert und verarbeitet, wodurch Abstürze durch fehlerhafte Netzwerkdaten zuverlässig verhindert werden. \end{quote}
+
+
+\DoxyHorRuler{0}
+\hypertarget{index_autotoc_md28}{}\doxysubsubsection{\texorpdfstring{Relativer Bildpfad und Ordnerprüfung}{Relativer Bildpfad und Ordnerprüfung}}\label{index_autotoc_md28}
+Ursprünglich wurde als Speicherort für empfangene Bilder ein relativer Pfad ({\ttfamily "{}./images"{}}) verwendet. Das war problematisch, da das Verzeichnis je nach aktuellem Arbeitsverzeichnis unterschiedlich interpretiert werden kann und bei fehlender Erstellung Dateioperationen fehlschlugen. Das führte vor allem beim ersten Programmstart zu unerwarteten Fehlern beim Speichern von Bildern.
+
+ 
+\begin{DoxyImage}
+\includegraphics[width=\textwidth,height=\textheight/2,keepaspectratio=true]{problem2.png}
+\doxyfigcaption{Bildpfad Fix}
+\end{DoxyImage}
+   
+
+\begin{quote}
+{\bfseries{Lösung\+:}} ~\newline
+ Die Methode {\ttfamily \+\_\+setup\+\_\+imagepath()} wandelt den Bildpfad jetzt in einen absoluten, benutzerspezifischen Pfad (z.\+ B. {\ttfamily \texorpdfstring{$\sim$}{\string~}/slcp\+\_\+images}) um und legt das Zielverzeichnis automatisch an. Dadurch werden Bilder plattformunabhängig und zuverlässig gespeichert. \end{quote}
+
+
+\DoxyHorRuler{0}
+\hypertarget{index_autotoc_md30}{}\doxysubsubsection{\texorpdfstring{Konsistente CLI-\/\+Befehle und Hilfeanzeige}{Konsistente CLI-\/\+Befehle und Hilfeanzeige}}\label{index_autotoc_md30}
+Die Kommandozeilenschnittstelle (CLI) war zunächst inkonsistent gestaltet. Es gab sowohl den Befehl {\ttfamily /send} als auch {\ttfamily /msg} und die Argumentbeschreibungen waren unklar (z.\+ B. {\ttfamily \texorpdfstring{$<$}{<}message\texorpdfstring{$>$}{>}} statt {\ttfamily \texorpdfstring{$<$}{<}text\texorpdfstring{$>$}{>}}). Das führte dazu, dass neue Benutzer die richtigen Befehle nicht immer sofort fanden und es zu Bedienungsfehlern kam.
+
+ 
+\begin{DoxyImage}
+\includegraphics[width=\textwidth,height=\textheight/2,keepaspectratio=true]{problem3.png}
+\doxyfigcaption{CLI-\/\+Hilfe}
+\end{DoxyImage}
+   
+
+\begin{quote}
+{\bfseries{Lösung\+:}} ~\newline
+ Alle Befehle und Hilfetexte wurden vereinheitlicht. Die CLI verwendet jetzt konsistente Benennungen wie {\ttfamily /msg} und eindeutige Argumente, was die Benutzung erleichtert und Missverständnisse minimiert. \end{quote}
+
+
+\DoxyHorRuler{0}
+\hypertarget{index_autotoc_md32}{}\doxysubsubsection{\texorpdfstring{Flexibler Umgang mit Peer-\/\+Daten (JOIN/\+KNOWNUSERS)}{Flexibler Umgang mit Peer-\/\+Daten (JOIN/\+KNOWNUSERS)}}\label{index_autotoc_md32}
+Bei der Verarbeitung von Peer-\/\+Informationen (insbesondere bei JOIN/\+KNOWNUSERS) wurden Einträge starr nach IP und Handle verglichen. Dadurch kam es gelegentlich zu unvollständigen oder doppelten Listen – etwa, wenn ein Nutzer mehrfach im Netzwerk auftauchte oder sich seine IP-\/\+Adresse änderte.
+
+ 
+\begin{DoxyImage}
+\includegraphics[width=\textwidth,height=\textheight/2,keepaspectratio=true]{problem4.png}
+\doxyfigcaption{Peer-\/\+Daten Fix}
+\end{DoxyImage}
+   
+
+\begin{quote}
+{\bfseries{Lösung\+:}} ~\newline
+ Die neue Logik sammelt alle Peer-\/\+Daten und prüft erst nach dem Sammeln, ob Einträge tatsächlich zur eigenen Instanz gehören. Die eigene Information wird gezielt am Ende der Liste eingefügt, doppelte Einträge werden zuverlässig vermieden. \end{quote}
+
+
+\DoxyHorRuler{0}
+\hypertarget{index_autotoc_md34}{}\doxysubsubsection{\texorpdfstring{Konsolidierung mehrerer KNOWNUSERS-\/\+Antworten}{Konsolidierung mehrerer KNOWNUSERS-\/\+Antworten}}\label{index_autotoc_md34}
+Wenn eine WHO-\/\+Anfrage gestellt wurde, konnten mehrere „\+KNOWNUSERS“-\/\+Antworten fast gleichzeitig eintreffen. Der ursprüngliche Code verarbeitete jede Antwort einzeln, wodurch Informationen verloren gehen konnten, wenn Nachrichten schnell hintereinander empfangen wurden.
+
+
+\begin{DoxyImage}
+\includegraphics[width=12cm]{problem5.png}
+\doxyfigcaption{Knownusers Konsolidierung – vorher}
+\end{DoxyImage}
+
+
+
+\begin{DoxyImage}
+\includegraphics[width=12cm]{problem5fix.png}
+\doxyfigcaption{Knownusers Konsolidierung – nachher}
+\end{DoxyImage}
+
+
+\begin{quote}
+{\bfseries{Lösung\+:}} ~\newline
+ Die neue Funktion {\ttfamily handle\+\_\+knownusers\+\_\+response} sammelt alle Antworten für eine kurze Zeit, konsolidiert die erhaltenen Daten und übergibt die vollständige Liste dann gesammelt an das Interface. \end{quote}
+
+
+\DoxyHorRuler{0}
+\hypertarget{index_autotoc_md36}{}\doxysubsubsection{\texorpdfstring{Verbesserte Anzeige des Absenders}{Verbesserte Anzeige des Absenders}}\label{index_autotoc_md36}
+Beim Anzeigen eingehender Nachrichten wurde bisher oft nur die rohe IP-\/\+Adresse des Absenders angezeigt, selbst wenn dessen Handle bekannt war. Das erschwerte die Zuordnung und war wenig benutzerfreundlich.
+
+ 
+\begin{DoxyImage}
+\includegraphics[width=\textwidth,height=\textheight/2,keepaspectratio=true]{problem6.png}
+\doxyfigcaption{Absenderanzeige}
+\end{DoxyImage}
+   
+
+\begin{quote}
+{\bfseries{Lösung\+:}} ~\newline
+ Jetzt wird – sofern möglich – immer der Benutzername (Handle) angezeigt. Ist dieser nicht bekannt, erscheint stattdessen „\+Unbekannt“. \end{quote}
+
+
+\DoxyHorRuler{0}
+\hypertarget{index_autotoc_md38}{}\doxysubsubsection{\texorpdfstring{Doppelte Einträge in WHO/\+KNOWNUSERS-\/\+Liste}{Doppelte Einträge in WHO/\+KNOWNUSERS-\/\+Liste}}\label{index_autotoc_md38}
+Die Peer-\/\+Liste enthielt manchmal doppelte Einträge, da bei jedem Empfang der eigenen Information diese erneut angehängt wurde. Das sorgte für Unübersichtlichkeit in der Nutzeranzeige.
+
+ 
+\begin{DoxyImage}
+\includegraphics[width=\textwidth,height=\textheight/2,keepaspectratio=true]{problem7.png}
+\doxyfigcaption{Peerlist Duplikate}
+\end{DoxyImage}
+   
+
+\begin{quote}
+{\bfseries{Lösung\+:}} ~\newline
+ Mithilfe einer sogenannten „seen“-\/\+Menge werden doppelte Einträge beim Sammeln gezielt vermieden. \end{quote}
+
+
+\DoxyHorRuler{0}
+
+
+{\bfseries{Weitere Details und vollständige Screenshots siehe\+:}} ~\newline
+ \href{docs/Screenshots\%20mit\%20Fehleranalyse\%20final.odt}{\texttt{Screenshots mit Fehleranalyse}}
+
+\DoxyHorRuler{0}
+\hypertarget{index_autotoc_md41}{}\doxysubsection{\texorpdfstring{Bedienung}{Bedienung}}\label{index_autotoc_md41}
+
+\begin{DoxyItemize}
+\item {\bfseries{Start\+:}} ~\newline
+ \`{}\`{}\`{}bash python main.\+py 
+\end{DoxyItemize}

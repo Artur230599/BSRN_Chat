@@ -1,0 +1,352 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="de">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.14.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>DOKUMENTATION: DOKUMENTATION</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">DOKUMENTATION
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Erzeugt von Doxygen 1.14.0 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+$(function() { codefold.init(); });
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','Suchen',true);
+  $(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(function(){initNavTree('index.html','',''); });
+</script>
+<div id="container">
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Lade ...</div>
+<div class="SRStatus" id="Searching">Suche ...</div>
+<div class="SRStatus" id="NoMatches">Keine Treffer</div>
+</div>
+</div>
+</div>
+</div>
+
+<div><div class="header">
+  <div class="headertitle"><div class="title">DOKUMENTATION </div></div>
+</div><!--header-->
+<div class="contents">
+<div class="textblock"><h1 class="doxsection"><a class="anchor" id="autotoc_md0"></a>
+Peer-to-Peer Chat – Dokumentation</h1>
+<hr  />
+<h2 class="doxsection"><a class="anchor" id="autotoc_md2"></a>
+Projektüberblick</h2>
+<p>Ein dezentraler Chat-Client im lokalen Netzwerk, der Text- und Bildnachrichten ohne zentralen Server ermöglicht. <br  />
+ Hauptfunktionen: Peer Discovery, Text- und Bildübertragung, Kommandozeilen-Bedienung (CLI), automatische Nutzererkennung.</p>
+<h3 class="doxsection"><a class="anchor" id="autotoc_md3"></a>
+Gruppenmitglieder</h3>
+<ul>
+<li>Aysha Aryubi</li>
+<li>Nhu Ngoc Le</li>
+<li>Artur Gubarkov</li>
+</ul>
+<h3 class="doxsection"><a class="anchor" id="autotoc_md4"></a>
+Abgabedatum / Semester / Kurs</h3>
+<ul>
+<li>Abgabedatum: 22. Juni 2025</li>
+<li>Semester: SoSe 2025</li>
+<li>Kurs: Betriebssysteme und Rechnernetze</li>
+<li>Dozent: Prof. Dr.-Ing. Markus Miettinen</li>
+</ul>
+<hr  />
+<h2 class="doxsection"><a class="anchor" id="autotoc_md6"></a>
+Architektur</h2>
+<p>Das System ist modular aufgebaut und besteht aus folgenden Hauptkomponenten:</p>
+<ul>
+<li><b>Interface (CLI):</b> Stellt die Kommandozeilen-Bedienung bereit. Nutzer gibt hier Befehle wie <span class="tt">/msg</span>, <span class="tt">/img</span>, <span class="tt">/who</span> usw. ein. Das Interface leitet die Befehle an den Messenger weiter und zeigt empfangene Nachrichten und Bilder an.</li>
+<li><b>Messenger:</b> Übernimmt die Netzwerkkommunikation. Sendet und empfängt Nachrichten sowie Bilder über UDP/TCP. Kommuniziert direkt mit Interface, DiscoveryService und nutzt das Protocol-Modul zum Kodieren/Dekodieren der Nachrichten.</li>
+<li><b>Protocol:</b> Stellt Funktionen zum Kodieren und Parsen des SLCP-Protokolls bereit (JOIN, MSG, IMG etc.).</li>
+<li><b>DiscoveryService:</b> Verantwortlich für Peer-Discovery im lokalen Netzwerk mittels UDP-Broadcasts (JOIN, WHO, LEAVE, KNOWNUSERS). Pflegt eine aktuelle Liste bekannter Teilnehmer.</li>
+<li><b>Config:</b> Verwaltet alle Einstellungen (wie Benutzername, Port, Bildverzeichnis) über eine TOML-Datei. Wird von Messenger und DiscoveryService geladen.</li>
+<li><b>main.py:</b> Startet und verbindet alle Komponenten.</li>
+</ul>
+<p>Das Zusammenspiel der Komponenten ist im folgenden Architekturdiagramm dargestellt:</p>
+<p></p>
+<hr  />
+<h2 class="doxsection"><a class="anchor" id="autotoc_md8"></a>
+Verwendete Technologien &amp; Tools</h2>
+<ul>
+<li><b>Programmiersprache:</b> Python 3.10+</li>
+<li><b>Libraries:</b> socket, threading, asyncio, toml, colorama</li>
+<li><b>Doxygen:</b> für technische Dokumentation (HTML, PDF)</li>
+<li><b>Git:</b> für Versionierung (GitHub)</li>
+<li><b>Konfigurationsdatei:</b> TOML-Format (slcp_config.toml)</li>
+<li><b>Entwicklungsumgebung:</b> PyCharm</li>
+</ul>
+<hr  />
+<h2 class="doxsection"><a class="anchor" id="autotoc_md10"></a>
+Protokollübersicht (SLCP)</h2>
+<p>Textbasierte Kommandos im Simple Local Chat Protocol:</p>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">Befehl  </th><th class="markdownTableHeadNone">Parameter  </th><th class="markdownTableHeadNone">Beschreibung  </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">JOIN  </td><td class="markdownTableBodyNone"><span class="tt">&lt;Handle&gt; &lt;Port&gt;</span>  </td><td class="markdownTableBodyNone">Tritt dem Chat bei  </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">LEAVE  </td><td class="markdownTableBodyNone"><span class="tt">&lt;Handle&gt;</span>  </td><td class="markdownTableBodyNone">Verlässt den Chat  </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">MSG  </td><td class="markdownTableBodyNone"><span class="tt">&lt;Handle&gt; &lt;Text&gt;</span>  </td><td class="markdownTableBodyNone">Sendet Nachricht an Nutzer  </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">IMG  </td><td class="markdownTableBodyNone"><span class="tt">&lt;Handle&gt; &lt;Size&gt;</span>  </td><td class="markdownTableBodyNone">Bildübertragung starten  </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">WHO  </td><td class="markdownTableBodyNone">-  </td><td class="markdownTableBodyNone">Fragt bekannte Nutzer ab  </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">KNOWNUSERS  </td><td class="markdownTableBodyNone"><span class="tt">&lt;Liste&gt;</span>  </td><td class="markdownTableBodyNone">Antwort mit bekannten Nutzern  </td></tr>
+</table>
+<hr  />
+<h3 class="doxsection"><a class="anchor" id="autotoc_md12"></a>
+Ablauf beim Anmelden im Chat</h3>
+<p>Im Folgenden wird gezeigt, wie ein Nutzer dem Chat beitritt:</p>
+<ol type="1">
+<li><b>Alice</b> gibt im Interface den Befehl /join ein.</li>
+<li><b>Das Interface</b> ruft im Messenger die Funktion zum Beitreten auf.</li>
+<li><b>Der Messenger</b> veranlasst den Discovery-Service, eine JOIN Alice &lt;Port&gt;-Nachricht per UDP-Broadcast im lokalen Netzwerk zu senden.</li>
+<li><b>Alle Discovery-Services</b> der anderen Peers empfangen die JOIN-Nachricht und nehmen Alice in ihre Peer-Liste auf.</li>
+<li><b>Alice</b> ist jetzt als aktiver Teilnehmer im Chat-Netzwerk bekannt.</li>
+</ol>
+<p>Der Ablauf ist im folgenden Diagramm dargestellt:</p>
+<p></p>
+<hr  />
+<h3 class="doxsection"><a class="anchor" id="autotoc_md14"></a>
+Ablauf beim Abmelden aus dem Chat</h3>
+<p>Im Folgenden wird gezeigt, wie ein Nutzer den Chat verlässt:</p>
+<ol type="1">
+<li><b>Alice</b> gibt im Interface den Befehl /leave ein.</li>
+<li><b>Das Interface</b> ruft im Messenger die Funktion zum Verlassen des Chats auf.</li>
+<li><b>Der Messenger</b> veranlasst den Discovery-Service, eine LEAVE Alice-Nachricht per UDP-Broadcast im lokalen Netzwerk zu senden.</li>
+<li><b>Alle Discovery-Services</b> der anderen Peers empfangen die LEAVE-Nachricht und entfernen Alice aus ihrer Peer-Liste.</li>
+<li><b>Alice</b> wird aus dem Netzwerk entfernt und erscheint nicht mehr als aktiver Teilnehmer.</li>
+</ol>
+<p>Der Ablauf ist im folgenden Diagramm dargestellt:</p>
+<p></p>
+<hr  />
+<h3 class="doxsection"><a class="anchor" id="autotoc_md16"></a>
+Ablauf beim Abfragen und Empfangen der Nutzerliste</h3>
+<p>Im Folgenden wird gezeigt, wie die Liste aller aktiven Nutzer im Chat abgefragt wird:</p>
+<ol type="1">
+<li><b>Bob</b> gibt im Interface den Befehl /who ein.</li>
+<li><b>Das Interface</b> ruft im Messenger die Funktion zum Senden einer WHO-Anfrage auf.</li>
+<li><b>Der Messenger</b> veranlasst den Discovery-Service, eine WHO-Nachricht per UDP-Broadcast an alle Discovery-Services im lokalen Netzwerk zu senden.</li>
+<li><b>Jeder Discovery-Service</b> (bei allen aktiven Peers) empfängt die WHO-Anfrage und antwortet per Unicast mit einer eigenen KNOWNUSERS-Nachricht, die alle aktuell bekannten Nutzer (Handle, IP, Port) enthält.</li>
+<li><b>Der Messenger von Bob</b> empfängt eine oder mehrere KNOWNUSERS-Antworten, konsolidiert die Einträge (entfernt ggf. Duplikate) und aktualisiert seine interne Peer-Liste.</li>
+<li><b>Das Interface bei Bob</b> zeigt daraufhin die vollständige Liste aller aktuell erreichbaren Nutzer im Terminal an.</li>
+</ol>
+<p>Der Ablauf ist im folgenden Diagramm dargestellt:</p>
+<p></p>
+<hr  />
+<h3 class="doxsection"><a class="anchor" id="autotoc_md18"></a>
+Ablauf beim Senden einer Textnachricht</h3>
+<p>Im Folgenden wird gezeigt, wie ein Bild vom Nutzer „Alice“ an „Bob“ gesendet wird:</p>
+<ol type="1">
+<li><b>Alice</b> gibt im Interface den Befehl /msg Bob Hallo Bob! ein.</li>
+<li><b>Das Interface</b> ruft im Messenger die Funktion zum Senden einer Nachricht auf.</li>
+<li><b>Der Messenger</b> ermittelt die Netzwerkadresse von Bob und sendet den SLCP-Befehl MSG Bob "Hallo Bob!" per UDP direkt an Bobs Peer-Adresse.</li>
+<li><b>Bob's Messenger</b> empfängt die Nachricht, prüft den Befehl und übergibt den Text an das lokale Interface.</li>
+<li><b>Das Interface bei Bob</b> zeigt die empfangene Nachricht sofort im Terminal an.</li>
+</ol>
+<p>Der Ablauf ist im folgenden Diagramm dargestellt:</p>
+<p></p>
+<hr  />
+<h3 class="doxsection"><a class="anchor" id="autotoc_md20"></a>
+Ablauf beim Senden eines Bildes</h3>
+<p>Im Folgenden wird gezeigt, wie ein Bild vom Nutzer „Alice“ an „Bob“ gesendet wird:</p>
+<ol type="1">
+<li><b>Alice</b> gibt im Interface den Befehl <span class="tt">/img Bob pfad/zum/bild.jpg</span> ein.</li>
+<li><b>Das Interface</b> ruft im Messenger die Funktion zum Senden eines Bildes auf.</li>
+<li><b>Der Messenger</b> öffnet eine TCP-Verbindung zum Peer (Bob), sendet den SLCP-Befehl <span class="tt">IMG Bob &lt;Größe&gt;</span>, danach die Bilddaten als Bytestream.</li>
+<li><b>Bob's Messenger</b> nimmt die Verbindung entgegen, liest Befehl und Daten und speichert das Bild im vorgegebenen Ordner.</li>
+<li><b>Das Interface bei Bob</b> zeigt eine Benachrichtigung über das empfangene Bild an.</li>
+</ol>
+<p>Der Ablauf ist im folgenden Diagramm dargestellt:</p>
+<p></p>
+<hr  />
+<h3 class="doxsection"><a class="anchor" id="autotoc_md22"></a>
+Ausgabe-Beispiel</h3>
+<p>Im Folgenden einige Screenshots der CLI-Anwendung:</p>
+<div class="image">
+<img src="ausgabe1.jpeg" alt=""/>
+<div class="caption">
+Ausgabe 1</div></div>
+    <div class="image">
+<img src="ausgabe2.jpeg" alt=""/>
+<div class="caption">
+Ausgabe 2</div></div>
+    <div class="image">
+<img src="ausgabe3.jpeg" alt=""/>
+<div class="caption">
+Ausgabe 3</div></div>
+    <hr  />
+<h2 class="doxsection"><a class="anchor" id="autotoc_md24"></a>
+Teilprobleme und Lösungsansätze (Fehleranalyse)</h2>
+<p>Im Folgenden werden typische Fehler und ihre Lösungen im Projekt erläutert. <br  />
+ Jedes Beispiel enthält einen Screenshot sowie eine kurze Analyse und die jeweilige Korrektur.</p>
+<hr  />
+<h3 class="doxsection"><a class="anchor" id="autotoc_md26"></a>
+IndexError beim Parsen von Benutzerdaten</h3>
+<p>Beim Parsen der „KNOWNUSERS“-Nachricht wurde die empfangene Zeichenkette mit <span class="tt">info.split()</span> zerlegt, ohne zu prüfen, ob wirklich drei Felder (<span class="tt">Handle</span>, <span class="tt">IP</span>, <span class="tt">Port</span>) vorliegen. Wenn ein Netzwerkpaket fehlformatiert war (z. B. zu wenige Einträge enthielt), wurde auf ein nicht vorhandenes Element zugegriffen – das führte zu einem IndexError. Dieser Fehler trat insbesondere bei Netzwerkproblemen oder inkompatiblen Peers auf und konnte das ganze Programm zum Absturz bringen.</p>
+<div class="image">
+<img src="problem1.png" alt=""/>
+<div class="caption">
+IndexError Fix</div></div>
+    <blockquote class="doxtable">
+<p><b>Lösung:</b> <br  />
+ Jetzt wird vor dem Zugriff geprüft, ob <span class="tt">len(infos) == 3</span> gilt. So werden nur gültige Peer-Informationen akzeptiert und verarbeitet, wodurch Abstürze durch fehlerhafte Netzwerkdaten zuverlässig verhindert werden. </p>
+</blockquote>
+<hr  />
+<h3 class="doxsection"><a class="anchor" id="autotoc_md28"></a>
+Relativer Bildpfad und Ordnerprüfung</h3>
+<p>Ursprünglich wurde als Speicherort für empfangene Bilder ein relativer Pfad (<span class="tt">"./images"</span>) verwendet. Das war problematisch, da das Verzeichnis je nach aktuellem Arbeitsverzeichnis unterschiedlich interpretiert werden kann und bei fehlender Erstellung Dateioperationen fehlschlugen. Das führte vor allem beim ersten Programmstart zu unerwarteten Fehlern beim Speichern von Bildern.</p>
+<div class="image">
+<img src="problem2.png" alt=""/>
+<div class="caption">
+Bildpfad Fix</div></div>
+    <blockquote class="doxtable">
+<p><b>Lösung:</b> <br  />
+ Die Methode <span class="tt">_setup_imagepath()</span> wandelt den Bildpfad jetzt in einen absoluten, benutzerspezifischen Pfad (z. B. <span class="tt">~/slcp_images</span>) um und legt das Zielverzeichnis automatisch an. Dadurch werden Bilder plattformunabhängig und zuverlässig gespeichert. </p>
+</blockquote>
+<hr  />
+<h3 class="doxsection"><a class="anchor" id="autotoc_md30"></a>
+Konsistente CLI-Befehle und Hilfeanzeige</h3>
+<p>Die Kommandozeilenschnittstelle (CLI) war zunächst inkonsistent gestaltet. Es gab sowohl den Befehl <span class="tt">/send</span> als auch <span class="tt">/msg</span> und die Argumentbeschreibungen waren unklar (z. B. <span class="tt">&lt;message&gt;</span> statt <span class="tt">&lt;text&gt;</span>). Das führte dazu, dass neue Benutzer die richtigen Befehle nicht immer sofort fanden und es zu Bedienungsfehlern kam.</p>
+<div class="image">
+<img src="problem3.png" alt=""/>
+<div class="caption">
+CLI-Hilfe</div></div>
+    <blockquote class="doxtable">
+<p><b>Lösung:</b> <br  />
+ Alle Befehle und Hilfetexte wurden vereinheitlicht. Die CLI verwendet jetzt konsistente Benennungen wie <span class="tt">/msg</span> und eindeutige Argumente, was die Benutzung erleichtert und Missverständnisse minimiert. </p>
+</blockquote>
+<hr  />
+<h3 class="doxsection"><a class="anchor" id="autotoc_md32"></a>
+Flexibler Umgang mit Peer-Daten (JOIN/KNOWNUSERS)</h3>
+<p>Bei der Verarbeitung von Peer-Informationen (insbesondere bei JOIN/KNOWNUSERS) wurden Einträge starr nach IP und Handle verglichen. Dadurch kam es gelegentlich zu unvollständigen oder doppelten Listen – etwa, wenn ein Nutzer mehrfach im Netzwerk auftauchte oder sich seine IP-Adresse änderte.</p>
+<div class="image">
+<img src="problem4.png" alt=""/>
+<div class="caption">
+Peer-Daten Fix</div></div>
+    <blockquote class="doxtable">
+<p><b>Lösung:</b> <br  />
+ Die neue Logik sammelt alle Peer-Daten und prüft erst nach dem Sammeln, ob Einträge tatsächlich zur eigenen Instanz gehören. Die eigene Information wird gezielt am Ende der Liste eingefügt, doppelte Einträge werden zuverlässig vermieden. </p>
+</blockquote>
+<hr  />
+<h3 class="doxsection"><a class="anchor" id="autotoc_md34"></a>
+Konsolidierung mehrerer KNOWNUSERS-Antworten</h3>
+<p>Wenn eine WHO-Anfrage gestellt wurde, konnten mehrere „KNOWNUSERS“-Antworten fast gleichzeitig eintreffen. Der ursprüngliche Code verarbeitete jede Antwort einzeln, wodurch Informationen verloren gehen konnten, wenn Nachrichten schnell hintereinander empfangen wurden.</p>
+<p></p>
+<p></p>
+<blockquote class="doxtable">
+<p><b>Lösung:</b> <br  />
+ Die neue Funktion <span class="tt">handle_knownusers_response</span> sammelt alle Antworten für eine kurze Zeit, konsolidiert die erhaltenen Daten und übergibt die vollständige Liste dann gesammelt an das Interface. </p>
+</blockquote>
+<hr  />
+<h3 class="doxsection"><a class="anchor" id="autotoc_md36"></a>
+Verbesserte Anzeige des Absenders</h3>
+<p>Beim Anzeigen eingehender Nachrichten wurde bisher oft nur die rohe IP-Adresse des Absenders angezeigt, selbst wenn dessen Handle bekannt war. Das erschwerte die Zuordnung und war wenig benutzerfreundlich.</p>
+<div class="image">
+<img src="problem6.png" alt=""/>
+<div class="caption">
+Absenderanzeige</div></div>
+    <blockquote class="doxtable">
+<p><b>Lösung:</b> <br  />
+ Jetzt wird – sofern möglich – immer der Benutzername (Handle) angezeigt. Ist dieser nicht bekannt, erscheint stattdessen „Unbekannt“. </p>
+</blockquote>
+<hr  />
+<h3 class="doxsection"><a class="anchor" id="autotoc_md38"></a>
+Doppelte Einträge in WHO/KNOWNUSERS-Liste</h3>
+<p>Die Peer-Liste enthielt manchmal doppelte Einträge, da bei jedem Empfang der eigenen Information diese erneut angehängt wurde. Das sorgte für Unübersichtlichkeit in der Nutzeranzeige.</p>
+<div class="image">
+<img src="problem7.png" alt=""/>
+<div class="caption">
+Peerlist Duplikate</div></div>
+    <blockquote class="doxtable">
+<p><b>Lösung:</b> <br  />
+ Mithilfe einer sogenannten „seen“-Menge werden doppelte Einträge beim Sammeln gezielt vermieden. </p>
+</blockquote>
+<hr  />
+<p><b>Weitere Details und vollständige Screenshots siehe:</b> <br  />
+ <a href="docs/Screenshots%20mit%20Fehleranalyse%20final.odt">Screenshots mit Fehleranalyse</a></p>
+<hr  />
+<h2 class="doxsection"><a class="anchor" id="autotoc_md41"></a>
+Bedienung</h2>
+<ul>
+<li><b>Start:</b> <br  />
+ ```bash python main.py </li>
+</ul>
+</div></div><!-- PageDoc -->
+<a href="doxygen_crawl.html"></a>
+</div><!-- contents -->
+</div><!-- doc-content -->
+</div><!-- container -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="footer">Erzeugt von <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.14.0 </li>
+  </ul>
+</div>
+</body>
+</html>

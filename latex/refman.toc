@@ -1,0 +1,119 @@
+\@ifundefined {etoctocstyle}{\let \etoc@startlocaltoc \@gobble \let \etoc@settocdepth \@gobble \let \etoc@depthtag \@gobble \let \etoc@setlocaltop \@gobble }{}
+\babel@toc {ngerman}{}\relax 
+\contentsline {chapter}{\numberline {1}mainpage2 }{1}{chapter.1}%
+\contentsline {section}{\numberline {1.1}Peer-\/to-\/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Peer Chat – Dokumentation}{1}{section.1.1}%
+\contentsline {subsection}{\numberline {1.1.1}Projektüberblick}{1}{subsection.1.1.1}%
+\contentsline {subsubsection}{\numberline {1.1.1.1}Gruppenmitglieder}{1}{subsubsection.1.1.1.1}%
+\contentsline {subsubsection}{\numberline {1.1.1.2}Abgabedatum / Semester / Kurs}{1}{subsubsection.1.1.1.2}%
+\contentsline {subsection}{\numberline {1.1.2}Architektur}{1}{subsection.1.1.2}%
+\contentsline {subsection}{\numberline {1.1.3}Verwendete Technologien \& Tools}{2}{subsection.1.1.3}%
+\contentsline {subsection}{\numberline {1.1.4}Protokollübersicht (SLCP)}{2}{subsection.1.1.4}%
+\contentsline {subsubsection}{\numberline {1.1.4.1}Ablauf beim Anmelden im Chat}{2}{subsubsection.1.1.4.1}%
+\contentsline {subsubsection}{\numberline {1.1.4.2}Ablauf beim Abmelden aus dem Chat}{3}{subsubsection.1.1.4.2}%
+\contentsline {subsubsection}{\numberline {1.1.4.3}Ablauf beim Abfragen und Empfangen der Nutzerliste}{3}{subsubsection.1.1.4.3}%
+\contentsline {subsubsection}{\numberline {1.1.4.4}Ablauf beim Senden einer Textnachricht}{4}{subsubsection.1.1.4.4}%
+\contentsline {subsubsection}{\numberline {1.1.4.5}Ablauf beim Senden eines Bildes}{4}{subsubsection.1.1.4.5}%
+\contentsline {subsubsection}{\numberline {1.1.4.6}Ausgabe-\/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Beispiel}{4}{subsubsection.1.1.4.6}%
+\contentsline {subsection}{\numberline {1.1.5}Teilprobleme und Lösungsansätze (Fehleranalyse)}{6}{subsection.1.1.5}%
+\contentsline {subsubsection}{\numberline {1.1.5.1}Index\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Error beim Parsen von Benutzerdaten}{6}{subsubsection.1.1.5.1}%
+\contentsline {subsubsection}{\numberline {1.1.5.2}Relativer Bildpfad und Ordnerprüfung}{7}{subsubsection.1.1.5.2}%
+\contentsline {subsubsection}{\numberline {1.1.5.3}Konsistente CLI-\/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Befehle und Hilfeanzeige}{8}{subsubsection.1.1.5.3}%
+\contentsline {subsubsection}{\numberline {1.1.5.4}Flexibler Umgang mit Peer-\/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Daten (JOIN/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}KNOWNUSERS)}{9}{subsubsection.1.1.5.4}%
+\contentsline {subsubsection}{\numberline {1.1.5.5}Konsolidierung mehrerer KNOWNUSERS-\/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Antworten}{10}{subsubsection.1.1.5.5}%
+\contentsline {subsubsection}{\numberline {1.1.5.6}Verbesserte Anzeige des Absenders}{12}{subsubsection.1.1.5.6}%
+\contentsline {subsubsection}{\numberline {1.1.5.7}Doppelte Einträge in WHO/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}KNOWNUSERS-\/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Liste}{13}{subsubsection.1.1.5.7}%
+\contentsline {subsection}{\numberline {1.1.6}Bedienung}{14}{subsection.1.1.6}%
+\contentsline {chapter}{\numberline {2}Verzeichnis der Namensbereiche}{15}{chapter.2}%
+\contentsline {section}{\numberline {2.1}Liste aller Namensbereiche}{15}{section.2.1}%
+\contentsline {chapter}{\numberline {3}Hierarchie-\/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Verzeichnis}{17}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Klassenhierarchie}{17}{section.3.1}%
+\contentsline {chapter}{\numberline {4}Klassen-\/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Verzeichnis}{19}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Auflistung der Klassen}{19}{section.4.1}%
+\contentsline {chapter}{\numberline {5}Datei-\/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Verzeichnis}{21}{chapter.5}%
+\contentsline {section}{\numberline {5.1}Auflistung der Dateien}{21}{section.5.1}%
+\contentsline {chapter}{\numberline {6}Dokumentation der Namensbereiche}{23}{chapter.6}%
+\contentsline {section}{\numberline {6.1}config.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}config-\/Namensbereichsreferenz}{23}{section.6.1}%
+\contentsline {subsection}{\numberline {6.1.1}Ausführliche Beschreibung}{23}{subsection.6.1.1}%
+\contentsline {section}{\numberline {6.2}discovery.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}discovery\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}\_\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}service-\/Namensbereichsreferenz}{23}{section.6.2}%
+\contentsline {subsection}{\numberline {6.2.1}Ausführliche Beschreibung}{23}{subsection.6.2.1}%
+\contentsline {subsection}{\numberline {6.2.2}Dokumentation der Funktionen}{23}{subsection.6.2.2}%
+\contentsline {subsubsection}{\numberline {6.2.2.1}is\_port\_in\_use()}{23}{subsubsection.6.2.2.1}%
+\contentsline {section}{\numberline {6.3}interface-\/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Namensbereichsreferenz}{24}{section.6.3}%
+\contentsline {subsection}{\numberline {6.3.1}Ausführliche Beschreibung}{24}{subsection.6.3.1}%
+\contentsline {section}{\numberline {6.4}main-\/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Namensbereichsreferenz}{24}{section.6.4}%
+\contentsline {subsection}{\numberline {6.4.1}Ausführliche Beschreibung}{24}{subsection.6.4.1}%
+\contentsline {subsection}{\numberline {6.4.2}Dokumentation der Funktionen}{24}{subsection.6.4.2}%
+\contentsline {subsubsection}{\numberline {6.4.2.1}main()}{24}{subsubsection.6.4.2.1}%
+\contentsline {section}{\numberline {6.5}network.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}messenger-\/Namensbereichsreferenz}{24}{section.6.5}%
+\contentsline {subsection}{\numberline {6.5.1}Ausführliche Beschreibung}{24}{subsection.6.5.1}%
+\contentsline {chapter}{\numberline {7}Klassen-\/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Dokumentation}{25}{chapter.7}%
+\contentsline {section}{\numberline {7.1}config.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}config.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Config Klassenreferenz}{25}{section.7.1}%
+\contentsline {subsection}{\numberline {7.1.1}Ausführliche Beschreibung}{25}{subsection.7.1.1}%
+\contentsline {subsection}{\numberline {7.1.2}Beschreibung der Konstruktoren und Destruktoren}{25}{subsection.7.1.2}%
+\contentsline {subsubsection}{\numberline {7.1.2.1}\_\_init\_\_()}{25}{subsubsection.7.1.2.1}%
+\contentsline {subsection}{\numberline {7.1.3}Dokumentation der Elementfunktionen}{26}{subsection.7.1.3}%
+\contentsline {subsubsection}{\numberline {7.1.3.1}\_setup\_imagepath()}{26}{subsubsection.7.1.3.1}%
+\contentsline {subsubsection}{\numberline {7.1.3.2}load()}{26}{subsubsection.7.1.3.2}%
+\contentsline {subsubsection}{\numberline {7.1.3.3}save()}{26}{subsubsection.7.1.3.3}%
+\contentsline {section}{\numberline {7.2}discovery.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}discovery\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}\_\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}service.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Discovery\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Service Klassenreferenz}{26}{section.7.2}%
+\contentsline {subsection}{\numberline {7.2.1}Ausführliche Beschreibung}{27}{subsection.7.2.1}%
+\contentsline {subsection}{\numberline {7.2.2}Beschreibung der Konstruktoren und Destruktoren}{27}{subsection.7.2.2}%
+\contentsline {subsubsection}{\numberline {7.2.2.1}\_\_init\_\_()}{27}{subsubsection.7.2.2.1}%
+\contentsline {subsection}{\numberline {7.2.3}Dokumentation der Elementfunktionen}{27}{subsection.7.2.3}%
+\contentsline {subsubsection}{\numberline {7.2.3.1}get\_local\_ip()}{27}{subsubsection.7.2.3.1}%
+\contentsline {subsubsection}{\numberline {7.2.3.2}get\_peers()}{27}{subsubsection.7.2.3.2}%
+\contentsline {subsubsection}{\numberline {7.2.3.3}handle\_message()}{27}{subsubsection.7.2.3.3}%
+\contentsline {subsubsection}{\numberline {7.2.3.4}listen()}{27}{subsubsection.7.2.3.4}%
+\contentsline {subsubsection}{\numberline {7.2.3.5}load\_config()}{28}{subsubsection.7.2.3.5}%
+\contentsline {subsubsection}{\numberline {7.2.3.6}send\_join()}{28}{subsubsection.7.2.3.6}%
+\contentsline {subsubsection}{\numberline {7.2.3.7}send\_leave()}{28}{subsubsection.7.2.3.7}%
+\contentsline {subsubsection}{\numberline {7.2.3.8}send\_who()}{28}{subsubsection.7.2.3.8}%
+\contentsline {subsubsection}{\numberline {7.2.3.9}start()}{28}{subsubsection.7.2.3.9}%
+\contentsline {subsubsection}{\numberline {7.2.3.10}stop()}{28}{subsubsection.7.2.3.10}%
+\contentsline {section}{\numberline {7.3}interface.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Interface Klassenreferenz}{28}{section.7.3}%
+\contentsline {subsection}{\numberline {7.3.1}Ausführliche Beschreibung}{29}{subsection.7.3.1}%
+\contentsline {subsection}{\numberline {7.3.2}Beschreibung der Konstruktoren und Destruktoren}{29}{subsection.7.3.2}%
+\contentsline {subsubsection}{\numberline {7.3.2.1}\_\_init\_\_()}{29}{subsubsection.7.3.2.1}%
+\contentsline {subsection}{\numberline {7.3.3}Dokumentation der Elementfunktionen}{29}{subsection.7.3.3}%
+\contentsline {subsubsection}{\numberline {7.3.3.1}display\_image\_notice()}{29}{subsubsection.7.3.3.1}%
+\contentsline {subsubsection}{\numberline {7.3.3.2}display\_knownusers()}{29}{subsubsection.7.3.3.2}%
+\contentsline {subsubsection}{\numberline {7.3.3.3}display\_message()}{30}{subsubsection.7.3.3.3}%
+\contentsline {subsubsection}{\numberline {7.3.3.4}run()}{30}{subsubsection.7.3.3.4}%
+\contentsline {section}{\numberline {7.4}network.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}messenger.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Messenger Klassenreferenz}{30}{section.7.4}%
+\contentsline {subsection}{\numberline {7.4.1}Ausführliche Beschreibung}{31}{subsection.7.4.1}%
+\contentsline {subsection}{\numberline {7.4.2}Beschreibung der Konstruktoren und Destruktoren}{31}{subsection.7.4.2}%
+\contentsline {subsubsection}{\numberline {7.4.2.1}\_\_init\_\_()}{31}{subsubsection.7.4.2.1}%
+\contentsline {subsection}{\numberline {7.4.3}Dokumentation der Elementfunktionen}{31}{subsection.7.4.3}%
+\contentsline {subsubsection}{\numberline {7.4.3.1}connection\_made()}{31}{subsubsection.7.4.3.1}%
+\contentsline {subsubsection}{\numberline {7.4.3.2}datagram\_received()}{31}{subsubsection.7.4.3.2}%
+\contentsline {subsubsection}{\numberline {7.4.3.3}get\_local\_ip()}{32}{subsubsection.7.4.3.3}%
+\contentsline {subsubsection}{\numberline {7.4.3.4}handle\_knownusers\_response()}{32}{subsubsection.7.4.3.4}%
+\contentsline {subsubsection}{\numberline {7.4.3.5}handle\_message()}{32}{subsubsection.7.4.3.5}%
+\contentsline {subsubsection}{\numberline {7.4.3.6}handle\_tcp\_connection()}{32}{subsubsection.7.4.3.6}%
+\contentsline {subsubsection}{\numberline {7.4.3.7}receive\_image\_data()}{32}{subsubsection.7.4.3.7}%
+\contentsline {subsubsection}{\numberline {7.4.3.8}send\_broadcast()}{33}{subsubsection.7.4.3.8}%
+\contentsline {subsubsection}{\numberline {7.4.3.9}send\_image()}{33}{subsubsection.7.4.3.9}%
+\contentsline {subsubsection}{\numberline {7.4.3.10}send\_image\_data()}{33}{subsubsection.7.4.3.10}%
+\contentsline {subsubsection}{\numberline {7.4.3.11}send\_join()}{33}{subsubsection.7.4.3.11}%
+\contentsline {subsubsection}{\numberline {7.4.3.12}send\_known\_to()}{33}{subsubsection.7.4.3.12}%
+\contentsline {subsubsection}{\numberline {7.4.3.13}send\_leave()}{34}{subsubsection.7.4.3.13}%
+\contentsline {subsubsection}{\numberline {7.4.3.14}send\_message()}{34}{subsubsection.7.4.3.14}%
+\contentsline {subsubsection}{\numberline {7.4.3.15}send\_slcp()}{34}{subsubsection.7.4.3.15}%
+\contentsline {subsubsection}{\numberline {7.4.3.16}send\_who()}{34}{subsubsection.7.4.3.16}%
+\contentsline {subsubsection}{\numberline {7.4.3.17}set\_image\_callback()}{34}{subsubsection.7.4.3.17}%
+\contentsline {subsubsection}{\numberline {7.4.3.18}set\_knownusers\_callback()}{34}{subsubsection.7.4.3.18}%
+\contentsline {subsubsection}{\numberline {7.4.3.19}set\_message\_callback()}{35}{subsubsection.7.4.3.19}%
+\contentsline {subsubsection}{\numberline {7.4.3.20}set\_progress\_callback()}{35}{subsubsection.7.4.3.20}%
+\contentsline {subsubsection}{\numberline {7.4.3.21}start\_listener()}{35}{subsubsection.7.4.3.21}%
+\contentsline {subsubsection}{\numberline {7.4.3.22}start\_tcp\_server()}{35}{subsubsection.7.4.3.22}%
+\contentsline {chapter}{\numberline {8}Datei-\/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Dokumentation}{37}{chapter.8}%
+\contentsline {section}{\numberline {8.1}Chat/common/protocol.py-\/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Dateireferenz}{37}{section.8.1}%
+\contentsline {subsection}{\numberline {8.1.1}Ausführliche Beschreibung}{37}{subsection.8.1.1}%
+\contentsline {subsection}{\numberline {8.1.2}Dokumentation der Funktionen}{37}{subsection.8.1.2}%
+\contentsline {subsubsection}{\numberline {8.1.2.1}create\_img()}{37}{subsubsection.8.1.2.1}%
+\contentsline {subsubsection}{\numberline {8.1.2.2}create\_join()}{37}{subsubsection.8.1.2.2}%
+\contentsline {subsubsection}{\numberline {8.1.2.3}create\_knownusers()}{38}{subsubsection.8.1.2.3}%
+\contentsline {subsubsection}{\numberline {8.1.2.4}create\_leave()}{38}{subsubsection.8.1.2.4}%
+\contentsline {subsubsection}{\numberline {8.1.2.5}create\_msg()}{38}{subsubsection.8.1.2.5}%
+\contentsline {subsubsection}{\numberline {8.1.2.6}create\_who()}{38}{subsubsection.8.1.2.6}%
+\contentsline {subsubsection}{\numberline {8.1.2.7}parse\_slcp()}{38}{subsubsection.8.1.2.7}%

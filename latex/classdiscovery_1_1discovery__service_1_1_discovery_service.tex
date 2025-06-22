@@ -1,0 +1,184 @@
+\doxysection{discovery.\+discovery\+\_\+service.\+Discovery\+Service Klassenreferenz}
+\hypertarget{classdiscovery_1_1discovery__service_1_1_discovery_service}{}\label{classdiscovery_1_1discovery__service_1_1_discovery_service}\index{discovery.discovery\_service.DiscoveryService@{discovery.discovery\_service.DiscoveryService}}
+\doxysubsubsection*{Öffentliche Methoden}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classdiscovery_1_1discovery__service_1_1_discovery_service_ad4cb0d3410d1ef3bd8fd5cdbe85fff72}{\+\_\+\+\_\+init\+\_\+\+\_\+}} (self, config\+\_\+path)
+\item 
+\mbox{\hyperlink{classdiscovery_1_1discovery__service_1_1_discovery_service_a1b4edd9aea1648fce92cab1cb110ddc0}{listen}} (self)
+\item 
+\mbox{\hyperlink{classdiscovery_1_1discovery__service_1_1_discovery_service_afff0642b6602f1dc83f7732628d75270}{handle\+\_\+message}} (self, message, addr)
+\item 
+\mbox{\hyperlink{classdiscovery_1_1discovery__service_1_1_discovery_service_af3cdc54e0691cf50c2a9ee24e21ad9a3}{send\+\_\+who}} (self)
+\item 
+\mbox{\hyperlink{classdiscovery_1_1discovery__service_1_1_discovery_service_a09bf309db43bc10d091bf120231fa538}{get\+\_\+local\+\_\+ip}} (self)
+\item 
+\mbox{\hyperlink{classdiscovery_1_1discovery__service_1_1_discovery_service_ac51feedab296e8077ab74eb2013088b0}{send\+\_\+join}} (self)
+\item 
+\mbox{\hyperlink{classdiscovery_1_1discovery__service_1_1_discovery_service_a34e37d86d78dd9b44d10e7c62e755464}{send\+\_\+leave}} (self)
+\item 
+\mbox{\hyperlink{classdiscovery_1_1discovery__service_1_1_discovery_service_a51d4cc9e0d727af31578d47ecc871810}{get\+\_\+peers}} (self)
+\item 
+\mbox{\hyperlink{classdiscovery_1_1discovery__service_1_1_discovery_service_acc1810922512f2ef89fd2d5ba7cc831d}{start}} (self)
+\item 
+\mbox{\hyperlink{classdiscovery_1_1discovery__service_1_1_discovery_service_a83d9ac379a243a917406813f84e29d79}{stop}} (self)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Öffentliche, statische Methoden}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classdiscovery_1_1discovery__service_1_1_discovery_service_adca2d83aa1d2858144b5969f02a2cebd}{load\+\_\+config}} (path)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Öffentliche Attribute}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classdiscovery_1_1discovery__service_1_1_discovery_service_aec1a8d5cbbef6bc4482d2d0f4558ba74}\label{classdiscovery_1_1discovery__service_1_1_discovery_service_aec1a8d5cbbef6bc4482d2d0f4558ba74} 
+dict {\bfseries peers} = \{\}
+\item 
+\Hypertarget{classdiscovery_1_1discovery__service_1_1_discovery_service_a951a9d6bde344482b870ca79f4660994}\label{classdiscovery_1_1discovery__service_1_1_discovery_service_a951a9d6bde344482b870ca79f4660994} 
+{\bfseries peers\+\_\+lock} = threading.\+Lock()
+\item 
+\Hypertarget{classdiscovery_1_1discovery__service_1_1_discovery_service_aad8119215f0e9b0b9c9cc7997862e2bd}\label{classdiscovery_1_1discovery__service_1_1_discovery_service_aad8119215f0e9b0b9c9cc7997862e2bd} 
+bool {\bfseries running} = True
+\item 
+\Hypertarget{classdiscovery_1_1discovery__service_1_1_discovery_service_ad8e903a0b0022e602ebeca665d507741}\label{classdiscovery_1_1discovery__service_1_1_discovery_service_ad8e903a0b0022e602ebeca665d507741} 
+{\bfseries config} = self.\+load\+\_\+config(config\+\_\+path)
+\item 
+\Hypertarget{classdiscovery_1_1discovery__service_1_1_discovery_service_ab9ca76c84050fc45839c4728e07a344e}\label{classdiscovery_1_1discovery__service_1_1_discovery_service_ab9ca76c84050fc45839c4728e07a344e} 
+{\bfseries handle} = self.\+config\mbox{[}"{}handle"{}\mbox{]}
+\item 
+\Hypertarget{classdiscovery_1_1discovery__service_1_1_discovery_service_a1b43dbc0959946b450b7f372f1318f72}\label{classdiscovery_1_1discovery__service_1_1_discovery_service_a1b43dbc0959946b450b7f372f1318f72} 
+{\bfseries port} = int(self.\+config\mbox{[}"{}port"{}\mbox{]})
+\item 
+\Hypertarget{classdiscovery_1_1discovery__service_1_1_discovery_service_a3912f0a2e0d7c9d90174e47917d06b64}\label{classdiscovery_1_1discovery__service_1_1_discovery_service_a3912f0a2e0d7c9d90174e47917d06b64} 
+{\bfseries whois\+\_\+port} = self.\+config.\+get("{}whoisport"{}, 0)
+\item 
+\Hypertarget{classdiscovery_1_1discovery__service_1_1_discovery_service_a517202cfb185a2b64fd33e188fa230da}\label{classdiscovery_1_1discovery__service_1_1_discovery_service_a517202cfb185a2b64fd33e188fa230da} 
+{\bfseries sock} = socket.\+socket(socket.\+AF\+\_\+\+INET, socket.\+SOCK\+\_\+\+DGRAM)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Ausführliche Beschreibung}
+\begin{DoxyVerb}@class DiscoveryService
+@brief Implementiert den Discovery-Dienst für das dezentrale Chat-System.
+
+Verwaltet bekannte Peers, sendet und empfängt UDP Broadcast-Nachrichten.
+\end{DoxyVerb}
+ 
+
+\label{doc-constructors}
+\Hypertarget{classdiscovery_1_1discovery__service_1_1_discovery_service_doc-constructors}
+\doxysubsection{Beschreibung der Konstruktoren und Destruktoren}
+\Hypertarget{classdiscovery_1_1discovery__service_1_1_discovery_service_ad4cb0d3410d1ef3bd8fd5cdbe85fff72}\index{discovery.discovery\_service.DiscoveryService@{discovery.discovery\_service.DiscoveryService}!\_\_init\_\_@{\_\_init\_\_}}
+\index{\_\_init\_\_@{\_\_init\_\_}!discovery.discovery\_service.DiscoveryService@{discovery.discovery\_service.DiscoveryService}}
+\doxysubsubsection{\texorpdfstring{\_\_init\_\_()}{\_\_init\_\_()}}
+{\footnotesize\ttfamily \label{classdiscovery_1_1discovery__service_1_1_discovery_service_ad4cb0d3410d1ef3bd8fd5cdbe85fff72} 
+discovery.\+discovery\+\_\+service.\+Discovery\+Service.\+\_\+\+\_\+init\+\_\+\+\_\+ (\begin{DoxyParamCaption}\item[{}]{self}{, }\item[{}]{config\+\_\+path}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}@brief Konstruktor für den DiscoveryService.
+
+Lädt Konfiguration, initialisiert Variablen und bindet UDP Socket.
+
+@param config_path Pfad zur TOML-Konfigurationsdatei
+\end{DoxyVerb}
+ 
+
+\label{doc-func-members}
+\Hypertarget{classdiscovery_1_1discovery__service_1_1_discovery_service_doc-func-members}
+\doxysubsection{Dokumentation der Elementfunktionen}
+\Hypertarget{classdiscovery_1_1discovery__service_1_1_discovery_service_a09bf309db43bc10d091bf120231fa538}\index{discovery.discovery\_service.DiscoveryService@{discovery.discovery\_service.DiscoveryService}!get\_local\_ip@{get\_local\_ip}}
+\index{get\_local\_ip@{get\_local\_ip}!discovery.discovery\_service.DiscoveryService@{discovery.discovery\_service.DiscoveryService}}
+\doxysubsubsection{\texorpdfstring{get\_local\_ip()}{get\_local\_ip()}}
+{\footnotesize\ttfamily \label{classdiscovery_1_1discovery__service_1_1_discovery_service_a09bf309db43bc10d091bf120231fa538} 
+discovery.\+discovery\+\_\+service.\+Discovery\+Service.\+get\+\_\+local\+\_\+ip (\begin{DoxyParamCaption}\item[{}]{self}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}@brief Ermittelt die lokale IP-Adresse des Hosts.
+
+@return String mit der lokalen IP-Adresse
+\end{DoxyVerb}
+ \Hypertarget{classdiscovery_1_1discovery__service_1_1_discovery_service_a51d4cc9e0d727af31578d47ecc871810}\index{discovery.discovery\_service.DiscoveryService@{discovery.discovery\_service.DiscoveryService}!get\_peers@{get\_peers}}
+\index{get\_peers@{get\_peers}!discovery.discovery\_service.DiscoveryService@{discovery.discovery\_service.DiscoveryService}}
+\doxysubsubsection{\texorpdfstring{get\_peers()}{get\_peers()}}
+{\footnotesize\ttfamily \label{classdiscovery_1_1discovery__service_1_1_discovery_service_a51d4cc9e0d727af31578d47ecc871810} 
+discovery.\+discovery\+\_\+service.\+Discovery\+Service.\+get\+\_\+peers (\begin{DoxyParamCaption}\item[{}]{self}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}@brief Gibt eine Kopie der aktuellen Peer-Liste zurück.
+
+@return Dictionary mit Peers {handle: (IP, Port)}
+\end{DoxyVerb}
+ \Hypertarget{classdiscovery_1_1discovery__service_1_1_discovery_service_afff0642b6602f1dc83f7732628d75270}\index{discovery.discovery\_service.DiscoveryService@{discovery.discovery\_service.DiscoveryService}!handle\_message@{handle\_message}}
+\index{handle\_message@{handle\_message}!discovery.discovery\_service.DiscoveryService@{discovery.discovery\_service.DiscoveryService}}
+\doxysubsubsection{\texorpdfstring{handle\_message()}{handle\_message()}}
+{\footnotesize\ttfamily \label{classdiscovery_1_1discovery__service_1_1_discovery_service_afff0642b6602f1dc83f7732628d75270} 
+discovery.\+discovery\+\_\+service.\+Discovery\+Service.\+handle\+\_\+message (\begin{DoxyParamCaption}\item[{}]{self}{, }\item[{}]{message}{, }\item[{}]{addr}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}@brief Verarbeitet eingehende UDP-Nachrichten gemäß Protokoll.
+
+@param message Empfangene Nachricht als String
+@param addr Adresse des Senders (IP, Port)
+\end{DoxyVerb}
+ \Hypertarget{classdiscovery_1_1discovery__service_1_1_discovery_service_a1b4edd9aea1648fce92cab1cb110ddc0}\index{discovery.discovery\_service.DiscoveryService@{discovery.discovery\_service.DiscoveryService}!listen@{listen}}
+\index{listen@{listen}!discovery.discovery\_service.DiscoveryService@{discovery.discovery\_service.DiscoveryService}}
+\doxysubsubsection{\texorpdfstring{listen()}{listen()}}
+{\footnotesize\ttfamily \label{classdiscovery_1_1discovery__service_1_1_discovery_service_a1b4edd9aea1648fce92cab1cb110ddc0} 
+discovery.\+discovery\+\_\+service.\+Discovery\+Service.\+listen (\begin{DoxyParamCaption}\item[{}]{self}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}@brief Endlosschleife zum Empfangen und Verarbeiten von UDP-Nachrichten.
+
+Läuft in eigenem Thread, verarbeitet JOIN, LEAVE, WHO und KNOWNUSERS Nachrichten.
+\end{DoxyVerb}
+ \Hypertarget{classdiscovery_1_1discovery__service_1_1_discovery_service_adca2d83aa1d2858144b5969f02a2cebd}\index{discovery.discovery\_service.DiscoveryService@{discovery.discovery\_service.DiscoveryService}!load\_config@{load\_config}}
+\index{load\_config@{load\_config}!discovery.discovery\_service.DiscoveryService@{discovery.discovery\_service.DiscoveryService}}
+\doxysubsubsection{\texorpdfstring{load\_config()}{load\_config()}}
+{\footnotesize\ttfamily \label{classdiscovery_1_1discovery__service_1_1_discovery_service_adca2d83aa1d2858144b5969f02a2cebd} 
+discovery.\+discovery\+\_\+service.\+Discovery\+Service.\+load\+\_\+config (\begin{DoxyParamCaption}\item[{}]{path}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\begin{DoxyVerb}@brief Lädt eine TOML-Konfigurationsdatei.
+
+@param path Pfad zur TOML-Datei
+@return Dictionary mit Konfigurationsdaten oder leeres Dict bei Fehler
+\end{DoxyVerb}
+ \Hypertarget{classdiscovery_1_1discovery__service_1_1_discovery_service_ac51feedab296e8077ab74eb2013088b0}\index{discovery.discovery\_service.DiscoveryService@{discovery.discovery\_service.DiscoveryService}!send\_join@{send\_join}}
+\index{send\_join@{send\_join}!discovery.discovery\_service.DiscoveryService@{discovery.discovery\_service.DiscoveryService}}
+\doxysubsubsection{\texorpdfstring{send\_join()}{send\_join()}}
+{\footnotesize\ttfamily \label{classdiscovery_1_1discovery__service_1_1_discovery_service_ac51feedab296e8077ab74eb2013088b0} 
+discovery.\+discovery\+\_\+service.\+Discovery\+Service.\+send\+\_\+join (\begin{DoxyParamCaption}\item[{}]{self}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}@brief Sendet eine JOIN-Nachricht als Broadcast, um sich anzumelden.
+\end{DoxyVerb}
+ \Hypertarget{classdiscovery_1_1discovery__service_1_1_discovery_service_a34e37d86d78dd9b44d10e7c62e755464}\index{discovery.discovery\_service.DiscoveryService@{discovery.discovery\_service.DiscoveryService}!send\_leave@{send\_leave}}
+\index{send\_leave@{send\_leave}!discovery.discovery\_service.DiscoveryService@{discovery.discovery\_service.DiscoveryService}}
+\doxysubsubsection{\texorpdfstring{send\_leave()}{send\_leave()}}
+{\footnotesize\ttfamily \label{classdiscovery_1_1discovery__service_1_1_discovery_service_a34e37d86d78dd9b44d10e7c62e755464} 
+discovery.\+discovery\+\_\+service.\+Discovery\+Service.\+send\+\_\+leave (\begin{DoxyParamCaption}\item[{}]{self}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}@brief Sendet eine LEAVE-Nachricht als Broadcast, um sich abzumelden.
+\end{DoxyVerb}
+ \Hypertarget{classdiscovery_1_1discovery__service_1_1_discovery_service_af3cdc54e0691cf50c2a9ee24e21ad9a3}\index{discovery.discovery\_service.DiscoveryService@{discovery.discovery\_service.DiscoveryService}!send\_who@{send\_who}}
+\index{send\_who@{send\_who}!discovery.discovery\_service.DiscoveryService@{discovery.discovery\_service.DiscoveryService}}
+\doxysubsubsection{\texorpdfstring{send\_who()}{send\_who()}}
+{\footnotesize\ttfamily \label{classdiscovery_1_1discovery__service_1_1_discovery_service_af3cdc54e0691cf50c2a9ee24e21ad9a3} 
+discovery.\+discovery\+\_\+service.\+Discovery\+Service.\+send\+\_\+who (\begin{DoxyParamCaption}\item[{}]{self}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}@brief Sendet eine WHO-Anfrage als UDP-Broadcast, um bekannte Peers abzufragen.
+\end{DoxyVerb}
+ \Hypertarget{classdiscovery_1_1discovery__service_1_1_discovery_service_acc1810922512f2ef89fd2d5ba7cc831d}\index{discovery.discovery\_service.DiscoveryService@{discovery.discovery\_service.DiscoveryService}!start@{start}}
+\index{start@{start}!discovery.discovery\_service.DiscoveryService@{discovery.discovery\_service.DiscoveryService}}
+\doxysubsubsection{\texorpdfstring{start()}{start()}}
+{\footnotesize\ttfamily \label{classdiscovery_1_1discovery__service_1_1_discovery_service_acc1810922512f2ef89fd2d5ba7cc831d} 
+discovery.\+discovery\+\_\+service.\+Discovery\+Service.\+start (\begin{DoxyParamCaption}\item[{}]{self}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}@brief Startet den Discovery-Service: Listener-Thread, JOIN und WHO senden.
+\end{DoxyVerb}
+ \Hypertarget{classdiscovery_1_1discovery__service_1_1_discovery_service_a83d9ac379a243a917406813f84e29d79}\index{discovery.discovery\_service.DiscoveryService@{discovery.discovery\_service.DiscoveryService}!stop@{stop}}
+\index{stop@{stop}!discovery.discovery\_service.DiscoveryService@{discovery.discovery\_service.DiscoveryService}}
+\doxysubsubsection{\texorpdfstring{stop()}{stop()}}
+{\footnotesize\ttfamily \label{classdiscovery_1_1discovery__service_1_1_discovery_service_a83d9ac379a243a917406813f84e29d79} 
+discovery.\+discovery\+\_\+service.\+Discovery\+Service.\+stop (\begin{DoxyParamCaption}\item[{}]{self}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}@brief Stoppt den Discovery-Service, sendet LEAVE und schließt das Socket.
+\end{DoxyVerb}
+ 
+
+Die Dokumentation für diese Klasse wurde erzeugt aufgrund der Datei\+:\begin{DoxyCompactItemize}
+\item 
+Chat/discovery/discovery\+\_\+service.\+py\end{DoxyCompactItemize}

@@ -1,0 +1,299 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="de">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.14.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>DOKUMENTATION: Chat/common/protocol.py-Dateireferenz</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">DOKUMENTATION
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Erzeugt von Doxygen 1.14.0 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+$(function() { codefold.init(); });
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','Suchen',true);
+  $(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(function(){initNavTree('protocol_8py.html','',''); });
+</script>
+<div id="container">
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Lade ...</div>
+<div class="SRStatus" id="Searching">Suche ...</div>
+<div class="SRStatus" id="NoMatches">Keine Treffer</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">protocol.py-Dateireferenz</div></div>
+</div><!--header-->
+<div class="contents">
+
+<p>Enthält Funktionen zum Parsen und Erzeugen von SLCP-Protokollnachrichten.  
+<a href="#details">Mehr ...</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-func-members" class="groupheader"><a id="func-members" name="func-members"></a>
+Funktionen</h2></td></tr>
+<tr class="memitem:a1b4297a79d008f1f45e9786840771f3b" id="r_a1b4297a79d008f1f45e9786840771f3b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1b4297a79d008f1f45e9786840771f3b">common.protocol.parse_slcp</a> (line)</td></tr>
+<tr class="memitem:a8a2cd5bee78fd29e7a6f3c8ada38d6b1" id="r_a8a2cd5bee78fd29e7a6f3c8ada38d6b1"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8a2cd5bee78fd29e7a6f3c8ada38d6b1">common.protocol.create_join</a> (handle, port)</td></tr>
+<tr class="memitem:a8a640310c1fc1fb4f4d530e8ca781ad8" id="r_a8a640310c1fc1fb4f4d530e8ca781ad8"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8a640310c1fc1fb4f4d530e8ca781ad8">common.protocol.create_leave</a> (handle)</td></tr>
+<tr class="memitem:a86856e56803ca33c96669aa927717c0f" id="r_a86856e56803ca33c96669aa927717c0f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a86856e56803ca33c96669aa927717c0f">common.protocol.create_msg</a> (target, text)</td></tr>
+<tr class="memitem:a6625763196fa571f2dfddd979e92125d" id="r_a6625763196fa571f2dfddd979e92125d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6625763196fa571f2dfddd979e92125d">common.protocol.create_img</a> (target, size)</td></tr>
+<tr class="memitem:a0f0e4646c3336e7dfc83b54bae1bed08" id="r_a0f0e4646c3336e7dfc83b54bae1bed08"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0f0e4646c3336e7dfc83b54bae1bed08">common.protocol.create_who</a> ()</td></tr>
+<tr class="memitem:a0a10ce1113974701f01a69d55e16625b" id="r_a0a10ce1113974701f01a69d55e16625b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0a10ce1113974701f01a69d55e16625b">common.protocol.create_knownusers</a> (users)</td></tr>
+</table>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Ausführliche Beschreibung</h2>
+<div class="textblock"><p>Enthält Funktionen zum Parsen und Erzeugen von SLCP-Protokollnachrichten. </p>
+<p>Diese Datei stellt das Kommunikationsprotokoll bereit, das vom Messenger und Discovery-Service verwendet wird, um Text- und Bildnachrichten sowie Netzwerkanfragen zu senden und zu empfangen. </p>
+</div><a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Dokumentation der Funktionen</h2>
+<a id="a6625763196fa571f2dfddd979e92125d" name="a6625763196fa571f2dfddd979e92125d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6625763196fa571f2dfddd979e92125d">&#9670;&#160;</a></span>create_img()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">common.protocol.create_img </td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>target</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>size</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">@brief Erstellt eine IMG-Nachricht zum Senden von Bilddaten.
+
+@param target Empfänger-Handle
+@param size Größe des Bildes in Bytes
+@return SLCP-konforme IMG-Zeile
+</pre> 
+</div>
+</div>
+<a id="a8a2cd5bee78fd29e7a6f3c8ada38d6b1" name="a8a2cd5bee78fd29e7a6f3c8ada38d6b1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8a2cd5bee78fd29e7a6f3c8ada38d6b1">&#9670;&#160;</a></span>create_join()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">common.protocol.create_join </td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>handle</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>port</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">@brief Erstellt eine JOIN-Nachricht.
+
+@param handle Benutzername
+@param port Portnummer
+@return SLCP-konforme JOIN-Zeile
+</pre> 
+</div>
+</div>
+<a id="a0a10ce1113974701f01a69d55e16625b" name="a0a10ce1113974701f01a69d55e16625b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0a10ce1113974701f01a69d55e16625b">&#9670;&#160;</a></span>create_knownusers()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">common.protocol.create_knownusers </td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>users</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">@brief Erstellt eine KNOWNUSERS-Nachricht mit Liste aller bekannten Peers.
+
+@param users Liste von Dictionaries mit Schlüsseln 'handle', 'ip', 'port'
+@return SLCP-konforme KNOWNUSERS-Zeile
+</pre> 
+</div>
+</div>
+<a id="a8a640310c1fc1fb4f4d530e8ca781ad8" name="a8a640310c1fc1fb4f4d530e8ca781ad8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8a640310c1fc1fb4f4d530e8ca781ad8">&#9670;&#160;</a></span>create_leave()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">common.protocol.create_leave </td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>handle</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">@brief Erstellt eine LEAVE-Nachricht.
+
+@param handle Benutzername
+@return SLCP-konforme LEAVE-Zeile
+</pre> 
+</div>
+</div>
+<a id="a86856e56803ca33c96669aa927717c0f" name="a86856e56803ca33c96669aa927717c0f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a86856e56803ca33c96669aa927717c0f">&#9670;&#160;</a></span>create_msg()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">common.protocol.create_msg </td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>target</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>text</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">@brief Erstellt eine MSG-Nachricht zum Senden eines Textes.
+
+@param target Empfänger-Handle
+@param text Nachrichtentext
+@return SLCP-konforme MSG-Zeile
+</pre> 
+</div>
+</div>
+<a id="a0f0e4646c3336e7dfc83b54bae1bed08" name="a0f0e4646c3336e7dfc83b54bae1bed08"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0f0e4646c3336e7dfc83b54bae1bed08">&#9670;&#160;</a></span>create_who()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">common.protocol.create_who </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">@brief Erstellt eine WHO-Broadcast-Nachricht zur Abfrage aller bekannten Nutzer.
+
+@return SLCP-konforme WHO-Zeile
+</pre> 
+</div>
+</div>
+<a id="a1b4297a79d008f1f45e9786840771f3b" name="a1b4297a79d008f1f45e9786840771f3b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1b4297a79d008f1f45e9786840771f3b">&#9670;&#160;</a></span>parse_slcp()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">common.protocol.parse_slcp </td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>line</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">@brief Parst eine SLCP-Zeile (Simple Local Chat Protocol) in ein Dictionary.
+
+Unterstützte Befehle:
+- JOIN &lt;handle&gt; &lt;port&gt;
+- LEAVE &lt;handle&gt;
+- WHO
+- MSG &lt;to&gt; &lt;message&gt;
+- IMG &lt;to&gt; &lt;size&gt;
+- KNOWNUSERS &lt;handle1&gt; &lt;ip1&gt; &lt;port1&gt;, ...
+
+@param line SLCP-Zeile als String
+@return Dictionary mit Schlüssel "type" und weiteren Feldern je nach Befehl
+</pre> 
+</div>
+</div>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<div id="page-nav" class="page-nav-panel">
+<div id="page-nav-resize-handle"></div>
+<div id="page-nav-tree">
+<div id="page-nav-contents">
+</div><!-- page-nav-contents -->
+</div><!-- page-nav-tree -->
+</div><!-- page-nav -->
+</div><!-- container -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a href="dir_d69a422d7a068af823e603f17674947b.html">Chat</a></li><li class="navelem"><a href="dir_f07cdb9c7d57363ea174216db620d185.html">common</a></li><li class="navelem"><a href="protocol_8py.html">protocol.py</a></li>
+    <li class="footer">Erzeugt von <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.14.0 </li>
+  </ul>
+</div>
+</body>
+</html>

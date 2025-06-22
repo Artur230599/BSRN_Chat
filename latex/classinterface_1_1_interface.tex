@@ -1,0 +1,117 @@
+\doxysection{interface.\+Interface Klassenreferenz}
+\hypertarget{classinterface_1_1_interface}{}\label{classinterface_1_1_interface}\index{interface.Interface@{interface.Interface}}
+\doxysubsubsection*{Öffentliche Methoden}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classinterface_1_1_interface_aae38a881a7bf1e28b63e3fa28abf5200}{\+\_\+\+\_\+init\+\_\+\+\_\+}} (self, config, messenger)
+\item 
+\mbox{\hyperlink{classinterface_1_1_interface_a850823dbc066116c2a9130a49e65510b}{run}} (self)
+\item 
+\mbox{\hyperlink{classinterface_1_1_interface_a239e6fef5a59b1536ceb0c906661cafe}{display\+\_\+message}} (self, sender\+\_\+display, message)
+\item 
+\mbox{\hyperlink{classinterface_1_1_interface_a9c7eca4de3e4f9e3cb7bffa2c6c3bcdc}{display\+\_\+image\+\_\+notice}} (self, sender, filename)
+\item 
+\mbox{\hyperlink{classinterface_1_1_interface_a725941ebd25456a31778329abf5ab71f}{display\+\_\+knownusers}} (self, user\+\_\+list)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Öffentliche Attribute}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classinterface_1_1_interface_a22b937e7925ed2ae3f68822f321f7ac7}\label{classinterface_1_1_interface_a22b937e7925ed2ae3f68822f321f7ac7} 
+{\bfseries config} = config
+\item 
+\Hypertarget{classinterface_1_1_interface_acfb0e5348b7610f7cce45f7a0baa6f39}\label{classinterface_1_1_interface_acfb0e5348b7610f7cce45f7a0baa6f39} 
+{\bfseries messenger} = messenger
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Ausführliche Beschreibung}
+\begin{DoxyVerb}@class Interface
+@brief CLI-basierte Benutzeroberfläche für den SLCP-Chat-Client.
+
+Diese Klasse stellt die Interaktion des Nutzers mit dem SLCP-Chat über ein Konsoleninterface bereit.
+Sie verwaltet alle Benutzereingaben, interpretiert SLCP-Befehle wie /join, /leave, /msg usw.
+und leitet sie asynchron an die Messenger-Komponente zur Verarbeitung weiter.
+
+Zusätzlich wird die farbliche Konsolenausgabe mit dem Modul `colorama` unterstützt,
+um Statusnachrichten und Befehle übersichtlicher darzustellen.
+\end{DoxyVerb}
+ 
+
+\label{doc-constructors}
+\Hypertarget{classinterface_1_1_interface_doc-constructors}
+\doxysubsection{Beschreibung der Konstruktoren und Destruktoren}
+\Hypertarget{classinterface_1_1_interface_aae38a881a7bf1e28b63e3fa28abf5200}\index{interface.Interface@{interface.Interface}!\_\_init\_\_@{\_\_init\_\_}}
+\index{\_\_init\_\_@{\_\_init\_\_}!interface.Interface@{interface.Interface}}
+\doxysubsubsection{\texorpdfstring{\_\_init\_\_()}{\_\_init\_\_()}}
+{\footnotesize\ttfamily \label{classinterface_1_1_interface_aae38a881a7bf1e28b63e3fa28abf5200} 
+interface.\+Interface.\+\_\+\+\_\+init\+\_\+\+\_\+ (\begin{DoxyParamCaption}\item[{}]{self}{, }\item[{}]{config}{, }\item[{}]{messenger}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}@brief Konstruktor der Interface-Klasse.
+
+Initialisiert das Interface mit Konfigurationsdaten und der Messenger-Instanz
+zur Netzwerkkommunikation.
+
+@param config Ein Konfigurationsobjekt mit Nutzername, Port, Autoreply etc.
+@param messenger Eine Messenger-Instanz, die SLCP-Nachrichten verarbeitet und verschickt
+\end{DoxyVerb}
+ 
+
+\label{doc-func-members}
+\Hypertarget{classinterface_1_1_interface_doc-func-members}
+\doxysubsection{Dokumentation der Elementfunktionen}
+\Hypertarget{classinterface_1_1_interface_a9c7eca4de3e4f9e3cb7bffa2c6c3bcdc}\index{interface.Interface@{interface.Interface}!display\_image\_notice@{display\_image\_notice}}
+\index{display\_image\_notice@{display\_image\_notice}!interface.Interface@{interface.Interface}}
+\doxysubsubsection{\texorpdfstring{display\_image\_notice()}{display\_image\_notice()}}
+{\footnotesize\ttfamily \label{classinterface_1_1_interface_a9c7eca4de3e4f9e3cb7bffa2c6c3bcdc} 
+interface.\+Interface.\+display\+\_\+image\+\_\+notice (\begin{DoxyParamCaption}\item[{}]{self}{, }\item[{}]{sender}{, }\item[{}]{filename}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}@brief Zeigt eine Benachrichtigung über ein empfangenes Bild an.
+
+Diese Methode wird als Callback bei erfolgreichem Empfang eines Bildes aufgerufen.
+
+@param sender Handle oder IP des Absenders
+@param filename Pfad zur lokal gespeicherten Bilddatei
+\end{DoxyVerb}
+ \Hypertarget{classinterface_1_1_interface_a725941ebd25456a31778329abf5ab71f}\index{interface.Interface@{interface.Interface}!display\_knownusers@{display\_knownusers}}
+\index{display\_knownusers@{display\_knownusers}!interface.Interface@{interface.Interface}}
+\doxysubsubsection{\texorpdfstring{display\_knownusers()}{display\_knownusers()}}
+{\footnotesize\ttfamily \label{classinterface_1_1_interface_a725941ebd25456a31778329abf5ab71f} 
+interface.\+Interface.\+display\+\_\+knownusers (\begin{DoxyParamCaption}\item[{}]{self}{, }\item[{}]{user\+\_\+list}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}@brief Gibt alle bekannten/erkannten Nutzer formatiert auf der Konsole aus.
+
+Diese Methode wird nach Empfang einer KNOWNUSERS-Nachricht genutzt, um
+alle bekannten Peers in der Benutzeroberfläche anzuzeigen.
+
+@param user_list Liste von Tupeln: (handle, ip, port)
+\end{DoxyVerb}
+ \Hypertarget{classinterface_1_1_interface_a239e6fef5a59b1536ceb0c906661cafe}\index{interface.Interface@{interface.Interface}!display\_message@{display\_message}}
+\index{display\_message@{display\_message}!interface.Interface@{interface.Interface}}
+\doxysubsubsection{\texorpdfstring{display\_message()}{display\_message()}}
+{\footnotesize\ttfamily \label{classinterface_1_1_interface_a239e6fef5a59b1536ceb0c906661cafe} 
+interface.\+Interface.\+display\+\_\+message (\begin{DoxyParamCaption}\item[{}]{self}{, }\item[{}]{sender\+\_\+display}{, }\item[{}]{message}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}@brief Zeigt eine empfangene Textnachricht in der Konsole an.
+
+Wird vom Messenger aufgerufen, wenn eine neue Nachricht vom Netzwerk empfangen wurde.
+
+@param sender_display Der Anzeigename oder die IP-Adresse des Absenders
+@param message Die empfangene Textnachricht
+\end{DoxyVerb}
+ \Hypertarget{classinterface_1_1_interface_a850823dbc066116c2a9130a49e65510b}\index{interface.Interface@{interface.Interface}!run@{run}}
+\index{run@{run}!interface.Interface@{interface.Interface}}
+\doxysubsubsection{\texorpdfstring{run()}{run()}}
+{\footnotesize\ttfamily \label{classinterface_1_1_interface_a850823dbc066116c2a9130a49e65510b} 
+interface.\+Interface.\+run (\begin{DoxyParamCaption}\item[{}]{self}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}@brief Startet die Haupt-Eingabeschleife für den Nutzer.
+
+Die Methode zeigt verfügbare Befehle an, liest Eingaben von der Konsole
+(z. B. /join, /msg, /img), prüft diese auf Gültigkeit und ruft entsprechende
+Messenger-Methoden zur Verarbeitung auf. Sie läuft bis der Befehl /quit ausgeführt wird.
+\end{DoxyVerb}
+ 
+
+Die Dokumentation für diese Klasse wurde erzeugt aufgrund der Datei\+:\begin{DoxyCompactItemize}
+\item 
+Chat/client/interface.\+py\end{DoxyCompactItemize}

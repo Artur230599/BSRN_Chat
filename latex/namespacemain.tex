@@ -1,0 +1,43 @@
+\doxysection{main-\/\+Namensbereichsreferenz}
+\hypertarget{namespacemain}{}\label{namespacemain}\index{main@{main}}
+\doxysubsubsection*{Funktionen}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{namespacemain_a3140e9a5b6a71ffbf498198cfc471b88}{main}} ()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Ausführliche Beschreibung}
+\begin{DoxyVerb}@file main.py
+@brief Hauptprogramm des P2P-Chat-Clients. Startet Discovery, Messenger, Interface (CLI).
+\end{DoxyVerb}
+ 
+
+\label{doc-func-members}
+\Hypertarget{namespacemain_doc-func-members}
+\doxysubsection{Dokumentation der Funktionen}
+\Hypertarget{namespacemain_a3140e9a5b6a71ffbf498198cfc471b88}\index{main@{main}!main@{main}}
+\index{main@{main}!main@{main}}
+\doxysubsubsection{\texorpdfstring{main()}{main()}}
+{\footnotesize\ttfamily \label{namespacemain_a3140e9a5b6a71ffbf498198cfc471b88} 
+main.\+main (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}@brief Hauptfunktion des SLCP-Clients.
+
+Initialisiert alle Hauptkomponenten des Systems:
+- Lädt Konfiguration
+- Startet den Discovery-Dienst (UDP-basiert)
+- Initialisiert die Messenger-Komponente (SLCP)
+- Setzt Callback-Funktionen
+- Startet die Benutzeroberfläche (Kommandozeile)
+- Öffnet den UDP-Listener (für asynchrone Nachrichtenannahme)
+
+Ablauf:
+1. Lade Einstellungen wie Handle und Port aus TOML-Datei.
+2. Starte Discovery-Service für JOIN/LEAVE/WHO per Broadcast.
+3. Starte SLCP-Messenger für Nachrichten- und Bildversand.
+4. Starte CLI für Benutzereingaben.
+
+@return None
+\end{DoxyVerb}
+ 

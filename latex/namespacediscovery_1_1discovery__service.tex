@@ -1,0 +1,50 @@
+\doxysection{discovery.\+discovery\+\_\+service-\/Namensbereichsreferenz}
+\hypertarget{namespacediscovery_1_1discovery__service}{}\label{namespacediscovery_1_1discovery__service}\index{discovery.discovery\_service@{discovery.discovery\_service}}
+\doxysubsubsection*{Klassen}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{classdiscovery_1_1discovery__service_1_1_discovery_service}{Discovery\+Service}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Funktionen}
+\begin{DoxyCompactItemize}
+\item 
+bool \mbox{\hyperlink{namespacediscovery_1_1discovery__service_a9c0bc43f8ebdcf98bce3f6ea8fb1de6e}{is\+\_\+port\+\_\+in\+\_\+use}} (int port)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Variablen}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{namespacediscovery_1_1discovery__service_a56d877c11692c5a4fcad832b85f4a872}\label{namespacediscovery_1_1discovery__service_a56d877c11692c5a4fcad832b85f4a872} 
+int {\bfseries BROADCAST\+\_\+\+PORT} = 4000
+\item 
+\Hypertarget{namespacediscovery_1_1discovery__service_aa22fd7b6d7db85cc5d5c6fe567d675ad}\label{namespacediscovery_1_1discovery__service_aa22fd7b6d7db85cc5d5c6fe567d675ad} 
+int {\bfseries BUFFER\+\_\+\+SIZE} = 1024
+\item 
+\Hypertarget{namespacediscovery_1_1discovery__service_ae3e03e3e84bb8b69080323881da1afb1}\label{namespacediscovery_1_1discovery__service_ae3e03e3e84bb8b69080323881da1afb1} 
+{\bfseries service} = \mbox{\hyperlink{classdiscovery_1_1discovery__service_1_1_discovery_service}{Discovery\+Service}}("{}slcp\+\_\+config.\+toml"{})
+\item 
+\Hypertarget{namespacediscovery_1_1discovery__service_a07b7c398b9e12fb19375524c11457094}\label{namespacediscovery_1_1discovery__service_a07b7c398b9e12fb19375524c11457094} 
+{\bfseries peers} = service.\+get\+\_\+peers()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Ausführliche Beschreibung}
+\begin{DoxyVerb}@file discovery_service.py
+@brief Discovery-Service für den P2P-Chat. Verwaltet Peer-Discovery, JOIN/LEAVE/WHO Broadcast, etc.
+\end{DoxyVerb}
+ 
+
+\label{doc-func-members}
+\Hypertarget{namespacediscovery_1_1discovery__service_doc-func-members}
+\doxysubsection{Dokumentation der Funktionen}
+\Hypertarget{namespacediscovery_1_1discovery__service_a9c0bc43f8ebdcf98bce3f6ea8fb1de6e}\index{discovery.discovery\_service@{discovery.discovery\_service}!is\_port\_in\_use@{is\_port\_in\_use}}
+\index{is\_port\_in\_use@{is\_port\_in\_use}!discovery.discovery\_service@{discovery.discovery\_service}}
+\doxysubsubsection{\texorpdfstring{is\_port\_in\_use()}{is\_port\_in\_use()}}
+{\footnotesize\ttfamily \label{namespacediscovery_1_1discovery__service_a9c0bc43f8ebdcf98bce3f6ea8fb1de6e} 
+ bool discovery.\+discovery\+\_\+service.\+is\+\_\+port\+\_\+in\+\_\+use (\begin{DoxyParamCaption}\item[{int}]{port}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}@brief Prüft, ob ein TCP-Port bereits belegt ist.
+
+@param port TCP-Portnummer, die geprüft werden soll
+@return True, wenn der Port belegt ist, sonst False
+\end{DoxyVerb}
+ 

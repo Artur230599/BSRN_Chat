@@ -1,0 +1,109 @@
+\doxysection{config.\+config.\+Config Klassenreferenz}
+\hypertarget{classconfig_1_1config_1_1_config}{}\label{classconfig_1_1config_1_1_config}\index{config.config.Config@{config.config.Config}}
+\doxysubsubsection*{Öffentliche Methoden}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classconfig_1_1config_1_1_config_a663010e9160eafa3b348e22f423a23d3}{\+\_\+\+\_\+init\+\_\+\+\_\+}} (self, path="{}slcp\+\_\+config.\+toml"{})
+\item 
+\mbox{\hyperlink{classconfig_1_1config_1_1_config_aa00633db83d420faa1b6cdfcb3ff2bf2}{load}} (self)
+\item 
+\mbox{\hyperlink{classconfig_1_1config_1_1_config_a0e432fa0621310bbcb58cd32ac4151d7}{save}} (self)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Öffentliche Attribute}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classconfig_1_1config_1_1_config_a6a053ab8a66511f4ac282b57980a1972}\label{classconfig_1_1config_1_1_config_a6a053ab8a66511f4ac282b57980a1972} 
+{\bfseries path} = path
+\item 
+\Hypertarget{classconfig_1_1config_1_1_config_a08e245ea9c927f0b6674e1d12668beee}\label{classconfig_1_1config_1_1_config_a08e245ea9c927f0b6674e1d12668beee} 
+{\bfseries data} = self.\+load()
+\item 
+\Hypertarget{classconfig_1_1config_1_1_config_abe8d2ab15891fb52f85fbc96bac1a2eb}\label{classconfig_1_1config_1_1_config_abe8d2ab15891fb52f85fbc96bac1a2eb} 
+{\bfseries handle} = self.\+data.\+get("{}handle"{})
+\item 
+\Hypertarget{classconfig_1_1config_1_1_config_afdea96714babc40b920b4783f4ede151}\label{classconfig_1_1config_1_1_config_afdea96714babc40b920b4783f4ede151} 
+{\bfseries port} = int(self.\+data.\+get("{}port"{}) or input("{}Port\+: "{}))
+\item 
+\Hypertarget{classconfig_1_1config_1_1_config_ac1c31d1dfaca4ed4b8e443138a06b3b3}\label{classconfig_1_1config_1_1_config_ac1c31d1dfaca4ed4b8e443138a06b3b3} 
+{\bfseries whoisport} = int(self.\+data.\+get("{}whoisport"{}) or input("{}Whois-\/Port (z.\+ \+B. 4000)\+: "{}))
+\item 
+\Hypertarget{classconfig_1_1config_1_1_config_af6857f0155696abd497111c3621fc6fa}\label{classconfig_1_1config_1_1_config_af6857f0155696abd497111c3621fc6fa} 
+{\bfseries autoreply} = self.\+data.\+get("{}autoreply"{}, "{}"{})
+\item 
+\Hypertarget{classconfig_1_1config_1_1_config_a8d058037a693ac13a8fea06ef81cd4a8}\label{classconfig_1_1config_1_1_config_a8d058037a693ac13a8fea06ef81cd4a8} 
+{\bfseries imagepath} = self.\+\_\+setup\+\_\+imagepath()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Geschützte Methoden}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classconfig_1_1config_1_1_config_a3df4b3b841057e592431a65a3abed6d8}{\+\_\+setup\+\_\+imagepath}} (self)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Ausführliche Beschreibung}
+\begin{DoxyVerb}@class Config
+@brief Verwaltet die Konfiguration des Chat-Clients.
+
+Diese Klasse lädt, speichert und verwaltet Benutzereinstellungen aus einer TOML-Datei.
+Falls Werte fehlen (z. B. Benutzername oder Port), werden sie beim ersten Start interaktiv abgefragt.
+\end{DoxyVerb}
+ 
+
+\label{doc-constructors}
+\Hypertarget{classconfig_1_1config_1_1_config_doc-constructors}
+\doxysubsection{Beschreibung der Konstruktoren und Destruktoren}
+\Hypertarget{classconfig_1_1config_1_1_config_a663010e9160eafa3b348e22f423a23d3}\index{config.config.Config@{config.config.Config}!\_\_init\_\_@{\_\_init\_\_}}
+\index{\_\_init\_\_@{\_\_init\_\_}!config.config.Config@{config.config.Config}}
+\doxysubsubsection{\texorpdfstring{\_\_init\_\_()}{\_\_init\_\_()}}
+{\footnotesize\ttfamily \label{classconfig_1_1config_1_1_config_a663010e9160eafa3b348e22f423a23d3} 
+config.\+config.\+Config.\+\_\+\+\_\+init\+\_\+\+\_\+ (\begin{DoxyParamCaption}\item[{}]{self}{, }\item[{}]{path}{ = {\ttfamily "{}slcp\+\_\+config.toml"{}}}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}@brief Initialisiert eine neue Konfigurationsinstanz.
+
+- Liest Konfiguration aus Datei (sofern vorhanden).
+- Fragt fehlende Parameter interaktiv ab.
+- Erstellt Standardverzeichnisse bei Bedarf.
+
+@param path Dateipfad zur TOML-Konfigurationsdatei (Standard: slcp_config.toml)
+\end{DoxyVerb}
+ 
+
+\label{doc-func-members}
+\Hypertarget{classconfig_1_1config_1_1_config_doc-func-members}
+\doxysubsection{Dokumentation der Elementfunktionen}
+\Hypertarget{classconfig_1_1config_1_1_config_a3df4b3b841057e592431a65a3abed6d8}\index{config.config.Config@{config.config.Config}!\_setup\_imagepath@{\_setup\_imagepath}}
+\index{\_setup\_imagepath@{\_setup\_imagepath}!config.config.Config@{config.config.Config}}
+\doxysubsubsection{\texorpdfstring{\_setup\_imagepath()}{\_setup\_imagepath()}}
+{\footnotesize\ttfamily \label{classconfig_1_1config_1_1_config_a3df4b3b841057e592431a65a3abed6d8} 
+config.\+config.\+Config.\+\_\+setup\+\_\+imagepath (\begin{DoxyParamCaption}\item[{}]{self}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+\begin{DoxyVerb}@brief Bereitet den Ordnerpfad für empfangene Bilder vor.
+
+- Nutzt Standardpfad, wenn nicht angegeben.
+- Erstellt das Verzeichnis bei Bedarf.
+
+@return Absoluter Pfad zum Bildspeicherordner (z. B. ~/slcp_images)
+\end{DoxyVerb}
+ \Hypertarget{classconfig_1_1config_1_1_config_aa00633db83d420faa1b6cdfcb3ff2bf2}\index{config.config.Config@{config.config.Config}!load@{load}}
+\index{load@{load}!config.config.Config@{config.config.Config}}
+\doxysubsubsection{\texorpdfstring{load()}{load()}}
+{\footnotesize\ttfamily \label{classconfig_1_1config_1_1_config_aa00633db83d420faa1b6cdfcb3ff2bf2} 
+config.\+config.\+Config.\+load (\begin{DoxyParamCaption}\item[{}]{self}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}@brief Lädt die Konfiguration aus der TOML-Datei.
+
+@return Dictionary mit den geladenen Konfigurationswerten.
+\end{DoxyVerb}
+ \Hypertarget{classconfig_1_1config_1_1_config_a0e432fa0621310bbcb58cd32ac4151d7}\index{config.config.Config@{config.config.Config}!save@{save}}
+\index{save@{save}!config.config.Config@{config.config.Config}}
+\doxysubsubsection{\texorpdfstring{save()}{save()}}
+{\footnotesize\ttfamily \label{classconfig_1_1config_1_1_config_a0e432fa0621310bbcb58cd32ac4151d7} 
+config.\+config.\+Config.\+save (\begin{DoxyParamCaption}\item[{}]{self}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}@brief Speichert die aktuelle Konfiguration zurück in die TOML-Datei.
+\end{DoxyVerb}
+ 
+
+Die Dokumentation für diese Klasse wurde erzeugt aufgrund der Datei\+:\begin{DoxyCompactItemize}
+\item 
+Chat/config/config.\+py\end{DoxyCompactItemize}

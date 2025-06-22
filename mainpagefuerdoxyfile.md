@@ -37,7 +37,7 @@ Das System ist modular aufgebaut und besteht aus folgenden Hauptkomponenten:
 
 Das Zusammenspiel der Komponenten ist im folgenden Architekturdiagramm dargestellt:
 
-![Architekturdiagramm](docs/architektur.png)
+@image latex docs/architektur.png "Architekturdiagramm" width=\textwidth
 
 ---
 
@@ -79,7 +79,7 @@ Im Folgenden wird gezeigt, wie ein Nutzer dem Chat beitritt:
 
 Der Ablauf ist im folgenden Diagramm dargestellt:
 
-![Ablaufdiagramm beim JOIN](docs/join.png)
+@image latex docs/join.png "Ablauf JOIN" width=\textwidth
 
 ---
 
@@ -95,7 +95,7 @@ Im Folgenden wird gezeigt, wie ein Nutzer den Chat verlässt:
 
 Der Ablauf ist im folgenden Diagramm dargestellt:
 
-![Ablaufdiagramm beim LEAVE](docs/leave.png)
+@image latex docs/leave.png "Ablauf LEAVE" width=\textwidth
 
 ---
 
@@ -112,7 +112,7 @@ Im Folgenden wird gezeigt, wie die Liste aller aktiven Nutzer im Chat abgefragt 
 
 Der Ablauf ist im folgenden Diagramm dargestellt:
 
-![Ablauf beim WHO und KNOWNUSERS](docs/whoundknownusers.png)
+@image latex docs/whoundknownusers.png "Ablauf WHO/KNOWNUSERS" width=\textwidth
 
 ---
 
@@ -128,7 +128,7 @@ Im Folgenden wird gezeigt, wie ein Bild vom Nutzer „Alice“ an „Bob“ gese
 
 Der Ablauf ist im folgenden Diagramm dargestellt:
 
-![Ablaufdiagramm beim MSG](docs/messagebeispiel.png)
+@image latex docs/messagebeispiel.png "Ablauf MSG" width=\textwidth
 
 ---
 
@@ -144,7 +144,7 @@ Im Folgenden wird gezeigt, wie ein Bild vom Nutzer „Alice“ an „Bob“ gese
 
 Der Ablauf ist im folgenden Diagramm dargestellt:
 
-![Ablaufdiagramm beim IMG](docs/bildbeispiel.png)
+@image latex docs/bildbeispiel.png "Ablauf IMG" width=\textwidth
 
 ---
 
@@ -215,8 +215,10 @@ Bei der Verarbeitung von Peer-Informationen (insbesondere bei JOIN/KNOWNUSERS) w
 
 Wenn eine WHO-Anfrage gestellt wurde, konnten mehrere „KNOWNUSERS“-Antworten fast gleichzeitig eintreffen. Der ursprüngliche Code verarbeitete jede Antwort einzeln, wodurch Informationen verloren gehen konnten, wenn Nachrichten schnell hintereinander empfangen wurden.
 
-![Knownusers Konsolidierung](docs/problem5.png)
-![Knownusers Konsolidierung](docs/problem5fix.png)
+@image latex docs/problem5.png "Knownusers Konsolidierung – vorher" width=12cm
+
+@image latex docs/problem5fix.png "Knownusers Konsolidierung – nachher" width=12cm
+
 
 > **Lösung:**  
 > Die neue Funktion `handle_knownusers_response` sammelt alle Antworten für eine kurze Zeit, konsolidiert die erhaltenen Daten und übergibt die vollständige Liste dann gesammelt an das Interface.
