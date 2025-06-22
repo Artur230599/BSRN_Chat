@@ -15,8 +15,6 @@ Hauptfunktionen: Peer Discovery, Text- und Bildübertragung, Kommandozeilen-Bedi
 - Nhu Ngoc Le
 - Artur Gubarkov
 
----
-
 ### 1.2 Abgabedatum / Semester / Kurs
 
 - Abgabedatum: 22. Juni 2025
