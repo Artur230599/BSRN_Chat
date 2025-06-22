@@ -2,10 +2,28 @@
 @mainpage
 # Peer-to-Peer Chat – Dokumentation
 
+---
+
 ## 1. Projektüberblick
+
 Ein dezentraler Chat-Client im lokalen Netzwerk, der Text- und Bildnachrichten ohne zentralen Server ermöglicht.  
 Hauptfunktionen: Peer Discovery, Text- und Bildübertragung, Kommandozeilen-Bedienung (CLI), automatische Nutzererkennung.
 
+### 1.1 Gruppenmitglieder
+
+- Aysha Aryubi
+- Nhu Ngoc Le
+- Artur Gubarkov
+
+---
+
+### 1.2 Abgabedatum / Semester / Kurs
+
+- Abgabedatum: 22. Juni 2025
+- Semester: SoSe 2025
+- Kurs: Betriebssysteme und Rechnernetze
+- Dozent: Prof. Dr.-Ing. Markus Miettinen
+- 
 ---
 
 ## 2. Architektur
