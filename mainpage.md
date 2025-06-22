@@ -36,7 +36,7 @@ Das System ist modular aufgebaut und besteht aus folgenden Hauptkomponenten:
 - **main.py:** Startet und verbindet alle Komponenten.
 
 Das Zusammenspiel der Komponenten ist im folgenden Architekturdiagramm dargestellt:
-![Architekturdiagramm](docs/architektur.png)
+![Architekturdiagramm](architektur.png)
 
 ---
 
