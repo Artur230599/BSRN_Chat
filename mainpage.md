@@ -39,14 +39,14 @@ Das Zusammenspiel der Komponenten ist im folgenden Architekturdiagramm dargestel
 
 Textbasierte Kommandos im Simple Local Chat Protocol:
 
-| Befehl      | Parameter           | Beschreibung                           |
-| ----------- | ------------------- | -------------------------------------- |
-| JOIN        | <Handle> <Port>     | Tritt dem Chat bei                     |
-| LEAVE       | <Handle>            | Verlässt den Chat                      |
-| MSG         | <Handle> <Text>     | Sendet Nachricht an Nutzer             |
-| IMG         | <Handle> <Size>     | Bildübertragung starten                |
-| WHO         | -                   | Fragt bekannte Nutzer ab               |
-| KNOWNUSERS  | <Liste>             | Antwort mit bekannten Nutzern          |
+| Befehl      | Parameter         | Beschreibung                           |
+| ----------- |-------------------| -------------------------------------- |
+| JOIN        | `<Handle> <Port>` | Tritt dem Chat bei                     |
+| LEAVE       | `<Handle>`        | Verlässt den Chat                      |
+| MSG         | `<Handle> <Text>` | Sendet Nachricht an Nutzer             |
+| IMG         | `<Handle> <Size>` | Bildübertragung starten                |
+| WHO         | -                 | Fragt bekannte Nutzer ab               |
+| KNOWNUSERS  | `<Liste>`         | Antwort mit bekannten Nutzern          |
 
 ---
 
