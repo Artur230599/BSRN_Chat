@@ -147,79 +147,79 @@ Jedes Beispiel enthält einen Screenshot sowie eine kurze Analyse und die jeweil
 
 ### 5.1 IndexError beim Parsen von Benutzerdaten
 
-Beim Parsen von "KNOWNUSERS"-Nachrichten wurde nicht geprüft, ob die Liste drei Einträge enthält. Das führte zu einem IndexError bei fehlerhaften Daten.
+Beim Parsen der „KNOWNUSERS“-Nachricht wurde die empfangene Zeichenkette mit `info.split()` zerlegt, ohne zu prüfen, ob wirklich drei Felder (`Handle`, `IP`, `Port`) vorliegen. Wenn ein Netzwerkpaket fehlformatiert war (z. B. zu wenige Einträge enthielt), wurde auf ein nicht vorhandenes Element zugegriffen – das führte zu einem IndexError. Dieser Fehler trat insbesondere bei Netzwerkproblemen oder inkompatiblen Peers auf und konnte das ganze Programm zum Absturz bringen.
 
 ![IndexError Fix](docs/problem1.png)
 
 > **Lösung:**  
-> Durch die zusätzliche Prüfung `if len(infos) == 3` werden nur gültige Einträge verarbeitet – Abstürze werden verhindert.
+> Jetzt wird vor dem Zugriff geprüft, ob `len(infos) == 3` gilt. So werden nur gültige Peer-Informationen akzeptiert und verarbeitet, wodurch Abstürze durch fehlerhafte Netzwerkdaten zuverlässig verhindert werden.
 
 ---
 
 ### 5.2 Relativer Bildpfad und Ordnerprüfung
 
-Bildpfade wurden ursprünglich relativ angegeben (`"./images"`), ohne zu prüfen, ob das Verzeichnis existiert. Das konnte zu Speicherfehlern führen.
+Ursprünglich wurde als Speicherort für empfangene Bilder ein relativer Pfad (`"./images"`) verwendet. Das war problematisch, da das Verzeichnis je nach aktuellem Arbeitsverzeichnis unterschiedlich interpretiert werden kann und bei fehlender Erstellung Dateioperationen fehlschlugen. Das führte vor allem beim ersten Programmstart zu unerwarteten Fehlern beim Speichern von Bildern.
 
 ![Bildpfad Fix](docs/problem2.png)
 
 > **Lösung:**  
-> Mit `_setup_imagepath()` wird ein absoluter, robuster Pfad erzeugt und der Zielordner automatisch angelegt.
+> Die Methode `_setup_imagepath()` wandelt den Bildpfad jetzt in einen absoluten, benutzerspezifischen Pfad (z. B. `~/slcp_images`) um und legt das Zielverzeichnis automatisch an. Dadurch werden Bilder plattformunabhängig und zuverlässig gespeichert.
 
 ---
 
 ### 5.3 Konsistente CLI-Befehle und Hilfeanzeige
 
-Der Befehl `/send` wurde zu `/msg` geändert, alle Hilfetexte und Argumentbeschreibungen wurden vereinheitlicht.
+Die Kommandozeilenschnittstelle (CLI) war zunächst inkonsistent gestaltet. Es gab sowohl den Befehl `/send` als auch `/msg` und die Argumentbeschreibungen waren unklar (z. B. `<message>` statt `<text>`). Das führte dazu, dass neue Benutzer die richtigen Befehle nicht immer sofort fanden und es zu Bedienungsfehlern kam.
 
 ![CLI-Hilfe](docs/problem3.png)
 
 > **Lösung:**  
-> Einheitliche Befehle und Hilfe reduzieren Fehler und verbessern die Usability.
+> Alle Befehle und Hilfetexte wurden vereinheitlicht. Die CLI verwendet jetzt konsistente Benennungen wie `/msg` und eindeutige Argumente, was die Benutzung erleichtert und Missverständnisse minimiert.
 
 ---
 
 ### 5.4 Flexibler Umgang mit Peer-Daten (JOIN/KNOWNUSERS)
 
-Die Peer-Liste wurde flexibler gestaltet, doppelte oder eigene Einträge werden gezielt behandelt.
+Bei der Verarbeitung von Peer-Informationen (insbesondere bei JOIN/KNOWNUSERS) wurden Einträge starr nach IP und Handle verglichen. Dadurch kam es gelegentlich zu unvollständigen oder doppelten Listen – etwa, wenn ein Nutzer mehrfach im Netzwerk auftauchte oder sich seine IP-Adresse änderte.
 
 ![Peer-Daten Fix](docs/problem4.png)
 
 > **Lösung:**  
-> Einträge werden gesammelt, die eigene Instanz wird einmalig am Ende hinzugefügt – die Peer-Liste ist vollständiger und übersichtlicher.
+> Die neue Logik sammelt alle Peer-Daten und prüft erst nach dem Sammeln, ob Einträge tatsächlich zur eigenen Instanz gehören. Die eigene Information wird gezielt am Ende der Liste eingefügt, doppelte Einträge werden zuverlässig vermieden.
 
 ---
 
 ### 5.5 Konsolidierung mehrerer KNOWNUSERS-Antworten
 
-Mehrere gleichzeitige KNOWNUSERS-Antworten konnten früher verloren gehen.
+Wenn eine WHO-Anfrage gestellt wurde, konnten mehrere „KNOWNUSERS“-Antworten fast gleichzeitig eintreffen. Der ursprüngliche Code verarbeitete jede Antwort einzeln, wodurch Informationen verloren gehen konnten, wenn Nachrichten schnell hintereinander empfangen wurden.
 
 ![Knownusers Konsolidierung](docs/problem5.png)
 ![Knownusers Konsolidierung](docs/problem5fix.png)
 
 > **Lösung:**  
-> Die Funktion `handle_knownusers_response` sammelt und konsolidiert nun alle Antworten mit Timeout.
+> Die neue Funktion `handle_knownusers_response` sammelt alle Antworten für eine kurze Zeit, konsolidiert die erhaltenen Daten und übergibt die vollständige Liste dann gesammelt an das Interface.
 
 ---
 
 ### 5.6 Verbesserte Anzeige des Absenders
 
-Statt nur der IP-Adresse wird nun – sofern bekannt – immer der Benutzername angezeigt.
+Beim Anzeigen eingehender Nachrichten wurde bisher oft nur die rohe IP-Adresse des Absenders angezeigt, selbst wenn dessen Handle bekannt war. Das erschwerte die Zuordnung und war wenig benutzerfreundlich.
 
 ![Absenderanzeige](docs/problem6.png)
 
 > **Lösung:**  
-> Der Anzeigename (Handle) wird bevorzugt gezeigt; ansonsten erscheint “Unbekannt”.
+> Jetzt wird – sofern möglich – immer der Benutzername (Handle) angezeigt. Ist dieser nicht bekannt, erscheint stattdessen „Unbekannt“.
 
 ---
 
 ### 5.7 Doppelte Einträge in WHO/KNOWNUSERS-Liste
 
-Doppelte Einträge in der Peer-Liste wurden entfernt.
+Die Peer-Liste enthielt manchmal doppelte Einträge, da bei jedem Empfang der eigenen Information diese erneut angehängt wurde. Das sorgte für Unübersichtlichkeit in der Nutzeranzeige.
 
 ![Peerlist Duplikate](docs/problem7.png)
 
 > **Lösung:**  
-> Mit einer seen-Menge werden Einträge geprüft, und Duplikate gezielt vermieden.
+> Mithilfe einer sogenannten „seen“-Menge werden doppelte Einträge beim Sammeln gezielt vermieden.
 
 ---
 
