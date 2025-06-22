@@ -1,3 +1,8 @@
+"""
+@file discovery_service.py
+@brief Discovery-Service für den P2P-Chat. Verwaltet Peer-Discovery, JOIN/LEAVE/WHO Broadcast, etc.
+"""
+
 import socket  # Für Netzwerkkommunikation (UDP/TCP Sockets)
 import threading  # Für nebenläufige Threads (z.B. Listener Thread)
 import toml  # Zum Laden der TOML-Konfigurationsdatei

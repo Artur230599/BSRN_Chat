@@ -1,3 +1,8 @@
+"""
+@file config.py
+@brief Klasse zur Verwaltung und Speicherung der Konfiguration des Chat-Clients (Laden/Speichern von slcp_config.toml, Verzeichnisverwaltung für Bilder usw.).
+"""
+
 import toml  # Für das Einlesen/Schreiben der Konfigurationsdatei
 import os    # Für Datei- und Pfadoperationen
 

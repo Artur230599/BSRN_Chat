@@ -1,3 +1,9 @@
+"""
+@file interface.py
+@brief Kommandozeilen-Benutzeroberfläche (CLI) für den SLCP-Chat-Client.
+Stellt Eingabe, Ausgabe und Nutzerinteraktion über Terminal bereit.
+"""
+
 import asyncio
 import os
 from colorama import Fore, Style, init

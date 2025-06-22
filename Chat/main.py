@@ -1,3 +1,8 @@
+"""
+@file main.py
+@brief Hauptprogramm des P2P-Chat-Clients. Startet Discovery, Messenger, Interface (CLI).
+"""
+
 import asyncio
 from Chat.config.config import Config
 from Chat.network.messenger import Messenger

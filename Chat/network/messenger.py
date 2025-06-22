@@ -17,6 +17,7 @@ import os
 
 class Messenger(asyncio.DatagramProtocol):
     """
+    @class Messenger
     @brief Messenger für den Versand und Empfang von Chat-Nachrichten und Bildern.
     @details
         Verwaltet alle UDP- und TCP-Kommunikationsprozesse, Peer-Liste, sowie das Senden und Empfangen von Nachrichten und Bildern.
