@@ -1,4 +1,4 @@
-# BSRN-Chat – Peer-to-Peer Chat mit Bildübertragung
+# BSRN-Chat – Peer-to-Peer Chat mit Text- und Bildübertragung
 
 ## Überblick
 
