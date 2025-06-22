@@ -5,7 +5,7 @@
 Dieses Projekt ist eine Peer-to-Peer-Chat-Anwendung in Python für das Modul Betriebsystem und Rechnernetz.  
 Es unterstützt die automatische Discovery von Peers im lokalen Netzwerk, das Versenden und Empfangen von Textnachrichten sowie Bildern.  
 Bedient wird das Programm über eine intuitive CLI (Command Line Interface).  
-Die technische und architektonische Dokumentation findet sich als PDF im Ordner `/Docs`.
+Die technische und architektonische Dokumentation findet sich als PDF unter dem Namen DOKUMENTATION oder im Ordner `/latex/refman.pdf`.
 
 ---
 
