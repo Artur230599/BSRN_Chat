@@ -61,7 +61,7 @@ Im Folgenden wird gezeigt, wie ein Nutzer dem Chat beitritt:
 5. **Alice** ist jetzt als aktiver Teilnehmer im Chat-Netzwerk bekannt.
 
 Der Ablauf ist im folgenden Diagramm dargestellt:
-![Ablaufdiagramm beim JOIN](Docs/join.png)
+![Ablaufdiagramm beim JOIN](docs/join.png)
 
 ---
 
@@ -76,7 +76,7 @@ Im Folgenden wird gezeigt, wie ein Nutzer den Chat verlässt:
 5. **Alice** wird aus dem Netzwerk entfernt und erscheint nicht mehr als aktiver Teilnehmer.
 
 Der Ablauf ist im folgenden Diagramm dargestellt:
-![Ablaufdiagramm beim LEAVE](Docs/leave.png)
+![Ablaufdiagramm beim LEAVE](docs/leave.png)
 
 ---
 
@@ -92,7 +92,7 @@ Im Folgenden wird gezeigt, wie die Liste aller aktiven Nutzer im Chat abgefragt 
 6. **Das Interface bei Bob** zeigt daraufhin die vollständige Liste aller aktuell erreichbaren Nutzer im Terminal an.
 
 Der Ablauf ist im folgenden Diagramm dargestellt:
-![Ablauf beim WHO und KNOWNUSERS](Docs/whoundknownusers.png)
+![Ablauf beim WHO und KNOWNUSERS](docs/whoundknownusers.png)
 
 ---
 
@@ -107,7 +107,7 @@ Im Folgenden wird gezeigt, wie ein Bild vom Nutzer „Alice“ an „Bob“ gese
 5. **Das Interface bei Bob** zeigt die empfangene Nachricht sofort im Terminal an.
 
 Der Ablauf ist im folgenden Diagramm dargestellt:
-![Ablaufdiagramm beim MSG](Docs/messagebeispiel.png)
+![Ablaufdiagramm beim MSG](docs/messagebeispiel.png)
 
 ---
 
@@ -122,7 +122,7 @@ Im Folgenden wird gezeigt, wie ein Bild vom Nutzer „Alice“ an „Bob“ gese
 5. **Das Interface bei Bob** zeigt eine Benachrichtigung über das empfangene Bild an.
 
 Der Ablauf ist im folgenden Diagramm dargestellt:
-![Ablaufdiagramm beim IMG](Docs/bildbeispiel.png)
+![Ablaufdiagramm beim IMG](docs/bildbeispiel.png)
 
 ---
 
@@ -130,11 +130,11 @@ Der Ablauf ist im folgenden Diagramm dargestellt:
 
 Im Folgenden einige Screenshots der CLI-Anwendung:
 
-![Ausgabe 1](Docs/ausgabe1.jpeg)
+![Ausgabe 1](docs/ausgabe1.jpeg)
 
-![Ausgabe 2](Docs/ausgabe2.jpeg)
+![Ausgabe 2](docs/ausgabe2.jpeg)
 
-![Ausgabe 3](Docs/ausgabe3.jpeg)
+![Ausgabe 3](docs/ausgabe3.jpeg)
 
 ---
 
@@ -149,7 +149,7 @@ Jedes Beispiel enthält einen Screenshot sowie eine kurze Analyse und die jeweil
 
 Beim Parsen von "KNOWNUSERS"-Nachrichten wurde nicht geprüft, ob die Liste drei Einträge enthält. Das führte zu einem IndexError bei fehlerhaften Daten.
 
-![IndexError Fix](Docs/problem1.png)
+![IndexError Fix](docs/problem1.png)
 
 > **Lösung:**  
 > Durch die zusätzliche Prüfung `if len(infos) == 3` werden nur gültige Einträge verarbeitet – Abstürze werden verhindert.
@@ -160,7 +160,7 @@ Beim Parsen von "KNOWNUSERS"-Nachrichten wurde nicht geprüft, ob die Liste drei
 
 Bildpfade wurden ursprünglich relativ angegeben (`"./images"`), ohne zu prüfen, ob das Verzeichnis existiert. Das konnte zu Speicherfehlern führen.
 
-![Bildpfad Fix](Docs/problem2.png)
+![Bildpfad Fix](docs/problem2.png)
 
 > **Lösung:**  
 > Mit `_setup_imagepath()` wird ein absoluter, robuster Pfad erzeugt und der Zielordner automatisch angelegt.
@@ -171,7 +171,7 @@ Bildpfade wurden ursprünglich relativ angegeben (`"./images"`), ohne zu prüfen
 
 Der Befehl `/send` wurde zu `/msg` geändert, alle Hilfetexte und Argumentbeschreibungen wurden vereinheitlicht.
 
-![CLI-Hilfe](Docs/problem3.png)
+![CLI-Hilfe](docs/problem3.png)
 
 > **Lösung:**  
 > Einheitliche Befehle und Hilfe reduzieren Fehler und verbessern die Usability.
@@ -182,7 +182,7 @@ Der Befehl `/send` wurde zu `/msg` geändert, alle Hilfetexte und Argumentbeschr
 
 Die Peer-Liste wurde flexibler gestaltet, doppelte oder eigene Einträge werden gezielt behandelt.
 
-![Peer-Daten Fix](Docs/problem4.png)
+![Peer-Daten Fix](docs/problem4.png)
 
 > **Lösung:**  
 > Einträge werden gesammelt, die eigene Instanz wird einmalig am Ende hinzugefügt – die Peer-Liste ist vollständiger und übersichtlicher.
@@ -193,8 +193,8 @@ Die Peer-Liste wurde flexibler gestaltet, doppelte oder eigene Einträge werden 
 
 Mehrere gleichzeitige KNOWNUSERS-Antworten konnten früher verloren gehen.
 
-![Knownusers Konsolidierung](Docs/problem5.png)
-![Knownusers Konsolidierung](Docs/problem5fix.png)
+![Knownusers Konsolidierung](docs/problem5.png)
+![Knownusers Konsolidierung](docs/problem5fix.png)
 
 > **Lösung:**  
 > Die Funktion `handle_knownusers_response` sammelt und konsolidiert nun alle Antworten mit Timeout.
@@ -205,7 +205,7 @@ Mehrere gleichzeitige KNOWNUSERS-Antworten konnten früher verloren gehen.
 
 Statt nur der IP-Adresse wird nun – sofern bekannt – immer der Benutzername angezeigt.
 
-![Absenderanzeige](Docs/problem6.png)
+![Absenderanzeige](docs/problem6.png)
 
 > **Lösung:**  
 > Der Anzeigename (Handle) wird bevorzugt gezeigt; ansonsten erscheint “Unbekannt”.
@@ -216,7 +216,7 @@ Statt nur der IP-Adresse wird nun – sofern bekannt – immer der Benutzername 
 
 Doppelte Einträge in der Peer-Liste wurden entfernt.
 
-![Peerlist Duplikate](Docs/problem7.png)
+![Peerlist Duplikate](docs/problem7.png)
 
 > **Lösung:**  
 > Mit einer seen-Menge werden Einträge geprüft, und Duplikate gezielt vermieden.
@@ -224,7 +224,7 @@ Doppelte Einträge in der Peer-Liste wurden entfernt.
 ---
 
 **Weitere Details und vollständige Screenshots siehe:**  
-[Screenshots mit Fehleranalyse](Docs/Screenshots%20mit%20Fehleranalyse%20final.odt)
+[Screenshots mit Fehleranalyse](docs/Screenshots%20mit%20Fehleranalyse%20final.odt)
 
 ---
 
