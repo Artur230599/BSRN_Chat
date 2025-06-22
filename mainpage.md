@@ -138,14 +138,14 @@ Im Folgenden einige Screenshots der CLI-Anwendung:
 
 ---
 
-## 3. Teilprobleme und Lösungsansätze (Fehleranalyse)
+## 5. Teilprobleme und Lösungsansätze (Fehleranalyse)
 
 Im Folgenden werden typische Fehler und ihre Lösungen im Projekt erläutert.  
 Jedes Beispiel enthält einen Screenshot sowie eine kurze Analyse und die jeweilige Korrektur.
 
 ---
 
-### 3.1 IndexError beim Parsen von Benutzerdaten
+### 5.1 IndexError beim Parsen von Benutzerdaten
 
 Beim Parsen von "KNOWNUSERS"-Nachrichten wurde nicht geprüft, ob die Liste drei Einträge enthält. Das führte zu einem IndexError bei fehlerhaften Daten.
 
@@ -156,7 +156,7 @@ Beim Parsen von "KNOWNUSERS"-Nachrichten wurde nicht geprüft, ob die Liste drei
 
 ---
 
-### 3.2 Relativer Bildpfad und Ordnerprüfung
+### 5.2 Relativer Bildpfad und Ordnerprüfung
 
 Bildpfade wurden ursprünglich relativ angegeben (`"./images"`), ohne zu prüfen, ob das Verzeichnis existiert. Das konnte zu Speicherfehlern führen.
 
@@ -167,7 +167,7 @@ Bildpfade wurden ursprünglich relativ angegeben (`"./images"`), ohne zu prüfen
 
 ---
 
-### 3.3 Konsistente CLI-Befehle und Hilfeanzeige
+### 5.3 Konsistente CLI-Befehle und Hilfeanzeige
 
 Der Befehl `/send` wurde zu `/msg` geändert, alle Hilfetexte und Argumentbeschreibungen wurden vereinheitlicht.
 
@@ -178,7 +178,7 @@ Der Befehl `/send` wurde zu `/msg` geändert, alle Hilfetexte und Argumentbeschr
 
 ---
 
-### 3.4 Flexibler Umgang mit Peer-Daten (JOIN/KNOWNUSERS)
+### 5.4 Flexibler Umgang mit Peer-Daten (JOIN/KNOWNUSERS)
 
 Die Peer-Liste wurde flexibler gestaltet, doppelte oder eigene Einträge werden gezielt behandelt.
 
@@ -189,7 +189,7 @@ Die Peer-Liste wurde flexibler gestaltet, doppelte oder eigene Einträge werden 
 
 ---
 
-### 3.5 Konsolidierung mehrerer KNOWNUSERS-Antworten
+### 5.5 Konsolidierung mehrerer KNOWNUSERS-Antworten
 
 Mehrere gleichzeitige KNOWNUSERS-Antworten konnten früher verloren gehen.
 
@@ -201,7 +201,7 @@ Mehrere gleichzeitige KNOWNUSERS-Antworten konnten früher verloren gehen.
 
 ---
 
-### 3.6 Verbesserte Anzeige des Absenders
+### 5.6 Verbesserte Anzeige des Absenders
 
 Statt nur der IP-Adresse wird nun – sofern bekannt – immer der Benutzername angezeigt.
 
@@ -212,7 +212,7 @@ Statt nur der IP-Adresse wird nun – sofern bekannt – immer der Benutzername 
 
 ---
 
-### 3.7 Doppelte Einträge in WHO/KNOWNUSERS-Liste
+### 5.7 Doppelte Einträge in WHO/KNOWNUSERS-Liste
 
 Doppelte Einträge in der Peer-Liste wurden entfernt.
 
